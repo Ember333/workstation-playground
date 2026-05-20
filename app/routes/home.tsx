@@ -1,134 +1,307 @@
+import { Suspense, useEffect, useMemo, useState } from "react";
+import { Canvas } from "@react-three/fiber";
+import { Line, useTexture } from "@react-three/drei";
+import type { ThreeEvent } from "@react-three/fiber";
 import type { Route } from "./+types/home";
 
+type Point = {
+  x: number;
+  y: number;
+};
+
+type ToyConfig = {
+  id?: string;
+  name?: string;
+  description?: string;
+  image?: string;
+  points?: Point[];
+};
+
+type DemoToy = {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  points: Point[];
+};
+
+type ImageSize = {
+  width: number;
+  height: number;
+};
+
+const CONFIG_URL = "/toy-configs.json";
+const MIN_DEMO_POINTS = 4;
+const PREFERRED_IMAGES = new Set(["image14.png", "image15.png", "image14", "image15"]);
+
 export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "Workstation Playground" },
-    {
-      name: "description",
-      content: "A compact React Router v7 playground for small web experiments.",
-    },
+  return [{ title: "Toy Connect Demo" }];
+}
+
+function clamp(value: number, min = 0, max = 1) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function normalizeToy(toy: ToyConfig): DemoToy | null {
+  const image = toy.image?.replace(/^\/?pics\//, "");
+
+  if (!image) {
+    return null;
+  }
+
+  return {
+    id: toy.id ?? image.replace(/\.[^.]+$/, ""),
+    name: toy.name || image.replace(/\.[^.]+$/, ""),
+    description: toy.description ?? "",
+    image,
+    points: Array.isArray(toy.points)
+      ? toy.points.map((point) => ({
+          x: clamp(Number(point.x)),
+          y: clamp(Number(point.y)),
+        }))
+      : [],
+  };
+}
+
+function chooseDemoToy(toys: DemoToy[]) {
+  const usableToys = toys.filter((toy) => toy.points.length >= MIN_DEMO_POINTS);
+
+  return (
+    usableToys.find((toy) => PREFERRED_IMAGES.has(toy.image) || PREFERRED_IMAGES.has(toy.id)) ??
+    usableToys[0] ??
+    null
+  );
+}
+
+function getContainedImageSize(size: ImageSize | null) {
+  if (!size || size.width <= 0 || size.height <= 0) {
+    return { width: 2, height: 2 };
+  }
+
+  const aspect = size.width / size.height;
+
+  if (aspect >= 1) {
+    return { width: 2, height: 2 / aspect };
+  }
+
+  return { width: 2 * aspect, height: 2 };
+}
+
+function getScenePoint(point: Point, imagePlane: ImageSize) {
+  return [(point.x - 0.5) * imagePlane.width, (0.5 - point.y) * imagePlane.height, 0.05] as [
+    number,
+    number,
+    number,
   ];
 }
 
-const projects = [
-  {
-    title: "Route Lab",
-    text: "File-based routes, loaders, and transitions for small ideas.",
-    accent: "bg-teal-500",
-  },
-  {
-    title: "UI Bench",
-    text: "Tiny interface sketches with responsive layout rules.",
-    accent: "bg-coral",
-  },
-  {
-    title: "Deploy Notes",
-    text: "Build once, ship static assets to Cloudflare Pages.",
-    accent: "bg-ink",
-  },
-];
+function PointMarker({
+  active,
+  errored,
+  onSelect,
+  position,
+}: {
+  active: boolean;
+  errored: boolean;
+  onSelect: (event: ThreeEvent<PointerEvent>) => void;
+  position: [number, number, number];
+}) {
+  return (
+    <group position={position}>
+      <mesh onPointerDown={onSelect}>
+        <circleGeometry args={[0.105, 32]} />
+        <meshBasicMaterial depthWrite={false} transparent opacity={0} />
+      </mesh>
+      <mesh position={[0, 0, 0.01]}>
+        <circleGeometry args={[active ? 0.042 : 0.034, 32]} />
+        <meshBasicMaterial color={errored ? "#dc2626" : "#050505"} />
+      </mesh>
+    </group>
+  );
+}
+
+function ToyScene({
+  completed,
+  errorIndex,
+  nextIndex,
+  onPointClick,
+  toy,
+}: {
+  completed: boolean;
+  errorIndex: number | null;
+  nextIndex: number;
+  onPointClick: (index: number) => void;
+  toy: DemoToy;
+}) {
+  const [sourceSize, setSourceSize] = useState<ImageSize | null>(null);
+  const imagePlane = useMemo(() => getContainedImageSize(sourceSize), [sourceSize]);
+  const clickedPoints = toy.points.slice(0, nextIndex).map((point) => getScenePoint(point, imagePlane));
+  const linePoints =
+    completed && clickedPoints.length > 1 ? [...clickedPoints, clickedPoints[0]] : clickedPoints;
+
+  return (
+    <>
+      <mesh>
+        <planeGeometry args={[2, 2]} />
+        <meshBasicMaterial color="#ffffff" />
+      </mesh>
+      <ImagePlane
+        completed={completed}
+        imagePlane={imagePlane}
+        onImageSize={setSourceSize}
+        src={`/pics/${toy.image}`}
+      />
+      {linePoints.length > 1 && (
+        <Line points={linePoints} color="#050505" lineWidth={3} transparent opacity={0.9} />
+      )}
+      {toy.points.map((point, index) => (
+        <PointMarker
+          active={index === nextIndex && !completed}
+          errored={index === errorIndex}
+          key={`${toy.image}-point-${index}`}
+          position={getScenePoint(point, imagePlane)}
+          onSelect={(event) => {
+            event.stopPropagation();
+            onPointClick(index);
+          }}
+        />
+      ))}
+    </>
+  );
+}
+
+function ImagePlane({
+  completed,
+  imagePlane,
+  onImageSize,
+  src,
+}: {
+  completed: boolean;
+  imagePlane: ImageSize;
+  onImageSize: (size: ImageSize) => void;
+  src: string;
+}) {
+  const texture = useTexture(src);
+
+  useEffect(() => {
+    const image = texture.image as HTMLImageElement | undefined;
+
+    onImageSize({
+      width: image?.naturalWidth || image?.width || 1,
+      height: image?.naturalHeight || image?.height || 1,
+    });
+  }, [onImageSize, texture]);
+
+  return (
+    <mesh>
+      <planeGeometry args={[imagePlane.width, imagePlane.height]} />
+      <meshBasicMaterial map={texture} transparent opacity={completed ? 1 : 0.035} />
+    </mesh>
+  );
+}
 
 export default function Home() {
+  const [toy, setToy] = useState<DemoToy | null>(null);
+  const [loadState, setLoadState] = useState<"loading" | "ready" | "empty" | "error">("loading");
+  const [nextIndex, setNextIndex] = useState(0);
+  const [errorIndex, setErrorIndex] = useState<number | null>(null);
+  const completed = Boolean(toy && nextIndex >= toy.points.length);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadToyConfig() {
+      try {
+        const response = await fetch(CONFIG_URL);
+
+        if (!response.ok) {
+          throw new Error("Failed to load toy config");
+        }
+
+        const value = (await response.json()) as unknown;
+        const toys = Array.isArray(value)
+          ? value.map((item) => normalizeToy(item as ToyConfig)).filter((item): item is DemoToy => Boolean(item))
+          : [];
+        const selectedToy = chooseDemoToy(toys);
+
+        if (cancelled) {
+          return;
+        }
+
+        setToy(selectedToy);
+        setLoadState(selectedToy ? "ready" : "empty");
+      } catch {
+        if (!cancelled) {
+          setLoadState("error");
+        }
+      }
+    }
+
+    loadToyConfig();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  function handlePointClick(index: number) {
+    if (!toy || completed) {
+      return;
+    }
+
+    if (index !== nextIndex) {
+      setErrorIndex(index);
+      window.setTimeout(() => setErrorIndex(null), 180);
+      return;
+    }
+
+    setErrorIndex(null);
+    setNextIndex(index + 1);
+  }
+
   return (
-    <main className="min-h-screen bg-white text-ink">
-      <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-5">
-        <a href="#top" className="flex items-center gap-3 font-semibold">
-          <span className="grid size-9 place-items-center rounded-lg bg-ink text-sm text-white">
-            WP
-          </span>
-          <span>Workstation Playground</span>
-        </a>
-        <nav className="hidden items-center gap-8 text-sm text-muted md:flex">
-          <a href="#top" className="transition hover:text-ink">
-            Home
-          </a>
-          <a href="#projects" className="transition hover:text-ink">
-            Projects
-          </a>
-          <a href="#about" className="transition hover:text-ink">
-            About
-          </a>
-        </nav>
-      </header>
-
-      <section
-        id="top"
-        className="mx-auto grid min-h-[calc(100vh-76px)] w-full max-w-6xl items-center gap-12 px-6 pb-16 pt-8 lg:grid-cols-[1fr_0.92fr]"
-      >
-        <div className="max-w-2xl">
-          <h1 className="text-balance text-5xl font-semibold leading-[1.02] tracking-normal text-ink sm:text-6xl lg:text-7xl">
-            Workstation Playground
-          </h1>
-          <p className="mt-6 max-w-xl text-lg leading-8 text-muted">
-            工位游乐场是一组轻量的网页实验：用 React Router v7 组织路由，
-            用清晰的组件和静态构建把想法快速发布到线上。
+    <main className="home-demo">
+      <section className="home-demo__stage" aria-label="Toy connection demo">
+        {toy && loadState === "ready" ? (
+          <Canvas
+            camera={{ position: [0, 0, 3.2], fov: 42 }}
+            className="home-demo__canvas"
+            gl={{ alpha: false, antialias: true }}
+          >
+            <color attach="background" args={["#ffffff"]} />
+            <Suspense fallback={null}>
+              <ToyScene
+                completed={completed}
+                errorIndex={errorIndex}
+                nextIndex={nextIndex}
+                onPointClick={handlePointClick}
+                toy={toy}
+              />
+            </Suspense>
+          </Canvas>
+        ) : (
+          <p className="home-demo__message">
+            {loadState === "loading"
+              ? "Loading toy..."
+              : loadState === "empty"
+                ? "No toy with enough points is available."
+                : "Unable to load toy-configs.json."}
           </p>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <a
-              href="#projects"
-              className="inline-flex h-12 items-center justify-center rounded-lg bg-ink px-5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-black"
-            >
-              View projects
-            </a>
-            <a
-              href="#about"
-              className="inline-flex h-12 items-center justify-center rounded-lg border border-line px-5 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:border-ink"
-            >
-              About the site
-            </a>
-          </div>
-        </div>
-
-        <div className="rounded-[18px] border border-line bg-paper p-3 shadow-[0_24px_80px_rgba(21,31,39,0.13)]">
-          <div className="rounded-xl border border-line bg-white">
-            <div className="flex items-center gap-2 border-b border-line px-4 py-3">
-              <span className="size-3 rounded-full bg-[#ff725e]" />
-              <span className="size-3 rounded-full bg-[#ffc857]" />
-              <span className="size-3 rounded-full bg-[#24b47e]" />
-              <span className="ml-3 text-xs text-muted">
-                workstation-playground.pages.dev
-              </span>
-            </div>
-            <div className="grid gap-4 p-4 sm:grid-cols-2">
-              {projects.map((project, index) => (
-                <article
-                  key={project.title}
-                  className={
-                    index === 0
-                      ? "rounded-lg border border-line bg-white p-5 sm:col-span-2"
-                      : "rounded-lg border border-line bg-white p-5"
-                  }
-                >
-                  <span className={`mb-8 block h-2 w-14 rounded-full ${project.accent}`} />
-                  <h2 className="text-xl font-semibold text-ink">{project.title}</h2>
-                  <p className="mt-3 text-sm leading-6 text-muted">{project.text}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
+        )}
       </section>
 
-      <section id="projects" className="border-y border-line bg-paper">
-        <div className="mx-auto grid max-w-6xl gap-5 px-6 py-16 md:grid-cols-3">
-          {projects.map((project) => (
-            <article key={project.title} className="rounded-lg bg-white p-6 shadow-sm">
-              <span className={`mb-7 block h-2 w-12 rounded-full ${project.accent}`} />
-              <h2 className="text-2xl font-semibold">{project.title}</h2>
-              <p className="mt-4 leading-7 text-muted">{project.text}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section id="about" className="mx-auto max-w-6xl px-6 py-16">
-        <div className="grid gap-8 md:grid-cols-[0.72fr_1fr] md:items-start">
-          <h2 className="text-3xl font-semibold text-ink">Built for quick experiments.</h2>
-          <p className="text-lg leading-8 text-muted">
-            这个站点使用 React Router v7、React 19、Tailwind CSS v4 和 Vite。
-            它以静态 SPA 方式构建，适合直接部署到 Cloudflare Pages。
-          </p>
-        </div>
+      <section className="home-demo__info" aria-live="polite">
+        {toy && completed ? (
+          <>
+            <h1>{toy.name}</h1>
+            <p>{toy.description || toy.image}</p>
+          </>
+        ) : (
+          <>
+            <h1>{toy ? `${nextIndex}/${toy.points.length}` : "Toy Connect"}</h1>
+            <p>Tap the black dots in order.</p>
+          </>
+        )}
       </section>
     </main>
   );
