@@ -3,13 +3,24 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --color-ink: #15212b;
+  --color-muted: #64717d;
+  --color-line: #dde5e8;
+  --color-paper: #f4f8f7;
+  --color-coral: #ff725e;
 }
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-white;
+  scroll-behavior: smooth;
+}
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+body {
+  min-width: 320px;
+}
+
+::selection {
+  background: #b7f0e8;
+  color: #15212b;
 }
