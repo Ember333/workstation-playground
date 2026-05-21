@@ -2,6 +2,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { PointerEvent } from "react";
 import type { ChangeEvent } from "react";
 import { getPointLabel } from "~/lib/point-labels";
+import {
+  getToyImageSrc,
+  normalizeToyImageName,
+  TOY_CONFIG_FILE_NAME,
+  TOY_CONFIG_URL,
+} from "~/lib/toy-connect";
 import type { Route } from "./+types/config";
 
 const PICTURE_FILES = [
@@ -25,7 +31,6 @@ const PICTURE_FILES = [
 
 const STORAGE_KEY = "toy-config-editor:v1";
 const SAVED_STORAGE_KEY = "toy-config-editor:saved";
-const CONFIG_URL = "/toy-configs.json";
 const AUTO_ALPHA_THRESHOLD = 8;
 const AUTO_POINT_COUNT = 48;
 const MAX_HISTORY = 80;
@@ -110,7 +115,7 @@ function getSavedToys() {
 }
 
 function normalizeImageName(image: string) {
-  return image.replace(/^\/?pics\//, "");
+  return normalizeToyImageName(image);
 }
 
 function normalizeToyConfig(toy: Partial<ToyConfig>, fallbackImage: string): ToyConfig {
@@ -164,12 +169,12 @@ function mergeStoredToys(stored: ToyConfig[] | null) {
 
 async function loadConfigFile(): Promise<ConfigSource> {
   try {
-    const response = await fetch(`${CONFIG_URL}?t=${Date.now()}`);
+    const response = await fetch(`${TOY_CONFIG_URL}?t=${Date.now()}`);
 
     if (!response.ok) {
       return {
         toys: [],
-        message: "No public/toy-configs.json loaded yet",
+        message: `No public/${TOY_CONFIG_FILE_NAME} loaded yet`,
       };
     }
 
@@ -178,18 +183,18 @@ async function loadConfigFile(): Promise<ConfigSource> {
     if (!Array.isArray(value)) {
       return {
         toys: [],
-        message: "public/toy-configs.json is not an array",
+        message: `public/${TOY_CONFIG_FILE_NAME} is not an array`,
       };
     }
 
     return {
       toys: mergeToySources(value),
-      message: `Loaded ${value.length} toys from public/toy-configs.json`,
+      message: `Loaded ${value.length} toys from public/${TOY_CONFIG_FILE_NAME}`,
     };
   } catch {
     return {
       toys: [],
-      message: "No public/toy-configs.json loaded yet",
+      message: `No public/${TOY_CONFIG_FILE_NAME} loaded yet`,
     };
   }
 }
@@ -233,7 +238,7 @@ function loadImage(src: string) {
 }
 
 async function extractAlphaBoundaryPoints(config: ToyConfig) {
-  const image = await loadImage(`/pics/${config.image}`);
+  const image = await loadImage(getToyImageSrc(config.image));
   const width = image.naturalWidth || image.width;
   const height = image.naturalHeight || image.height;
   const canvas = document.createElement("canvas");
@@ -430,7 +435,7 @@ export default function Config() {
       }
 
       try {
-        const image = await loadImage(`/pics/${selectedToy.image}`);
+        const image = await loadImage(getToyImageSrc(selectedToy.image));
 
         if (cancelled) {
           return;
@@ -647,7 +652,7 @@ export default function Config() {
       <aside className="toy-sidebar">
         <div className="toy-sidebar__header">
           <h1>Toy Config Editor</h1>
-          <p>{toys.length} images in public/pics</p>
+          <p>{toys.length} images in public/tinified</p>
         </div>
         <div className="toy-add-image">
           <input
@@ -676,7 +681,7 @@ export default function Config() {
                 setSelectedPointIndex(null);
               }}
             >
-              <img alt="" src={`/pics/${toy.image}`} />
+              <img alt="" src={getToyImageSrc(toy.image)} />
               <span>
                 <strong>{toy.name || toy.id}</strong>
                 <small>{toy.image}</small>
@@ -892,7 +897,7 @@ export default function Config() {
         <section className="toy-panel">
           <div className="toy-panel__title-row">
             <h2>Export</h2>
-            <button type="button" onClick={() => downloadJson("toy-configs.json", toys)}>
+            <button type="button" onClick={() => downloadJson(TOY_CONFIG_FILE_NAME, toys)}>
               {"\u4e0b\u8f7d JSON"}
             </button>
           </div>

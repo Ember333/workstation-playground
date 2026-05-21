@@ -105,27 +105,28 @@ button:disabled {
   position: relative;
   width: 24px;
   height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   border-radius: 999px;
-  background: radial-gradient(circle, #ffffff 0 9px, transparent 9.5px);
-  color: #050505;
-  font-family: "Segoe UI Symbol", "Noto Sans Symbols 2", "Poppins", "Noto Sans SC", sans-serif;
-  font-size: 18px;
-  font-weight: 400;
+  color: #ffffff;
+  font-family: "Poppins", "Noto Sans SC", ui-sans-serif, system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
   line-height: 1;
+  background: radial-gradient(circle, #050505 0 9px, transparent 9.5px);
   text-align: center;
   user-select: none;
 }
 
 .toy-connect__point-number.is-connected {
-  background: radial-gradient(circle, #ffffff 0 10px, transparent 10.5px);
-  font-size: 20px;
+  background:
+    radial-gradient(circle, #050505 0 9px, transparent 9.5px),
+    radial-gradient(circle, rgba(5, 5, 5, 0.14) 0 12px, transparent 12.5px);
 }
 
 .toy-connect__point-number.is-errored {
-  color: #dc2626;
+  color: #ffffff;
+  background: radial-gradient(circle, #dc2626 0 9px, transparent 9.5px);
 }
 
 .toy-connect__scene-info {

@@ -24,7 +24,9 @@ export type ImageSize = {
   height: number;
 };
 
-export const TOY_CONFIG_URL = "/toy-configs.json";
+export const TOY_CONFIG_FILE_NAME = "toy-configs2.json";
+export const TOY_CONFIG_URL = `/${TOY_CONFIG_FILE_NAME}`;
+export const TOY_IMAGE_BASE_PATH = "/tinified";
 
 const MIN_TOY_POINTS = 4;
 const PREFERRED_IMAGES = ["image15.png", "image15", "image14.png", "image14"];
@@ -34,7 +36,7 @@ function clamp(value: number, min = 0, max = 1) {
 }
 
 export function normalizeToy(toy: ToyConfig): Toy | null {
-  const image = toy.image?.replace(/^\/?pics\//, "");
+  const image = toy.image ? normalizeToyImageName(toy.image) : "";
 
   if (!image) {
     return null;
@@ -52,6 +54,14 @@ export function normalizeToy(toy: ToyConfig): Toy | null {
         }))
       : [],
   };
+}
+
+export function normalizeToyImageName(image: string) {
+  return image.replace(/^\/?(?:pics|tinified)\//, "");
+}
+
+export function getToyImageSrc(image: string) {
+  return `${TOY_IMAGE_BASE_PATH}/${normalizeToyImageName(image)}`;
 }
 
 export function chooseToy(toys: Toy[]) {

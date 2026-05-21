@@ -1,3 +1,5 @@
+import { TOY_CONFIG_FILE_NAME } from "~/lib/toy-connect";
+
 type ToyConnectMessageProps = {
   loadState: "loading" | "ready" | "empty" | "error";
 };
@@ -9,7 +11,7 @@ export function ToyConnectMessage({ loadState }: ToyConnectMessageProps) {
         ? "Loading toy..."
         : loadState === "empty"
           ? "No toy with enough points is available."
-          : "Unable to load toy-configs.json."}
+          : `Unable to load ${TOY_CONFIG_FILE_NAME}.`}
     </p>
   );
 }

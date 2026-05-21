@@ -7,8 +7,7 @@ import { useGSAP } from "@gsap/react";
 import type { ThreeEvent } from "@react-three/fiber";
 import type { ImageSize, Toy } from "~/lib/toy-connect";
 import { installThreeConsoleFilter } from "~/lib/three-console";
-import { getPointLabel } from "~/lib/point-labels";
-import { getContainedImageSize, getScenePoint } from "~/lib/toy-connect";
+import { getContainedImageSize, getScenePoint, getToyImageSrc } from "~/lib/toy-connect";
 
 installThreeConsoleFilter();
 gsap.registerPlugin(useGSAP);
@@ -19,8 +18,8 @@ const LANDSCAPE_FRAME_HEIGHT_RATIO = 0.6;
 const PHONE_FRAME_WIDTH_RATIO = 0.95;
 const PHONE_MAX_CSS_WIDTH = 720;
 const POINT_Z = 0.05;
-const CONNECTION_LINE_Z = POINT_Z - 0.002;
-const POINTER_LINE_Z = CONNECTION_LINE_Z - 0.001;
+const CONNECTION_LINE_Z = POINT_Z;
+const POINTER_LINE_Z = POINT_Z;
 const POINT_CONTACT_RADIUS = 0.064;
 
 type SceneImagePlane = ImageSize & {
@@ -70,11 +69,11 @@ function PointMarker({
       </mesh>
       <Html
         center
-        position={[0, 0, 0.03]}
+        position={[0, 0, 0]}
         style={{ pointerEvents: "none" }}
         zIndexRange={[50, 0]}
       >
-        <span className={labelClassName}>{getPointLabel(number - 1)}</span>
+        <span className={labelClassName}>{number}</span>
       </Html>
     </group>
   );
@@ -333,7 +332,7 @@ function ToyScene({ completed, errorIndex, nextIndex, onPointClick, toy }: ToyCo
           completed={completed}
           imagePlane={imagePlane}
           onImageSize={setSourceSize}
-          src={`/pics/${toy.image}`}
+          src={getToyImageSrc(toy.image)}
         />
         {linePoints.length > 1 && (
           <Line
