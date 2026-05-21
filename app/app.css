@@ -125,7 +125,7 @@ button:disabled {
   flex: 0 0 auto;
   color: #050505;
   font-family: "Deskland Comic Sans", "Comic Sans MS", cursive;
-  font-size: clamp(22px, 5.2vw, 58px);
+  font-size: clamp(28px, 6.1vw, 72px);
   font-weight: 400;
   line-height: 1;
   text-align: center;

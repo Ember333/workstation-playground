@@ -14,6 +14,7 @@ type PointMarkerProps = {
   onPointerContact: (event: ThreeEvent<PointerEvent>) => void;
   onSelect: (event: ThreeEvent<PointerEvent>) => void;
   position: ScenePoint;
+  visible?: boolean;
 };
 
 export function PointMarker({
@@ -25,11 +26,14 @@ export function PointMarker({
   onPointerContact,
   onSelect,
   position,
+  visible = true,
 }: PointMarkerProps) {
   const markerRef = useRef<HTMLSpanElement>(null);
+  const completedRef = useRef(completed);
+  const visibleRef = useRef(visible);
   const labelClassName = [
     "toy-connect__point-number",
-    connected ? "is-connected" : "",
+    connected && !completed ? "is-connected" : "",
     errored ? "is-errored" : "",
   ]
     .filter(Boolean)
@@ -41,11 +45,42 @@ export function PointMarker({
         return;
       }
 
+      if (!visible) {
+        visibleRef.current = false;
+        gsap.to(markerRef.current, {
+          autoAlpha: 0,
+          scale: 0,
+          duration: 0.2,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+        return;
+      }
+
       if (!completed) {
+        completedRef.current = false;
+        if (!visibleRef.current) {
+          visibleRef.current = true;
+          gsap.to(markerRef.current, {
+            autoAlpha: 1,
+            scale: 1,
+            duration: 0.32,
+            ease: "back.out(1.35)",
+            overwrite: "auto",
+          });
+          return;
+        }
+
         gsap.set(markerRef.current, { autoAlpha: 1, scale: 1 });
         return;
       }
 
+      if (completedRef.current) {
+        gsap.set(markerRef.current, { autoAlpha: 0, scale: 0 });
+        return;
+      }
+
+      completedRef.current = true;
       gsap.to(markerRef.current, {
         autoAlpha: 0,
         scale: 0,
@@ -55,7 +90,7 @@ export function PointMarker({
         overwrite: "auto",
       });
     },
-    { dependencies: [completed, completeDelay], revertOnUpdate: true },
+    { dependencies: [completed, completeDelay, visible] },
   );
 
   return (

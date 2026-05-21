@@ -11,7 +11,6 @@ import {
   SCENE_INFO_GAP_RATIO,
   SCENE_INFO_GROUP_LIFT_RATIO,
 } from "./constants";
-import { ExplodingLineSegment } from "./ExplodingLineSegment";
 import { ImagePlane } from "./ImagePlane";
 import { PLAY_FRAME_SIZE, SELECT_TOY_SCALE } from "./layout";
 import { PointMarker } from "./PointMarker";
@@ -31,9 +30,14 @@ export function ToyConnectScene({
   onPointClick,
   position = [0, 0, 0],
   scale = 1,
+  showConnectionLines = true,
+  showPlaceholder = true,
+  showSceneInfo = true,
   toy,
+  visible = true,
 }: ToyConnectSceneProps) {
   const rootRef = useRef<Group>(null);
+  const scaleMountedRef = useRef(false);
   const [sourceSize, setSourceSize] = useState<ImageSize | null>(null);
   const [pointerActive, setPointerActive] = useState(false);
   const pointerActiveRef = useRef(false);
@@ -57,36 +61,41 @@ export function ToyConnectScene({
   });
   const clickedPoints = scenePoints.slice(0, nextIndex);
   const clickedLinePoints = clickedPoints.map(([x, y]) => [x, y, CONNECTION_LINE_Z] as ScenePoint);
-  const linePoints =
-    completed && clickedLinePoints.length > 1
-      ? [...clickedLinePoints, clickedLinePoints[0]]
-      : clickedLinePoints;
-  const explodingLineSegments =
-    completed && linePoints.length > 1
-      ? linePoints.slice(0, -1).map((point, index) => {
-          return [point, linePoints[index + 1]] as [ScenePoint, ScenePoint];
-        })
-      : [];
-  const connectedIndex = nextIndex > 0 ? Math.min(nextIndex - 1, toy.points.length - 1) : null;
+  const shouldDrawConnectionLines = visible && showConnectionLines && !completed;
+  const linePoints = shouldDrawConnectionLines ? clickedLinePoints : [];
+  const connectedIndex =
+    shouldDrawConnectionLines && nextIndex > 0 ? Math.min(nextIndex - 1, toy.points.length - 1) : null;
   const pointerLinePoints =
-    !completed && pointerActive && pointerPoint && clickedLinePoints.length > 0
+    shouldDrawConnectionLines && pointerActive && pointerPoint && clickedLinePoints.length > 0
       ? [clickedLinePoints[clickedLinePoints.length - 1], pointerPoint]
       : [];
   const revealed = completed;
 
   useGSAP(
     () => {
-      if (!rootRef.current || !animateIn) {
+      if (!rootRef.current) {
         return;
       }
 
-      gsap.fromTo(
-        rootRef.current.scale,
-        { x: SELECT_TOY_SCALE, y: SELECT_TOY_SCALE, z: 1 },
-        { x: 1, y: 1, z: 1, duration: 0.86, ease: "power3.inOut", overwrite: "auto" },
-      );
+      if (!scaleMountedRef.current) {
+        scaleMountedRef.current = true;
+        gsap.set(rootRef.current.scale, {
+          x: animateIn ? SELECT_TOY_SCALE : scale,
+          y: animateIn ? SELECT_TOY_SCALE : scale,
+          z: 1,
+        });
+      }
+
+      gsap.to(rootRef.current.scale, {
+        x: scale,
+        y: scale,
+        z: 1,
+        duration: animateIn ? 0.92 : 0.68,
+        ease: "power3.inOut",
+        overwrite: "auto",
+      });
     },
-    { dependencies: [animateIn, toy.id] },
+    { dependencies: [animateIn, scale, toy.id] },
   );
 
   function updatePointerPoint(event: ThreeEvent<PointerEvent>) {
@@ -99,7 +108,7 @@ export function ToyConnectScene({
   }
 
   function handleStagePointerDown(event: ThreeEvent<PointerEvent>) {
-    if (!interactive) {
+    if (!interactive || !visible) {
       return;
     }
 
@@ -108,7 +117,7 @@ export function ToyConnectScene({
   }
 
   function handleStagePointerMove(event: ThreeEvent<PointerEvent>) {
-    if (!interactive || !pointerActiveRef.current || completed) {
+    if (!interactive || !visible || !pointerActiveRef.current || completed) {
       return;
     }
 
@@ -121,7 +130,7 @@ export function ToyConnectScene({
   }
 
   function handlePointContact(index: number, position: ScenePoint, event: ThreeEvent<PointerEvent>) {
-    if (!interactive) {
+    if (!interactive || !visible) {
       return;
     }
 
@@ -135,8 +144,8 @@ export function ToyConnectScene({
   }
 
   return (
-    <group ref={rootRef} position={position} scale={scale}>
-      <group position={[0, imagePlane.groupLift, 0]}>
+    <group ref={rootRef} position={position}>
+      <group position={[0, showSceneInfo ? imagePlane.groupLift : 0, 0]}>
         <group>
           <mesh
             onPointerCancel={handleStagePointerEnd}
@@ -153,6 +162,7 @@ export function ToyConnectScene({
             onImageSize={setSourceSize}
             questionRotation={getQuestionRotation(`${toy.id}-${toy.image}`)}
             revealed={revealed}
+            showPlaceholder={visible && showPlaceholder}
             src={getToyImageSrc(toy.image)}
           />
           {!completed && linePoints.length > 1 && (
@@ -160,26 +170,18 @@ export function ToyConnectScene({
               points={linePoints}
               color="#050505"
               depthWrite={false}
-              lineWidth={1.4}
+              lineWidth={1.8}
               renderOrder={1}
               transparent
               opacity={0.78}
             />
           )}
-          {explodingLineSegments.map((points, index) => (
-            <ExplodingLineSegment
-              index={index}
-              key={`${toy.image}-line-segment-${index}`}
-              points={points}
-              total={explodingLineSegments.length}
-            />
-          ))}
           {pointerLinePoints.length > 1 && (
             <Line
               points={pointerLinePoints}
               color="#050505"
               depthWrite={false}
-              lineWidth={1.4}
+              lineWidth={1.8}
               renderOrder={2}
               transparent
               opacity={0.86}
@@ -194,8 +196,9 @@ export function ToyConnectScene({
               key={`${toy.image}-point-${index}`}
               number={index + 1}
               position={scenePoints[index]}
+              visible={visible}
               onPointerContact={(event) => {
-                if (interactive && pointerActiveRef.current) {
+                if (interactive && visible && pointerActiveRef.current) {
                   handlePointContact(index, scenePoints[index], event);
                 }
               }}
@@ -204,7 +207,7 @@ export function ToyConnectScene({
               }}
             />
           ))}
-          <ToySceneInfo revealed={revealed} imagePlane={imagePlane} toy={toy} />
+          {showSceneInfo && <ToySceneInfo revealed={revealed} imagePlane={imagePlane} toy={toy} />}
         </group>
       </group>
     </group>

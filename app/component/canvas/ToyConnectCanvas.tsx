@@ -4,7 +4,6 @@ import { installThreeConsoleFilter } from "~/lib/three-console";
 import { CanvasReadySignal } from "./toy-connect/CanvasReadySignal";
 import { clampSelectScroll, FIELD_CAMERA_ZOOM, getFieldViewport, getToyLayoutItems } from "./toy-connect/layout";
 import { ToyCameraRig } from "./toy-connect/ToyCameraRig";
-import { ToyConnectScene } from "./toy-connect/ToyConnectScene";
 import { ToyFieldScene } from "./toy-connect/ToyFieldScene";
 import { ToySelectInput } from "./toy-connect/ToySelectInput";
 import type { ToyConnectCanvasProps } from "./toy-connect/types";
@@ -33,7 +32,6 @@ function ToyCanvasContent({
     () => getToyLayoutItems(toys, layoutMode, selectScroll, viewport),
     [layoutMode, selectScroll, toys, viewport],
   );
-  const selectedItem = items.find((item) => item.toy.id === selectedToyId);
 
   useEffect(() => {
     setSelectScroll((current) => clampSelectScroll(current, toys.length, viewport));
@@ -55,26 +53,18 @@ function ToyCanvasContent({
       />
       <ToyFieldScene
         completedToyIds={completedToyIds}
+        errorIndex={errorIndex}
         items={items}
         mode={mode}
+        nextIndex={nextIndex}
+        onPointClick={onPointClick}
         onShowcaseClick={onShowcaseClick}
         onToySelect={onToySelect}
         selectDraggingRef={selectDraggingRef}
         selectDragging={selectDragging}
+        selectedToyId={selectedToyId}
+        viewport={viewport}
       />
-      {mode === "play" && selectedItem && (
-        <ToyConnectScene
-          animateIn
-          completed={completedToyIds.has(selectedItem.toy.id) || nextIndex > selectedItem.toy.points.length}
-          errorIndex={errorIndex}
-          interactive
-          nextIndex={nextIndex}
-          position={selectedItem.position}
-          scale={1}
-          toy={selectedItem.toy}
-          onPointClick={onPointClick}
-        />
-      )}
       <CanvasReadySignal onReady={onCanvasReady} />
     </>
   );

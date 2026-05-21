@@ -12,6 +12,7 @@ type ImagePlaneProps = {
   revealed: boolean;
   imagePlane: SceneImagePlane;
   onImageSize: (size: ImageSize) => void;
+  showPlaceholder?: boolean;
   src: string;
 };
 
@@ -86,6 +87,7 @@ export function ImagePlane({
   revealed,
   imagePlane,
   onImageSize,
+  showPlaceholder = true,
   src,
 }: ImagePlaneProps) {
   useEffect(() => {
@@ -115,14 +117,16 @@ export function ImagePlane({
           <RevealedImage imagePlane={imagePlane} onImageSize={onImageSize} src={src} />
         </Suspense>
       )}
-      <Html
-        center
-        position={[0, 0, 0.04]}
-        style={{ pointerEvents: "none" }}
-        zIndexRange={[120, 0]}
-      >
-        <ToyQuestionMark revealed={revealed} rotation={questionRotation} />
-      </Html>
+      {showPlaceholder && (
+        <Html
+          center
+          position={[0, 0, 0.04]}
+          style={{ pointerEvents: "none" }}
+          zIndexRange={[120, 0]}
+        >
+          <ToyQuestionMark revealed={revealed} rotation={questionRotation} />
+        </Html>
+      )}
     </group>
   );
 }

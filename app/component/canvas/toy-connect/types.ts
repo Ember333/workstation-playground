@@ -48,5 +48,9 @@ export type ToyConnectSceneProps = {
   onPointClick: (index: number) => void;
   position?: ScenePoint;
   scale?: number;
+  showConnectionLines?: boolean;
+  showPlaceholder?: boolean;
+  showSceneInfo?: boolean;
   toy: Toy;
+  visible?: boolean;
 };
