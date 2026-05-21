@@ -128,3 +128,75 @@
 [2m04:36:19[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
 [2m04:38:24[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32m✨ new dependencies optimized: [33m@gsap/react, @react-three/drei, @react-three/fiber, gsap, three[32m[39m
 [2m04:38:24[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32m✨ optimized dependencies changed. reloading[39m
+[2m04:42:25[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx[22m
+[2m04:42:25[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/app.css[22m
+[2m04:42:25[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m04:42:30[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m04:42:30[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m04:42:30[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m04:42:30[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m04:50:32[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m04:50:33[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m04:50:33[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m04:50:33[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m04:51:00[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m04:51:00[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m04:51:41[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m04:51:42[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m04:51:42[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m04:52:16[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m04:52:25[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx[22m
+[2m04:52:25[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/app.css[22m
+[2m04:52:25[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m05:19:56[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m05:19:57[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m05:19:57[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m05:21:09[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m05:21:09[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m05:21:09[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m05:21:09[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m05:21:09[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m05:21:34[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m05:21:34[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m05:21:34[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m05:21:56[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx[22m
+[2m05:21:56[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/app.css[22m
+[2m05:21:56[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m05:22:51[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/ui/DesklandNav.tsx[22m
+[2m05:22:51[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/ui/DesklandNav.tsx[22m
+[2m05:22:51[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m05:22:51[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m05:22:51[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m05:22:51[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m05:22:57[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/routes/home.tsx[22m
+[2m05:22:57[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/routes/home.tsx, /app/app.css[22m
+[2m05:22:57[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m05:23:16[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m05:23:17[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m05:23:17[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m05:23:17[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m05:24:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m05:24:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m05:24:07[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m05:24:51[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m05:24:51[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m05:24:51[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m05:43:57[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m05:44:13[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx[22m
+[2m05:44:14[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/app.css[22m
+[2m05:44:14[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m05:44:58[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m05:44:58[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m05:44:58[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m05:45:37[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx[22m
+[2m05:45:37[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/app.css[22m
+[2m05:45:37[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m05:45:46[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx[22m
+[2m05:45:46[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/app.css[22m
+[2m05:45:46[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m05:51:59[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx[22m
+[2m05:51:59[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/app.css[22m
+[2m05:51:59[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m05:51:59[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m05:51:59[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m05:51:59[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m

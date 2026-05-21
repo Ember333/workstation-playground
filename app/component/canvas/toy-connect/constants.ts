@@ -1,0 +1,10 @@
+export const SCENE_INFO_GAP_RATIO = 0.14;
+export const SCENE_INFO_GROUP_LIFT_RATIO = 0.78;
+export const SCENE_INFO_DROP_RATIO = 0.16;
+export const LANDSCAPE_FRAME_HEIGHT_RATIO = 0.6;
+export const PHONE_FRAME_WIDTH_RATIO = 0.95;
+export const PHONE_MAX_CSS_WIDTH = 720;
+export const POINT_Z = 0.05;
+export const CONNECTION_LINE_Z = POINT_Z;
+export const POINTER_LINE_Z = POINT_Z;
+export const POINT_CONTACT_RADIUS = 0.064;
