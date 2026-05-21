@@ -1,9 +1,14 @@
-import { useEffect, useState } from "react";
-import { ToyConnectCanvas } from "~/component/canvas/ToyConnectCanvas";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { ToyConnectMessage } from "~/component/ui/ToyConnectMessage";
 import type { Toy, ToyConfig } from "~/lib/toy-connect";
 import { chooseToy, normalizeToy, TOY_CONFIG_URL } from "~/lib/toy-connect";
 import type { Route } from "./+types/home";
+
+const ToyConnectCanvas = lazy(() =>
+  import("~/component/canvas/ToyConnectCanvas").then((module) => ({
+    default: module.ToyConnectCanvas,
+  })),
+);
 
 export function meta({}: Route.MetaArgs) {
   return [{ title: "工位游乐场" }];
@@ -95,13 +100,15 @@ export default function Home() {
     <main className="toy-connect">
       <section className="toy-connect__stage" aria-label="Toy connection">
         {toy && loadState === "ready" ? (
-          <ToyConnectCanvas
-            completed={completed}
-            errorIndex={errorIndex}
-            nextIndex={nextIndex}
-            onPointClick={handlePointClick}
-            toy={toy}
-          />
+          <Suspense fallback={<ToyConnectMessage loadState="loading" />}>
+            <ToyConnectCanvas
+              completed={completed}
+              errorIndex={errorIndex}
+              nextIndex={nextIndex}
+              onPointClick={handlePointClick}
+              toy={toy}
+            />
+          </Suspense>
         ) : (
           <ToyConnectMessage loadState={loadState} />
         )}

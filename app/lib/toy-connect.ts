@@ -27,7 +27,7 @@ export type ImageSize = {
 export const TOY_CONFIG_URL = "/toy-configs.json";
 
 const MIN_TOY_POINTS = 4;
-const PREFERRED_IMAGES = new Set(["image14.png", "image15.png", "image14", "image15"]);
+const PREFERRED_IMAGES = ["image15.png", "image15", "image14.png", "image14"];
 
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
@@ -56,12 +56,11 @@ export function normalizeToy(toy: ToyConfig): Toy | null {
 
 export function chooseToy(toys: Toy[]) {
   const usableToys = toys.filter((toy) => toy.points.length >= MIN_TOY_POINTS);
+  const preferredToy = PREFERRED_IMAGES.map((preferredImage) =>
+    usableToys.find((toy) => toy.image === preferredImage || toy.id === preferredImage),
+  ).find((toy): toy is Toy => Boolean(toy));
 
-  return (
-    usableToys.find((toy) => PREFERRED_IMAGES.has(toy.image) || PREFERRED_IMAGES.has(toy.id)) ??
-    usableToys[0] ??
-    null
-  );
+  return preferredToy ?? usableToys[0] ?? null;
 }
 
 export function getContainedImageSize(size: ImageSize | null, maxExtent = 2) {

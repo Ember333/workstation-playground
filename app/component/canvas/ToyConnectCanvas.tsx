@@ -145,13 +145,11 @@ function ToySceneInfo({
   );
 }
 
-function ImagePlane({
-  completed,
+function CompletedImage({
   imagePlane,
   onImageSize,
   src,
 }: {
-  completed: boolean;
   imagePlane: SceneImagePlane;
   onImageSize: (size: ImageSize) => void;
   src: string;
@@ -173,22 +171,56 @@ function ImagePlane({
   }, [onImageSize, texture]);
 
   return (
+    <mesh position={[0, 0, 0.01]}>
+      <planeGeometry args={[imagePlane.width, imagePlane.height]} />
+      <meshBasicMaterial
+        depthWrite={false}
+        map={texture}
+        toneMapped={false}
+        transparent
+        opacity={1}
+      />
+    </mesh>
+  );
+}
+
+function ImagePlane({
+  completed,
+  imagePlane,
+  onImageSize,
+  src,
+}: {
+  completed: boolean;
+  imagePlane: SceneImagePlane;
+  onImageSize: (size: ImageSize) => void;
+  src: string;
+}) {
+  useEffect(() => {
+    const image = new Image();
+    image.decoding = "async";
+    image.onload = () => {
+      onImageSize({
+        width: image.naturalWidth || image.width || 1,
+        height: image.naturalHeight || image.height || 1,
+      });
+    };
+    image.src = src;
+
+    return () => {
+      image.onload = null;
+    };
+  }, [onImageSize, src]);
+
+  return (
     <group>
       <mesh>
         <planeGeometry args={[imagePlane.frameSize, imagePlane.frameSize]} />
         <meshBasicMaterial color="#ffffff" depthWrite={false} transparent opacity={0} />
       </mesh>
       {completed ? (
-        <mesh position={[0, 0, 0.01]}>
-          <planeGeometry args={[imagePlane.width, imagePlane.height]} />
-          <meshBasicMaterial
-            depthWrite={false}
-            map={texture}
-            toneMapped={false}
-            transparent
-            opacity={1}
-          />
-        </mesh>
+        <Suspense fallback={null}>
+          <CompletedImage imagePlane={imagePlane} onImageSize={onImageSize} src={src} />
+        </Suspense>
       ) : (
         <Html
           center

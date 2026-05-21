@@ -60,6 +60,7 @@ button:disabled {
 
 .toy-connect {
   width: 100vw;
+  height: 100vh;
   height: 100svh;
   overflow: hidden;
   background: #ffffff;
@@ -69,10 +70,14 @@ button:disabled {
 .toy-connect__stage {
   width: 100%;
   height: 100%;
+  display: grid;
+  place-items: center;
 }
 
 .toy-connect__canvas {
+  grid-area: 1 / 1;
   width: 100vw !important;
+  height: 100vh !important;
   height: 100svh !important;
   display: block;
   touch-action: none;
