@@ -15,6 +15,7 @@ gsap.registerPlugin(useGSAP);
 
 const SCENE_INFO_GAP_RATIO = 0.14;
 const SCENE_INFO_GROUP_LIFT_RATIO = 0.78;
+const SCENE_INFO_DROP_RATIO = 0.16;
 const LANDSCAPE_FRAME_HEIGHT_RATIO = 0.6;
 const PHONE_FRAME_WIDTH_RATIO = 0.95;
 const PHONE_MAX_CSS_WIDTH = 720;
@@ -27,6 +28,7 @@ type SceneImagePlane = ImageSize & {
   frameSize: number;
   groupLift: number;
   infoGap: number;
+  infoDrop: number;
 };
 
 type ScenePoint = [number, number, number];
@@ -228,7 +230,7 @@ function ToySceneInfo({
   const infoRef = useRef<HTMLDivElement>(null);
   const title = revealed ? toy.name : " ";
   const body = revealed ? toy.description || toy.image : " ";
-  const position = [0, imagePlane.height * -0.5 - imagePlane.infoGap, 0.16] as [
+  const position = [0, imagePlane.height * -0.5 - imagePlane.infoGap - imagePlane.infoDrop, 0.16] as [
     number,
     number,
     number,
@@ -268,7 +270,10 @@ function ToySceneInfo({
       zIndexRange={[100, 0]}
     >
       <div className="toy-connect__scene-info" aria-live="polite" ref={infoRef}>
-        <h1>{title}</h1>
+        <h1>
+          <span>{title}</span>
+          {revealed && <img alt="" aria-hidden="true" src="/资源%206.svg" />}
+        </h1>
         <p>{body}</p>
       </div>
     </Html>
@@ -354,7 +359,7 @@ function RevealedImage({
         .fromTo(
           imageGroupRef.current.scale,
           { x: 0.7, y: 0.7, z: 1 },
-          { x: 1, y: 1, z: 1, duration: 0.72, ease: "elastic.out(1, 0.45)" },
+          { x: 1.2, y: 1.2, z: 1, duration: 0.78, ease: "elastic.out(1, 0.45)" },
           0,
         )
         .fromTo(
@@ -456,6 +461,7 @@ function ToyScene({ completed, errorIndex, nextIndex, onPointClick, toy }: ToyCo
       ...size,
       frameSize,
       infoGap,
+      infoDrop: frameSize * SCENE_INFO_DROP_RATIO,
       groupLift: infoGap * SCENE_INFO_GROUP_LIFT_RATIO,
     };
   }, [sourceSize, viewport.height, viewport.width, viewportSize.width]);

@@ -1,0 +1,35 @@
+[2m04:38:23[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled rejection] [1mTypeError[22m: Importing a module script failed.
+[39m
+[2m04:38:24[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mTypeError: Importing a module script failed.
+
+The above error occurred in one of your React components.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, RenderErrorBoundary.
+
+[2m04:38:24[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mReact Router caught the following error during render TypeError: Importing a module script failed.
+[2m04:39:33[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mA tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RemixErrorBoundary location={{pathname:"/", ...}}>
+      <RouterProvider2 router={{basename:"/", ...}} useTransitions={undefined} onError={undefined}>
+        <RouterProvider flushSync={function} router={{basename:"/", ...}} useTransitions={undefined} onError={undefined}>
+          <Router basename="/" location={{pathname:"/", ...}} navigationType="POP" navigator={{...}} ...>
+            <DataRoutes2 routes={[...]} manifest={{...}} future={{...}} state={{...}} isStatic={false} ...>
+              <RenderErrorBoundary location={{pathname:"/", ...}} revalidation="idle" component={<Layout>} ...>
+                <RenderedRoute match={{params:{}, ...}} routeContext={{outlet:null, ...}}>
+                  <Layout>
+                    <html
+                      lang="zh-CN"
+-                     style={{-webkit-touch-callout:"none"}}
+                    >
+

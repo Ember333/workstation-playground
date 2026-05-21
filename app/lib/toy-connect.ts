@@ -29,7 +29,7 @@ export const TOY_CONFIG_URL = `/${TOY_CONFIG_FILE_NAME}`;
 export const TOY_IMAGE_BASE_PATH = "/tinified";
 
 const MIN_TOY_POINTS = 4;
-const PREFERRED_IMAGES = ["image1.png", "image1", "image8.png", "image8"];
+const PREFERRED_IMAGES = ["image8.png", "image8", "image1.png", "image1"];
 
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
