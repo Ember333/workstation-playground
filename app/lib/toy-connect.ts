@@ -11,7 +11,7 @@ export type ToyConfig = {
   points?: Point[];
 };
 
-export type DemoToy = {
+export type Toy = {
   id: string;
   name: string;
   description: string;
@@ -26,14 +26,14 @@ export type ImageSize = {
 
 export const TOY_CONFIG_URL = "/toy-configs.json";
 
-const MIN_DEMO_POINTS = 4;
+const MIN_TOY_POINTS = 4;
 const PREFERRED_IMAGES = new Set(["image14.png", "image15.png", "image14", "image15"]);
 
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
 }
 
-export function normalizeToy(toy: ToyConfig): DemoToy | null {
+export function normalizeToy(toy: ToyConfig): Toy | null {
   const image = toy.image?.replace(/^\/?pics\//, "");
 
   if (!image) {
@@ -54,8 +54,8 @@ export function normalizeToy(toy: ToyConfig): DemoToy | null {
   };
 }
 
-export function chooseDemoToy(toys: DemoToy[]) {
-  const usableToys = toys.filter((toy) => toy.points.length >= MIN_DEMO_POINTS);
+export function chooseToy(toys: Toy[]) {
+  const usableToys = toys.filter((toy) => toy.points.length >= MIN_TOY_POINTS);
 
   return (
     usableToys.find((toy) => PREFERRED_IMAGES.has(toy.image) || PREFERRED_IMAGES.has(toy.id)) ??
@@ -64,18 +64,18 @@ export function chooseDemoToy(toys: DemoToy[]) {
   );
 }
 
-export function getContainedImageSize(size: ImageSize | null) {
+export function getContainedImageSize(size: ImageSize | null, maxExtent = 2) {
   if (!size || size.width <= 0 || size.height <= 0) {
-    return { width: 2, height: 2 };
+    return { width: maxExtent, height: maxExtent };
   }
 
   const aspect = size.width / size.height;
 
   if (aspect >= 1) {
-    return { width: 2, height: 2 / aspect };
+    return { width: maxExtent, height: maxExtent / aspect };
   }
 
-  return { width: 2 * aspect, height: 2 };
+  return { width: maxExtent * aspect, height: maxExtent };
 }
 
 export function getScenePoint(point: Point, imagePlane: ImageSize) {

@@ -1,10 +1,10 @@
-type HomeDemoMessageProps = {
+type ToyConnectMessageProps = {
   loadState: "loading" | "ready" | "empty" | "error";
 };
 
-export function HomeDemoMessage({ loadState }: HomeDemoMessageProps) {
+export function ToyConnectMessage({ loadState }: ToyConnectMessageProps) {
   return (
-    <p className="home-demo__message">
+    <p className="toy-connect__message">
       {loadState === "loading"
         ? "Loading toy..."
         : loadState === "empty"

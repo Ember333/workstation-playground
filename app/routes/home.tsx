@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
 import { ToyConnectCanvas } from "~/component/canvas/ToyConnectCanvas";
-import { HomeDemoInfo } from "~/component/ui/HomeDemoInfo";
-import { HomeDemoMessage } from "~/component/ui/HomeDemoMessage";
-import type { DemoToy, ToyConfig } from "~/lib/toy-demo";
-import { chooseDemoToy, normalizeToy, TOY_CONFIG_URL } from "~/lib/toy-demo";
+import { ToyConnectMessage } from "~/component/ui/ToyConnectMessage";
+import type { Toy, ToyConfig } from "~/lib/toy-connect";
+import { chooseToy, normalizeToy, TOY_CONFIG_URL } from "~/lib/toy-connect";
 import type { Route } from "./+types/home";
 
 export function meta({}: Route.MetaArgs) {
-  return [{ title: "Toy Connect Demo" }];
+  return [{ title: "工位游乐场" }];
 }
 
 export default function Home() {
-  const [toy, setToy] = useState<DemoToy | null>(null);
+  const [toy, setToy] = useState<Toy | null>(null);
   const [loadState, setLoadState] = useState<"loading" | "ready" | "empty" | "error">("loading");
   const [nextIndex, setNextIndex] = useState(0);
   const [errorIndex, setErrorIndex] = useState<number | null>(null);
-  const completed = Boolean(toy && nextIndex >= toy.points.length);
+  const completed = Boolean(toy && nextIndex > toy.points.length);
 
   useEffect(() => {
     let cancelled = false;
@@ -30,9 +29,9 @@ export default function Home() {
 
         const value = (await response.json()) as unknown;
         const toys = Array.isArray(value)
-          ? value.map((item) => normalizeToy(item as ToyConfig)).filter((item): item is DemoToy => Boolean(item))
+          ? value.map((item) => normalizeToy(item as ToyConfig)).filter((item): item is Toy => Boolean(item))
           : [];
-        const selectedToy = chooseDemoToy(toys);
+        const selectedToy = chooseToy(toys);
 
         if (cancelled) {
           return;
@@ -55,23 +54,46 @@ export default function Home() {
   }, []);
 
   function handlePointClick(index: number) {
-    if (!toy || completed) {
+    if (!toy) {
       return;
     }
 
-    if (index !== nextIndex) {
-      setErrorIndex(index);
-      window.setTimeout(() => setErrorIndex(null), 180);
-      return;
-    }
+    setNextIndex((currentNextIndex) => {
+      const pointCount = toy.points.length;
 
-    setErrorIndex(null);
-    setNextIndex(index + 1);
+      if (currentNextIndex > pointCount) {
+        return currentNextIndex;
+      }
+
+      if (currentNextIndex === pointCount) {
+        if (index !== 0) {
+          setErrorIndex(index);
+          window.setTimeout(() => setErrorIndex(null), 180);
+          return currentNextIndex;
+        }
+
+        setErrorIndex(null);
+        return currentNextIndex + 1;
+      }
+
+      if (index < currentNextIndex) {
+        return currentNextIndex;
+      }
+
+      if (index !== currentNextIndex) {
+        setErrorIndex(index);
+        window.setTimeout(() => setErrorIndex(null), 180);
+        return currentNextIndex;
+      }
+
+      setErrorIndex(null);
+      return currentNextIndex + 1;
+    });
   }
 
   return (
-    <main className="home-demo">
-      <section className="home-demo__stage" aria-label="Toy connection demo">
+    <main className="toy-connect">
+      <section className="toy-connect__stage" aria-label="Toy connection">
         {toy && loadState === "ready" ? (
           <ToyConnectCanvas
             completed={completed}
@@ -81,11 +103,9 @@ export default function Home() {
             toy={toy}
           />
         ) : (
-          <HomeDemoMessage loadState={loadState} />
+          <ToyConnectMessage loadState={loadState} />
         )}
       </section>
-
-      <HomeDemoInfo completed={completed} nextIndex={nextIndex} toy={toy} />
     </main>
   );
 }

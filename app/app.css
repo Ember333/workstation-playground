@@ -1,7 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800&family=Poppins:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
+  --font-sans: "Poppins", "Noto Sans SC", "Noto Sans", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --color-ink: #15212b;
   --color-muted: #64717d;
@@ -13,14 +14,16 @@
 html,
 body {
   @apply bg-slate-100 text-slate-950;
+  width: 100%;
+  height: 100%;
 }
 
 body {
   min-width: 320px;
   margin: 0;
   font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+    "Poppins", "Noto Sans SC", "Noto Sans", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 ::selection {
@@ -55,81 +58,99 @@ button:disabled {
   display: block;
 }
 
-.home-demo {
-  min-height: 100svh;
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
+.toy-connect {
+  width: 100vw;
+  height: 100svh;
+  overflow: hidden;
   background: #ffffff;
   color: #050505;
 }
 
-.home-demo__stage {
-  min-height: 0;
-  display: grid;
-  place-items: center;
-  padding: 16px 16px 8px;
+.toy-connect__stage {
+  width: 100%;
+  height: 100%;
 }
 
-.home-demo__canvas {
-  width: min(100%, 520px) !important;
-  height: min(calc(100vw - 32px), 520px) !important;
-  max-height: calc(100svh - 172px);
+.toy-connect__canvas {
+  width: 100vw !important;
+  height: 100svh !important;
   display: block;
   touch-action: none;
 }
 
-.home-demo__message {
+.toy-connect__message {
   margin: 0;
   color: #050505;
+  font-family: "Poppins", "Noto Sans SC", "Noto Sans", ui-sans-serif, system-ui, sans-serif;
   font-size: 15px;
   line-height: 1.45;
   text-align: center;
 }
 
-.home-demo__info {
-  min-height: 132px;
-  display: grid;
-  align-content: start;
-  gap: 8px;
-  padding: 18px 22px 28px;
-  background: #ffffff;
+.toy-connect__image-question {
+  color: #050505;
+  font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", "Segoe UI Symbol", sans-serif;
+  font-size: clamp(96px, 22vw, 240px);
+  font-weight: 400;
+  line-height: 1;
+  user-select: none;
 }
 
-.home-demo__info h1,
-.home-demo__info p {
+.toy-connect__point-number {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: radial-gradient(circle, #ffffff 0 9px, transparent 9.5px);
+  color: #050505;
+  font-family: "Segoe UI Symbol", "Noto Sans Symbols 2", "Poppins", "Noto Sans SC", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  user-select: none;
+}
+
+.toy-connect__point-number.is-connected {
+  background: radial-gradient(circle, #ffffff 0 10px, transparent 10.5px);
+  font-size: 20px;
+}
+
+.toy-connect__point-number.is-errored {
+  color: #dc2626;
+}
+
+.toy-connect__scene-info {
+  width: min(240px, 62vw);
+  color: #050505;
+  font-family: "Poppins", "Noto Sans SC", "Noto Sans", ui-sans-serif, system-ui, sans-serif;
+  text-align: center;
+  text-shadow:
+    0 1px 0 #ffffff,
+    1px 0 0 #ffffff,
+    0 -1px 0 #ffffff,
+    -1px 0 0 #ffffff;
+}
+
+.toy-connect__scene-info h1,
+.toy-connect__scene-info p {
   margin: 0;
   letter-spacing: 0;
 }
 
-.home-demo__info h1 {
-  color: #050505;
-  font-size: 24px;
+.toy-connect__scene-info h1 {
+  font-size: 22px;
   line-height: 1.12;
   font-weight: 760;
 }
 
-.home-demo__info p {
-  max-width: 38rem;
-  color: #050505;
-  font-size: 15px;
-  line-height: 1.55;
-}
-
-@media (min-width: 720px) {
-  .home-demo__stage {
-    padding-top: 28px;
-  }
-
-  .home-demo__canvas {
-    width: min(72vh, 620px) !important;
-    height: min(72vh, 620px) !important;
-    max-height: calc(100svh - 158px);
-  }
-
-  .home-demo__info {
-    min-height: 118px;
-    padding-inline: max(32px, calc((100vw - 620px) / 2));
-  }
+.toy-connect__scene-info p {
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.35;
 }
 
 .toy-editor {
@@ -403,9 +424,9 @@ button:disabled {
 
 .toy-boundary-line {
   fill: none;
-  stroke: rgba(15, 23, 42, 0.82);
+  stroke: rgba(15, 23, 42, 0.68);
   stroke-linejoin: round;
-  stroke-width: 2;
+  stroke-width: 1.25;
   vector-effect: non-scaling-stroke;
 }
 
@@ -416,6 +437,18 @@ button:disabled {
   vector-effect: non-scaling-stroke;
 }
 
+.toy-point .toy-point__hit-area {
+  fill: transparent;
+  pointer-events: all;
+  stroke: none;
+}
+
+.toy-point .toy-point__label-shield {
+  fill: #ffffff;
+  pointer-events: none;
+  stroke: none;
+}
+
 .toy-point circle.is-selected {
   fill: #dc2626;
   stroke: #ffffff;
@@ -423,13 +456,19 @@ button:disabled {
 
 .toy-point text {
   fill: #020617;
-  paint-order: stroke;
   pointer-events: none;
-  stroke: #ffffff;
-  stroke-width: 4;
-  font-size: 13px;
-  font-weight: 800;
+  stroke: none;
+  font-family: "Segoe UI Symbol", "Noto Sans Symbols 2", "Poppins", "Noto Sans SC", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  alignment-baseline: middle;
+  dominant-baseline: middle;
+  text-anchor: middle;
   vector-effect: non-scaling-stroke;
+}
+
+.toy-point text.is-selected {
+  fill: #dc2626;
 }
 
 .toy-inspector {

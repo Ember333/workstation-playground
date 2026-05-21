@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { PointerEvent } from "react";
 import type { ChangeEvent } from "react";
+import { getPointLabel } from "~/lib/point-labels";
 import type { Route } from "./+types/config";
 
 const PICTURE_FILES = [
@@ -773,10 +774,10 @@ export default function Config() {
               {selectedToy.points.map((point, index) => (
                 <g className="toy-point" key={`point-${index}`}>
                   <circle
-                    className={index === selectedPointIndex ? "is-selected" : ""}
+                    className="toy-point__hit-area"
                     cx={point.x * canvasSize.width}
                     cy={point.y * canvasSize.height}
-                    r={index === selectedPointIndex ? 8 : 6}
+                    r={14}
                     onPointerDown={(event) => {
                       event.stopPropagation();
                       event.currentTarget.setPointerCapture(event.pointerId);
@@ -784,11 +785,18 @@ export default function Config() {
                       setDragPointIndex(index);
                     }}
                   />
+                  <circle
+                    className="toy-point__label-shield"
+                    cx={point.x * canvasSize.width}
+                    cy={point.y * canvasSize.height}
+                    r={9}
+                  />
                   <text
-                    x={point.x * canvasSize.width + 10}
-                    y={point.y * canvasSize.height - 10}
+                    className={index === selectedPointIndex ? "is-selected" : ""}
+                    x={point.x * canvasSize.width}
+                    y={point.y * canvasSize.height}
                   >
-                    {index + 1}
+                    {getPointLabel(index)}
                   </text>
                 </g>
               ))}
