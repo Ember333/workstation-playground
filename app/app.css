@@ -1,6 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800&family=Poppins:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Deskland Comic Sans";
+  src: url("/fonts/Comic%20Sans%20MS.ttf") format("truetype");
+  font-display: swap;
+}
+
 @theme {
   --font-sans: "Poppins", "Noto Sans SC", "Noto Sans", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -59,12 +65,51 @@ button:disabled {
 }
 
 .toy-connect {
+  position: relative;
   width: 100vw;
   height: 100vh;
   height: 100svh;
   overflow: hidden;
   background: #ffffff;
   color: #050505;
+}
+
+.deskland-nav {
+  position: fixed;
+  z-index: 20;
+  top: clamp(24px, 3.7vw, 58px);
+  left: clamp(24px, 5vw, 78px);
+  right: clamp(24px, 4.1vw, 58px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  pointer-events: none;
+}
+
+.deskland-nav__brand,
+.deskland-nav__close {
+  pointer-events: auto;
+}
+
+.deskland-nav__brand {
+  display: block;
+  width: clamp(198px, 53vw, 610px);
+}
+
+.deskland-nav__brand img,
+.deskland-nav__close img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.deskland-nav__close {
+  width: clamp(48px, 11.4vw, 130px);
+  flex: 0 0 auto;
+  border: 0;
+  background: transparent;
+  padding: 0;
 }
 
 .toy-connect__stage {
@@ -93,12 +138,18 @@ button:disabled {
 }
 
 .toy-connect__image-question {
-  color: #050505;
-  font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", "Segoe UI Symbol", sans-serif;
+  display: block;
+  color: #aeb4b8;
+  font-family: "Deskland Comic Sans", "Comic Sans MS", cursive;
   font-size: clamp(96px, 22vw, 240px);
   font-weight: 400;
   line-height: 1;
+  opacity: 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+  transform-origin: 50% 50%;
   user-select: none;
+  visibility: visible;
 }
 
 .toy-connect__point-number {
@@ -110,9 +161,10 @@ button:disabled {
   border-radius: 999px;
   color: #ffffff;
   font-family: "Poppins", "Noto Sans SC", ui-sans-serif, system-ui, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 1;
+  font-size: 12px;
+  font-weight: 300;
+  font-variant-numeric: tabular-nums;
+  line-height: 0;
   background: radial-gradient(circle, #050505 0 9px, transparent 9.5px);
   text-align: center;
   user-select: none;
@@ -593,6 +645,21 @@ button:disabled {
 }
 
 @media (max-width: 760px) {
+  .deskland-nav {
+    top: 22px;
+    left: 20px;
+    right: 18px;
+    gap: 18px;
+  }
+
+  .deskland-nav__brand {
+    width: min(58vw, 280px);
+  }
+
+  .deskland-nav__close {
+    width: 52px;
+  }
+
   .toy-editor {
     grid-template-columns: 1fr;
   }

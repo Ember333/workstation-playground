@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from "react";
+import { DesklandNav } from "~/component/ui/DesklandNav";
 import { ToyConnectMessage } from "~/component/ui/ToyConnectMessage";
 import type { Toy, ToyConfig } from "~/lib/toy-connect";
 import { chooseToy, normalizeToy, TOY_CONFIG_URL } from "~/lib/toy-connect";
@@ -98,6 +99,7 @@ export default function Home() {
 
   return (
     <main className="toy-connect">
+      <DesklandNav />
       <section className="toy-connect__stage" aria-label="Toy connection">
         {toy && loadState === "ready" ? (
           <Suspense fallback={<ToyConnectMessage loadState="loading" />}>

@@ -5,6 +5,7 @@ import { SRGBColorSpace } from "three";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import type { ThreeEvent } from "@react-three/fiber";
+import type { Group, MeshBasicMaterial } from "three";
 import type { ImageSize, Toy } from "~/lib/toy-connect";
 import { installThreeConsoleFilter } from "~/lib/three-console";
 import { getContainedImageSize, getScenePoint, getToyImageSrc } from "~/lib/toy-connect";
@@ -39,20 +40,25 @@ type ToyConnectCanvasProps = {
 };
 
 function PointMarker({
+  completeDelay,
   connected,
+  completed,
   errored,
   number,
   onPointerContact,
   onSelect,
   position,
 }: {
+  completeDelay: number;
   connected: boolean;
+  completed: boolean;
   errored: boolean;
   number: number;
   onPointerContact: (event: ThreeEvent<PointerEvent>) => void;
   onSelect: (event: ThreeEvent<PointerEvent>) => void;
   position: ScenePoint;
 }) {
+  const markerRef = useRef<HTMLSpanElement>(null);
   const labelClassName = [
     "toy-connect__point-number",
     connected ? "is-connected" : "",
@@ -60,6 +66,29 @@ function PointMarker({
   ]
     .filter(Boolean)
     .join(" ");
+
+  useGSAP(
+    () => {
+      if (!markerRef.current) {
+        return;
+      }
+
+      if (!completed) {
+        gsap.set(markerRef.current, { autoAlpha: 1, scale: 1 });
+        return;
+      }
+
+      gsap.to(markerRef.current, {
+        autoAlpha: 0,
+        scale: 0,
+        duration: 0.34,
+        delay: completeDelay,
+        ease: "back.in(1.5)",
+        overwrite: "auto",
+      });
+    },
+    { dependencies: [completed, completeDelay], revertOnUpdate: true },
+  );
 
   return (
     <group position={position}>
@@ -73,8 +102,110 @@ function PointMarker({
         style={{ pointerEvents: "none" }}
         zIndexRange={[50, 0]}
       >
-        <span className={labelClassName}>{number}</span>
+        <span className={labelClassName} ref={markerRef}>
+          {number}
+        </span>
       </Html>
+    </group>
+  );
+}
+
+function getCompletionDelay(index: number, count: number) {
+  if (count <= 1) {
+    return 0;
+  }
+
+  const shuffled = (index * 7) % count;
+
+  return shuffled * 0.035;
+}
+
+function getQuestionRotation(seed: string) {
+  const hash = Array.from(seed).reduce((value, char) => {
+    return (value * 31 + char.charCodeAt(0)) % 1009;
+  }, 17);
+
+  return (hash / 1008) * 40 - 20;
+}
+
+function getExplosionDirection(center: ScenePoint, index: number, count: number) {
+  const fallbackAngle = ((index * 137.5 + 23) % 360) * (Math.PI / 180);
+  const centerDistance = Math.hypot(center[0], center[1]);
+  const outwardX = centerDistance > 0.001 ? center[0] / centerDistance : Math.cos(fallbackAngle);
+  const outwardY = centerDistance > 0.001 ? center[1] / centerDistance : Math.sin(fallbackAngle);
+  const distance = count > 8 ? 0.28 : 0.22;
+  const drift = ((index % 3) - 1) * 0.035;
+
+  return {
+    x: outwardX * distance - outwardY * drift,
+    y: outwardY * distance + outwardX * drift,
+    rotation: (index % 2 === 0 ? 1 : -1) * (10 + (index % 5) * 3),
+  };
+}
+
+function ExplodingLineSegment({
+  index,
+  points,
+  total,
+}: {
+  index: number;
+  points: [ScenePoint, ScenePoint];
+  total: number;
+}) {
+  const groupRef = useRef<Group>(null);
+  const lineRef = useRef<any>(null);
+  const [[startX, startY, startZ], [endX, endY, endZ]] = points;
+  const center: ScenePoint = [(startX + endX) * 0.5, (startY + endY) * 0.5, CONNECTION_LINE_Z];
+  const localPoints: ScenePoint[] = [
+    [startX - center[0], startY - center[1], startZ],
+    [endX - center[0], endY - center[1], endZ],
+  ];
+  const direction = getExplosionDirection(center, index, total);
+
+  useGSAP(
+    () => {
+      const group = groupRef.current;
+      const material = lineRef.current?.material;
+
+      if (!group || !material) {
+        return;
+      }
+
+      gsap.set(group.position, { x: center[0], y: center[1], z: center[2] });
+      gsap.set(group.scale, { x: 1, y: 1, z: 1 });
+      gsap.set(group.rotation, { z: 0 });
+      gsap.set(material, { opacity: 0.82 });
+
+      gsap
+        .timeline({ defaults: { ease: "power3.out" } })
+        .to(
+          group.position,
+          {
+            x: center[0] + direction.x,
+            y: center[1] + direction.y,
+            duration: 0.92,
+          },
+          0,
+        )
+        .to(group.rotation, { z: (direction.rotation * Math.PI) / 180, duration: 0.92 }, 0)
+        .to(group.scale, { x: 1.24, y: 1.24, duration: 0.92 }, 0)
+        .to(material, { opacity: 0, duration: 0.72 }, 0.18);
+    },
+    { dependencies: [center[0], center[1], direction.x, direction.y, direction.rotation], revertOnUpdate: true },
+  );
+
+  return (
+    <group ref={groupRef}>
+      <Line
+        ref={lineRef}
+        points={localPoints}
+        color="#050505"
+        depthWrite={false}
+        lineWidth={1.4}
+        renderOrder={3}
+        transparent
+        opacity={0.82}
+      />
     </group>
   );
 }
@@ -86,17 +217,17 @@ function getLocalPointerPoint(event: ThreeEvent<PointerEvent>, z = POINTER_LINE_
 }
 
 function ToySceneInfo({
-  completed,
+  revealed,
   imagePlane,
   toy,
 }: {
-  completed: boolean;
+  revealed: boolean;
   imagePlane: SceneImagePlane;
   toy: Toy;
 }) {
   const infoRef = useRef<HTMLDivElement>(null);
-  const title = completed ? toy.name : " ";
-  const body = completed ? toy.description || toy.image : " ";
+  const title = revealed ? toy.name : " ";
+  const body = revealed ? toy.description || toy.image : " ";
   const position = [0, imagePlane.height * -0.5 - imagePlane.infoGap, 0.16] as [
     number,
     number,
@@ -111,22 +242,22 @@ function ToySceneInfo({
 
       const textTargets = infoRef.current.querySelectorAll("h1, p");
 
-      if (!completed) {
+      if (!revealed) {
         gsap.set(infoRef.current, { autoAlpha: 0 });
         return;
       }
 
       gsap
         .timeline({ defaults: { ease: "power3.out" } })
-        .fromTo(infoRef.current, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.36 })
+        .fromTo(infoRef.current, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.46 })
         .fromTo(
           textTargets,
           { autoAlpha: 0 },
           { autoAlpha: 1, duration: 0.34, stagger: 0.06 },
-          "-=0.22",
+          "-=0.28",
         );
     },
-    { dependencies: [completed, title, body], revertOnUpdate: true },
+    { dependencies: [revealed, title, body], revertOnUpdate: true },
   );
 
   return (
@@ -144,7 +275,48 @@ function ToySceneInfo({
   );
 }
 
-function CompletedImage({
+function ToyQuestionMark({
+  revealed,
+  rotation,
+}: {
+  revealed: boolean;
+  rotation: number;
+}) {
+  const questionRef = useRef<HTMLSpanElement>(null);
+
+  useGSAP(
+    () => {
+      if (!questionRef.current) {
+        return;
+      }
+
+      if (revealed) {
+        gsap.to(questionRef.current, {
+          autoAlpha: 0,
+          duration: 0.36,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+        return;
+      }
+
+      gsap.set(questionRef.current, {
+        autoAlpha: 1,
+        rotation,
+        scale: 1,
+      });
+    },
+    { dependencies: [revealed, rotation], revertOnUpdate: true },
+  );
+
+  return (
+    <span className="toy-connect__image-question" ref={questionRef}>
+      ?
+    </span>
+  );
+}
+
+function RevealedImage({
   imagePlane,
   onImageSize,
   src,
@@ -154,6 +326,8 @@ function CompletedImage({
   src: string;
 }) {
   const texture = useTexture(src);
+  const imageGroupRef = useRef<Group>(null);
+  const materialRef = useRef<MeshBasicMaterial>(null);
 
   if (texture.colorSpace !== SRGBColorSpace) {
     texture.colorSpace = SRGBColorSpace;
@@ -169,27 +343,56 @@ function CompletedImage({
     });
   }, [onImageSize, texture]);
 
+  useGSAP(
+    () => {
+      if (!imageGroupRef.current || !materialRef.current) {
+        return;
+      }
+
+      gsap
+        .timeline()
+        .fromTo(
+          imageGroupRef.current.scale,
+          { x: 0.7, y: 0.7, z: 1 },
+          { x: 1, y: 1, z: 1, duration: 0.72, ease: "elastic.out(1, 0.45)" },
+          0,
+        )
+        .fromTo(
+          materialRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.42, ease: "power2.out" },
+          0,
+        );
+    },
+    { dependencies: [src], revertOnUpdate: true },
+  );
+
   return (
-    <mesh position={[0, 0, 0.01]}>
-      <planeGeometry args={[imagePlane.width, imagePlane.height]} />
-      <meshBasicMaterial
-        depthWrite={false}
-        map={texture}
-        toneMapped={false}
-        transparent
-        opacity={1}
-      />
-    </mesh>
+    <group ref={imageGroupRef}>
+      <mesh position={[0, 0, 0.01]}>
+        <planeGeometry args={[imagePlane.width, imagePlane.height]} />
+        <meshBasicMaterial
+          ref={materialRef}
+          depthWrite={false}
+          map={texture}
+          toneMapped={false}
+          transparent
+          opacity={0}
+        />
+      </mesh>
+    </group>
   );
 }
 
 function ImagePlane({
-  completed,
+  questionRotation,
+  revealed,
   imagePlane,
   onImageSize,
   src,
 }: {
-  completed: boolean;
+  questionRotation: number;
+  revealed: boolean;
   imagePlane: SceneImagePlane;
   onImageSize: (size: ImageSize) => void;
   src: string;
@@ -216,20 +419,19 @@ function ImagePlane({
         <planeGeometry args={[imagePlane.frameSize, imagePlane.frameSize]} />
         <meshBasicMaterial color="#ffffff" depthWrite={false} transparent opacity={0} />
       </mesh>
-      {completed ? (
+      {revealed && (
         <Suspense fallback={null}>
-          <CompletedImage imagePlane={imagePlane} onImageSize={onImageSize} src={src} />
+          <RevealedImage imagePlane={imagePlane} onImageSize={onImageSize} src={src} />
         </Suspense>
-      ) : (
-        <Html
-          center
-          position={[0, 0, 0.01]}
-          style={{ pointerEvents: "none" }}
-          zIndexRange={[10, 0]}
-        >
-          <span className="toy-connect__image-question">❔</span>
-        </Html>
       )}
+      <Html
+        center
+        position={[0, 0, 0.04]}
+        style={{ pointerEvents: "none" }}
+        zIndexRange={[120, 0]}
+      >
+        <ToyQuestionMark revealed={revealed} rotation={questionRotation} />
+      </Html>
     </group>
   );
 }
@@ -272,11 +474,18 @@ function ToyScene({ completed, errorIndex, nextIndex, onPointClick, toy }: ToyCo
     completed && clickedLinePoints.length > 1
       ? [...clickedLinePoints, clickedLinePoints[0]]
       : clickedLinePoints;
+  const explodingLineSegments =
+    completed && linePoints.length > 1
+      ? linePoints.slice(0, -1).map((point, index) => {
+          return [point, linePoints[index + 1]] as [ScenePoint, ScenePoint];
+        })
+      : [];
   const connectedIndex = nextIndex > 0 ? Math.min(nextIndex - 1, toy.points.length - 1) : null;
   const pointerLinePoints =
     !completed && pointerActive && pointerPoint && clickedLinePoints.length > 0
       ? [clickedLinePoints[clickedLinePoints.length - 1], pointerPoint]
       : [];
+  const revealed = completed;
 
   function updatePointerPoint(event: ThreeEvent<PointerEvent>) {
     setPointerPoint(getLocalPointerPoint(event));
@@ -329,12 +538,13 @@ function ToyScene({ completed, errorIndex, nextIndex, onPointClick, toy }: ToyCo
           <meshBasicMaterial depthWrite={false} transparent opacity={0} />
         </mesh>
         <ImagePlane
-          completed={completed}
           imagePlane={imagePlane}
           onImageSize={setSourceSize}
+          questionRotation={getQuestionRotation(`${toy.id}-${toy.image}`)}
+          revealed={revealed}
           src={getToyImageSrc(toy.image)}
         />
-        {linePoints.length > 1 && (
+        {!completed && linePoints.length > 1 && (
           <Line
             points={linePoints}
             color="#050505"
@@ -345,6 +555,14 @@ function ToyScene({ completed, errorIndex, nextIndex, onPointClick, toy }: ToyCo
             opacity={0.78}
           />
         )}
+        {explodingLineSegments.map((points, index) => (
+          <ExplodingLineSegment
+            index={index}
+            key={`${toy.image}-line-segment-${index}`}
+            points={points}
+            total={explodingLineSegments.length}
+          />
+        ))}
         {pointerLinePoints.length > 1 && (
           <Line
             points={pointerLinePoints}
@@ -358,7 +576,9 @@ function ToyScene({ completed, errorIndex, nextIndex, onPointClick, toy }: ToyCo
         )}
         {toy.points.map((point, index) => (
           <PointMarker
+            completeDelay={getCompletionDelay(index, toy.points.length)}
             connected={index === connectedIndex}
+            completed={completed}
             errored={index === errorIndex}
             key={`${toy.image}-point-${index}`}
             number={index + 1}
@@ -373,7 +593,7 @@ function ToyScene({ completed, errorIndex, nextIndex, onPointClick, toy }: ToyCo
             }}
           />
         ))}
-        <ToySceneInfo completed={completed} imagePlane={imagePlane} toy={toy} />
+        <ToySceneInfo revealed={revealed} imagePlane={imagePlane} toy={toy} />
       </group>
     </group>
   );
