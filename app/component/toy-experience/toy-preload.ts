@@ -12,6 +12,17 @@ const STATIC_IMAGE_ASSETS = [
   "/%E8%B5%84%E6%BA%90%206.svg",
 ];
 
+const FONT_LOAD_REQUESTS = [
+  { font: '400 86px "Deskland Comic Sans"', text: "0123456789/?" },
+  { font: '400 240px "Deskland Comic Sans"', text: "?" },
+  { font: '400 12px "Poppins"', text: "0123456789" },
+  { font: '500 38px "Poppins"', text: "0123456789" },
+  { font: '600 38px "Poppins"', text: "0123456789" },
+  { font: '400 12px "Noto Sans SC"', text: "0123456789" },
+  { font: '500 38px "Noto Sans SC"', text: "工位游乐场" },
+  { font: '700 38px "Noto Sans SC"', text: "工位游乐场" },
+];
+
 export async function preloadImage(src: string) {
   await new Promise<void>((resolve, reject) => {
     const image = new Image();
@@ -51,7 +62,10 @@ export async function preloadToyAssets(toys: Toy[]) {
   const imageSources = Array.from(new Set([...STATIC_IMAGE_ASSETS, ...toys.map((toy) => getToyImageSrc(toy.image))]));
   const fontReady =
     typeof document !== "undefined" && "fonts" in document
-      ? Promise.all([document.fonts.load('16px "Deskland Comic Sans"'), document.fonts.ready]).then(() => undefined)
+      ? Promise.all([
+          ...FONT_LOAD_REQUESTS.map(({ font, text }) => document.fonts.load(font, text)),
+          document.fonts.ready,
+        ]).then(() => undefined)
       : undefined;
 
   await Promise.all([...imageSources.map((src) => preloadImage(src)), fontReady].filter(Boolean));

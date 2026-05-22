@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { DesklandNav } from "~/component/ui/DesklandNav";
 import { ToyLoadingLogo } from "~/component/ui/ToyLoadingLogo";
 import type { Toy } from "~/lib/toy-connect";
@@ -42,8 +42,10 @@ export function ToyExperience({ onCanvasReady, toys }: ToyExperienceProps) {
   const [mode, setMode] = useState<ToyCanvasMode>("showcase");
   const [selectedToyId, setSelectedToyId] = useState<string | null>(null);
   const [completedToyIds, setCompletedToyIds] = useState(() => getStoredCompletedToyIds(toys));
+  const [completionBurstToyId, setCompletionBurstToyId] = useState<string | null>(null);
   const [nextIndexByToyId, setNextIndexByToyId] = useState<Record<string, number>>({});
   const [errorIndex, setErrorIndex] = useState<number | null>(null);
+  const completionBurstTimeoutRef = useRef<number | null>(null);
   const selectedToy = toys.find((toy) => toy.id === selectedToyId) ?? null;
   const nextIndex = selectedToy ? (completedToyIds.has(selectedToy.id) ? selectedToy.points.length + 1 : nextIndexByToyId[selectedToy.id] ?? 0) : 0;
   const completedCount = useMemo(
@@ -55,6 +57,14 @@ export function ToyExperience({ onCanvasReady, toys }: ToyExperienceProps) {
     persistCompletedToyIds(completedToyIds);
   }, [completedToyIds]);
 
+  useEffect(() => {
+    return () => {
+      if (completionBurstTimeoutRef.current !== null) {
+        window.clearTimeout(completionBurstTimeoutRef.current);
+      }
+    };
+  }, []);
+
   function markToyCompleted(toyId: string) {
     setCompletedToyIds((current) => {
       if (current.has(toyId)) {
@@ -63,6 +73,17 @@ export function ToyExperience({ onCanvasReady, toys }: ToyExperienceProps) {
 
       const next = new Set(current);
       next.add(toyId);
+      setCompletionBurstToyId(toyId);
+
+      if (completionBurstTimeoutRef.current !== null) {
+        window.clearTimeout(completionBurstTimeoutRef.current);
+      }
+
+      completionBurstTimeoutRef.current = window.setTimeout(() => {
+        setCompletionBurstToyId((currentToyId) => (currentToyId === toyId ? null : currentToyId));
+        completionBurstTimeoutRef.current = null;
+      }, 1200);
+
       return next;
     });
   }
@@ -132,12 +153,13 @@ export function ToyExperience({ onCanvasReady, toys }: ToyExperienceProps) {
         mode={mode}
         totalCount={toys.length}
         onClose={showSelect}
-        onHome={showShowcase}
+        onHome={mode === "showcase" ? showSelect : showShowcase}
       />
       <section className="toy-connect__stage" aria-label="Toy connection">
         <Suspense fallback={<ToyLoadingLogo />}>
           <LazyToyConnectCanvas
             completedToyIds={completedToyIds}
+            completionBurstToyId={completionBurstToyId}
             errorIndex={errorIndex}
             mode={mode}
             nextIndex={nextIndex}

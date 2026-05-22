@@ -12,8 +12,18 @@ type ToySceneInfoProps = {
 
 export function ToySceneInfo({ revealed, imagePlane, toy }: ToySceneInfoProps) {
   const infoRef = useRef<HTMLDivElement>(null);
-  const title = revealed ? toy.name : " ";
-  const body = revealed ? toy.description || toy.image : " ";
+  const hasRevealedRef = useRef(false);
+  const lastTitleRef = useRef(" ");
+  const lastBodyRef = useRef(" ");
+
+  if (revealed) {
+    lastTitleRef.current = toy.name;
+    lastBodyRef.current = toy.description || toy.image;
+  }
+
+  const hasContent = revealed || hasRevealedRef.current;
+  const title = hasContent ? lastTitleRef.current : " ";
+  const body = hasContent ? lastBodyRef.current : " ";
   const bodyLines = body
     .split(/[,，]/)
     .map((line) => line.trim())
@@ -30,24 +40,25 @@ export function ToySceneInfo({ revealed, imagePlane, toy }: ToySceneInfoProps) {
         return;
       }
 
-      const textTargets = infoRef.current.querySelectorAll("h1, p");
-
       if (!revealed) {
-        gsap.set(infoRef.current, { autoAlpha: 0 });
+        if (!hasRevealedRef.current) {
+          gsap.set(infoRef.current, { autoAlpha: 0 });
+          return;
+        }
+
+        gsap.to(infoRef.current, {
+          autoAlpha: 0,
+          duration: 0.44,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
         return;
       }
 
-      gsap
-        .timeline({ defaults: { ease: "power3.out" } })
-        .fromTo(infoRef.current, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.46 })
-        .fromTo(
-          textTargets,
-          { autoAlpha: 0 },
-          { autoAlpha: 1, duration: 0.34, stagger: 0.06 },
-          "-=0.28",
-        );
+      hasRevealedRef.current = true;
+      gsap.fromTo(infoRef.current, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.92, ease: "power2.out" });
     },
-    { dependencies: [revealed, title, body], revertOnUpdate: true },
+    { dependencies: [revealed, title, body] },
   );
 
   return (
@@ -60,7 +71,7 @@ export function ToySceneInfo({ revealed, imagePlane, toy }: ToySceneInfoProps) {
       <div className="toy-connect__scene-info" aria-live="polite" ref={infoRef}>
         <h1>
           <span>{title}</span>
-          {revealed && <img alt="" aria-hidden="true" src="/%E8%B5%84%E6%BA%90%206.svg" />}
+          {hasContent && <img alt="" aria-hidden="true" src="/%E8%B5%84%E6%BA%90%206.svg" />}
         </h1>
         <p>
           {bodyLines.map((line, index) => (

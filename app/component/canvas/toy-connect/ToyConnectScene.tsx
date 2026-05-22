@@ -24,6 +24,7 @@ import type { ImageSize } from "~/lib/toy-connect";
 export function ToyConnectScene({
   animateIn = false,
   completed,
+  completionBurstActive = false,
   detailsVisible = true,
   errorIndex,
   frameSize = PLAY_FRAME_SIZE,
@@ -32,6 +33,7 @@ export function ToyConnectScene({
   onPointClick,
   position = [0, 0, 0],
   scale = 1,
+  forceImageReveal = false,
   showConnectionLines = true,
   showImage = completed,
   showPlaceholder = true,
@@ -75,14 +77,14 @@ export function ToyConnectScene({
       : [];
   const completedLinePoints = scenePoints.map(([x, y]) => [x, y, CONNECTION_LINE_Z] as ScenePoint);
   const completedLineSegments =
-    completed && visible && showConnectionLines && completedLinePoints.length > 1
+    completed && completionBurstActive && visible && showConnectionLines && completedLinePoints.length > 1
       ? completedLinePoints.map((point, index) => {
           const nextPoint = completedLinePoints[(index + 1) % completedLinePoints.length];
 
           return [point, nextPoint] as [ScenePoint, ScenePoint];
         })
       : [];
-  const revealed = completed && showImage;
+  const revealed = showImage && (completed || forceImageReveal);
   const revealDetails = detailsVisible && visible;
 
   useGSAP(
@@ -174,6 +176,7 @@ export function ToyConnectScene({
           <ImagePlane
             imagePlane={imagePlane}
             onImageSize={setSourceSize}
+            preferHtmlImage={forceImageReveal}
             questionRotation={getQuestionRotation(`${toy.id}-${toy.image}`)}
             revealed={revealed}
             showPlaceholder={visible && showPlaceholder}
@@ -215,6 +218,7 @@ export function ToyConnectScene({
                 completeDelay={getCompletionDelay(index, toy.points.length)}
                 connected={index === connectedIndex}
                 completed={completed}
+                completionBurstActive={completionBurstActive}
                 errored={index === errorIndex}
                 key={`${toy.image}-point-${index}`}
                 number={index + 1}

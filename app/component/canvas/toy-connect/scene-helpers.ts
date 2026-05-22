@@ -34,7 +34,7 @@ export function getQuestionRotation(seed: string) {
     return (value * 31 + char.charCodeAt(0)) % 1009;
   }, 17);
 
-  return (hash / 1008) * 40 - 20;
+  return (hash / 1008) * 20 - 10;
 }
 
 export function getExplosionDirection(center: ScenePoint, index: number, count: number) {

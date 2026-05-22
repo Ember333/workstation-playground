@@ -36,7 +36,7 @@ export function ToyQuestionMark({ revealed, rotation }: ToyQuestionMarkProps) {
 
   return (
     <span className="toy-connect__image-question" ref={questionRef}>
-      ?
+      <span className="toy-connect__image-question-glyph">?</span>
     </span>
   );
 }

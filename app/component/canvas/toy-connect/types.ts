@@ -27,6 +27,7 @@ export type ViewportBounds = {
 
 export type ToyConnectCanvasProps = {
   completedToyIds: Set<string>;
+  completionBurstToyId: string | null;
   errorIndex: number | null;
   mode: ToyCanvasMode;
   nextIndex: number;
@@ -41,6 +42,7 @@ export type ToyConnectCanvasProps = {
 export type ToyConnectSceneProps = {
   animateIn?: boolean;
   completed: boolean;
+  completionBurstActive?: boolean;
   detailsVisible?: boolean;
   errorIndex: number | null;
   frameSize?: number;
@@ -49,6 +51,7 @@ export type ToyConnectSceneProps = {
   onPointClick: (index: number) => void;
   position?: ScenePoint;
   scale?: number;
+  forceImageReveal?: boolean;
   showConnectionLines?: boolean;
   showImage?: boolean;
   showPlaceholder?: boolean;

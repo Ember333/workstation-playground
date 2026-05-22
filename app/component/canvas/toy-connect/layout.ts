@@ -12,12 +12,13 @@ const SELECT_FRAME_VIEWPORT_RATIO = 1.05;
 const SELECT_CAMERA_PULLBACK_RATIO = 0.9;
 const SELECT_MIN_ZOOM = 48;
 
-const SHOWCASE_SAFE_TOP_RATIO = 0.08;
-const SHOWCASE_SAFE_BOTTOM_RATIO = 0.08;
-const SHOWCASE_SAFE_X_RATIO = 0.08;
-const SHOWCASE_MAX_TOY_SCALE = 0.44;
-const SHOWCASE_MIN_TOY_SCALE = 0.2;
-const SHOWCASE_CELL_FILL_RATIO = 0.78;
+const SHOWCASE_SAFE_TOP_RATIO = 0.18;
+const SHOWCASE_SAFE_BOTTOM_RATIO = 0.1;
+const SHOWCASE_SAFE_X_RATIO = 0.1;
+export const SHOWCASE_RING_RADIUS_RATIO = 0.42;
+const SHOWCASE_MAX_TOY_SCALE = 0.27;
+const SHOWCASE_MIN_TOY_SCALE = 0.18;
+const SHOWCASE_RING_FILL_RATIO = 0.36;
 const SELECT_SAFE_TOP_RATIO = 0.08;
 const SELECT_SAFE_BOTTOM_RATIO = 0.12;
 const SELECT_ROW_GAP = PLAY_FRAME_SIZE * 1.58;
@@ -48,24 +49,20 @@ export function getViewportForZoom(size: ViewportBounds, zoom: number) {
   };
 }
 
-function getShowcaseGrid(toyCount: number, viewport: ViewportBounds) {
+function getShowcaseRing(toyCount: number, viewport: ViewportBounds) {
   const safeWidth = Math.max(0.1, viewport.width * (1 - SHOWCASE_SAFE_X_RATIO * 2));
   const safeHeight = Math.max(0.1, viewport.height * (1 - SHOWCASE_SAFE_TOP_RATIO - SHOWCASE_SAFE_BOTTOM_RATIO));
-  const columns = Math.max(1, Math.ceil(Math.sqrt((toyCount * safeWidth) / safeHeight)));
-  const rows = Math.max(1, Math.ceil(toyCount / columns));
-  const cellWidth = safeWidth / columns;
-  const cellHeight = safeHeight / rows;
+  const radius = Math.min(safeWidth, safeHeight) * SHOWCASE_RING_RADIUS_RATIO;
+  const circumference = Math.PI * 2 * radius;
+  const arcSpacing = circumference / Math.max(1, toyCount);
   const scale = Math.min(
     SHOWCASE_MAX_TOY_SCALE,
-    Math.max(SHOWCASE_MIN_TOY_SCALE, (Math.min(cellWidth, cellHeight) * SHOWCASE_CELL_FILL_RATIO) / PLAY_FRAME_SIZE),
+    Math.max(SHOWCASE_MIN_TOY_SCALE, (arcSpacing * SHOWCASE_RING_FILL_RATIO) / PLAY_FRAME_SIZE),
   );
 
   return {
-    cellHeight,
-    cellWidth,
-    columns,
+    radius,
     scale,
-    topY: viewport.height * 0.5 - viewport.height * SHOWCASE_SAFE_TOP_RATIO,
   };
 }
 
@@ -75,29 +72,19 @@ export function getShowcasePosition(
   toyCount: number,
   viewport: ViewportBounds,
 ): ScenePoint {
-  const grid = getShowcaseGrid(toyCount, viewport);
-  const row = Math.floor(index / grid.columns);
-  const column = index % grid.columns;
-  const remainingInRow = toyCount - row * grid.columns;
-  const columnsInRow = Math.max(1, Math.min(grid.columns, remainingInRow));
-  const rowWidth = grid.cellWidth * columnsInRow;
-  const maxJitterX = Math.max(0, (grid.cellWidth - PLAY_FRAME_SIZE * grid.scale) * 0.28);
-  const maxJitterY = Math.max(0, (grid.cellHeight - PLAY_FRAME_SIZE * grid.scale) * 0.22);
-  const x =
-    rowWidth * -0.5 +
-    grid.cellWidth * (column + 0.5) +
-    (getSeedUnit(toy.id || toy.image, 1) - 0.5) * maxJitterX;
-  const y =
-    grid.topY -
-    grid.cellHeight * (row + 0.5) +
-    (getSeedUnit(toy.id || toy.image, 2) - 0.5) * maxJitterY;
+  const ring = getShowcaseRing(toyCount, viewport);
+  const angle = -Math.PI / 2 + (index / Math.max(1, toyCount)) * Math.PI * 2;
+  const radialJitter = (getSeedUnit(toy.id || toy.image, 1) - 0.5) * 0.12;
+  const tangentJitter = (getSeedUnit(toy.id || toy.image, 2) - 0.5) * 0.04;
+  const x = Math.cos(angle + tangentJitter) * (ring.radius + radialJitter);
+  const y = Math.sin(angle + tangentJitter) * (ring.radius + radialJitter);
   const z = (index % 7) * 0.01;
 
   return [x, y, z];
 }
 
 export function getShowcaseScale(toyCount: number, viewport: ViewportBounds) {
-  return getShowcaseGrid(toyCount, viewport).scale;
+  return getShowcaseRing(toyCount, viewport).scale;
 }
 
 export function getSelectPosition(index: number, scrollY: number, viewport: ViewportBounds): ScenePoint {

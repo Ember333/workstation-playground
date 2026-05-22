@@ -19,6 +19,7 @@ installThreeConsoleFilter();
 
 function ToyCanvasContent({
   completedToyIds,
+  completionBurstToyId,
   errorIndex,
   mode,
   nextIndex,
@@ -31,7 +32,10 @@ function ToyCanvasContent({
 }: ToyConnectCanvasProps) {
   const [selectScroll, setSelectScroll] = useState(0);
   const [selectDragging, setSelectDragging] = useState(false);
+  const [sceneInfoExitToyId, setSceneInfoExitToyId] = useState<string | null>(null);
   const [settledCameraKey, setSettledCameraKey] = useState<string | null>(null);
+  const previousModeRef = useRef<ToyConnectCanvasProps["mode"] | null>(null);
+  const previousSelectedToyIdRef = useRef<string | null>(null);
   const selectDraggingRef = useRef(false);
   const size = useThree((state) => state.size);
   const layoutMode = mode === "showcase" ? "showcase" : "select";
@@ -47,6 +51,9 @@ function ToyCanvasContent({
     setSettledCameraKey(null);
   }, []);
   const detailsVisible = mode === "play" && settledCameraKey === cameraKey;
+  const activeSceneInfoExitToyId =
+    sceneInfoExitToyId ??
+    (previousModeRef.current === "play" && mode !== "play" ? previousSelectedToyIdRef.current : null);
   const items = useMemo(
     () => getToyLayoutItems(toys, layoutMode, selectScroll, viewport),
     [layoutMode, selectScroll, toys, viewport],
@@ -55,6 +62,27 @@ function ToyCanvasContent({
   useEffect(() => {
     setSelectScroll((current) => clampSelectScroll(current, toys.length, viewport));
   }, [toys.length, viewport]);
+
+  useEffect(() => {
+    const previousMode = previousModeRef.current;
+    const previousSelectedToyId = previousSelectedToyIdRef.current;
+
+    previousModeRef.current = mode;
+    previousSelectedToyIdRef.current = selectedToyId;
+
+    if (previousMode === "play" && mode !== "play" && previousSelectedToyId) {
+      setSceneInfoExitToyId(previousSelectedToyId);
+      const timeout = window.setTimeout(() => {
+        setSceneInfoExitToyId((current) => (current === previousSelectedToyId ? null : current));
+      }, 620);
+
+      return () => window.clearTimeout(timeout);
+    }
+
+    if (mode === "play") {
+      setSceneInfoExitToyId(null);
+    }
+  }, [mode, selectedToyId]);
 
   return (
     <>
@@ -78,6 +106,7 @@ function ToyCanvasContent({
       />
       <ToyFieldScene
         completedToyIds={completedToyIds}
+        completionBurstToyId={completionBurstToyId}
         errorIndex={errorIndex}
         items={items}
         mode={mode}
@@ -87,6 +116,7 @@ function ToyCanvasContent({
         onToySelect={onToySelect}
         selectDraggingRef={selectDraggingRef}
         selectDragging={selectDragging}
+        sceneInfoExitToyId={activeSceneInfoExitToyId}
         selectedToyId={selectedToyId}
         detailsVisible={detailsVisible}
         viewport={viewport}

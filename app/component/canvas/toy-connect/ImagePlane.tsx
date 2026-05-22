@@ -2,16 +2,22 @@ import { Suspense, useEffect, useRef } from "react";
 import { Html, useTexture } from "@react-three/drei";
 import { SRGBColorSpace } from "three";
 import type { Group, MeshBasicMaterial } from "three";
+import type { CSSProperties } from "react";
 import type { ImageSize } from "~/lib/toy-connect";
 import { gsap, useGSAP } from "./animation";
 import { ToyQuestionMark } from "./ToyQuestionMark";
 import type { SceneImagePlane } from "./types";
+
+const QUESTION_MARK_MIN_SCALE = 0.18;
+const QUESTION_MARK_SCALE_RATIO = 0.1;
+const htmlOverlayStyle = { pointerEvents: "none" } satisfies CSSProperties;
 
 type ImagePlaneProps = {
   questionRotation: number;
   revealed: boolean;
   imagePlane: SceneImagePlane;
   onImageSize: (size: ImageSize) => void;
+  preferHtmlImage?: boolean;
   showPlaceholder?: boolean;
   src: string;
 };
@@ -87,6 +93,7 @@ export function ImagePlane({
   revealed,
   imagePlane,
   onImageSize,
+  preferHtmlImage = false,
   showPlaceholder = true,
   src,
 }: ImagePlaneProps) {
@@ -112,7 +119,29 @@ export function ImagePlane({
         <planeGeometry args={[imagePlane.frameSize, imagePlane.frameSize]} />
         <meshBasicMaterial color="#ffffff" depthWrite={false} transparent opacity={0} />
       </mesh>
-      {revealed && (
+      {revealed && preferHtmlImage && (
+        <Html
+          center
+          transform
+          position={[0, 0, 0.03]}
+          scale={1}
+          style={htmlOverlayStyle}
+          zIndexRange={[80, 0]}
+        >
+          <img
+            alt=""
+            aria-hidden="true"
+            src={src}
+            style={{
+              display: "block",
+              height: `${imagePlane.height * 100}px`,
+              objectFit: "contain",
+              width: `${imagePlane.width * 100}px`,
+            }}
+          />
+        </Html>
+      )}
+      {revealed && !preferHtmlImage && (
         <Suspense fallback={null}>
           <RevealedImage imagePlane={imagePlane} onImageSize={onImageSize} src={src} />
         </Suspense>
@@ -122,8 +151,8 @@ export function ImagePlane({
           center
           transform
           position={[0, 0, 0.04]}
-          scale={Math.max(0.14, imagePlane.frameSize * 0.08)}
-          style={{ pointerEvents: "none" }}
+          scale={Math.max(QUESTION_MARK_MIN_SCALE, imagePlane.frameSize * QUESTION_MARK_SCALE_RATIO)}
+          style={htmlOverlayStyle}
           zIndexRange={[120, 0]}
         >
           <ToyQuestionMark revealed={revealed} rotation={questionRotation} />

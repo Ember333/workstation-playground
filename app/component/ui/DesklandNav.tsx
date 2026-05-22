@@ -7,9 +7,18 @@ type DesklandNavProps = {
 };
 
 export function DesklandNav({ completedCount, mode, onClose, onHome, totalCount }: DesklandNavProps) {
+  const brandInteractive = mode !== "play";
+
   return (
     <nav className="deskland-nav" aria-label="DESKLAND">
-      <button className="deskland-nav__brand" type="button" aria-label="DESKLAND home" onClick={onHome}>
+      <button
+        className="deskland-nav__brand"
+        type="button"
+        aria-disabled={!brandInteractive}
+        aria-label="DESKLAND home"
+        tabIndex={brandInteractive ? 0 : -1}
+        onClick={brandInteractive ? onHome : undefined}
+      >
         <img src="/deskland-wordmark.svg" alt="DESKLAND" />
       </button>
       {mode === "play" ? (
