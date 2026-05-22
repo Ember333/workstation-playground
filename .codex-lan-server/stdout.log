@@ -246,3 +246,310 @@
 [2m06:26:57[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/PointMarker.tsx[22m
 [2m06:26:57[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/PointMarker.tsx[22m
 [2m06:26:57[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m06:50:51[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m06:50:51[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m06:50:51[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m06:51:13[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m06:51:13[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m06:51:13[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m07:34:29[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m07:34:29[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m07:34:29[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m07:34:29[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m07:34:29[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m07:34:29[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m07:38:11[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m07:38:11[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m07:38:11[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m07:38:11[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m07:38:11[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m07:38:11[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m07:38:11[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m07:38:11[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m07:38:11[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m07:38:21[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m07:38:21[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m07:38:21[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m07:41:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m07:41:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m07:41:07[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m07:41:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m07:41:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m07:41:07[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m07:44:57[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m07:44:57[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m07:44:57[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m07:44:57[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m07:44:57[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m07:44:57[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m07:45:09[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m07:45:09[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m07:45:09[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m07:47:33[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m07:47:33[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m07:47:33[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m07:50:09[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m07:50:09[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m07:50:09[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m07:51:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m07:51:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m07:51:07[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m07:52:32[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m07:52:32[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m07:52:32[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m07:59:21[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m07:59:21[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m07:59:21[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m07:59:30[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx[22m
+[2m07:59:30[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/app.css[22m
+[2m07:59:30[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m07:59:36[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyCameraRig.tsx[22m
+[2m07:59:36[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyCameraRig.tsx[22m
+[2m07:59:36[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m07:59:40[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m07:59:40[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m07:59:40[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:02:42[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:02:42[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:02:42[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:04:09[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:04:09[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:04:09[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:04:39[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:04:39[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:04:39[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:05:27[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:05:27[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:05:27[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:07:51[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyCameraRig.tsx[22m
+[2m08:07:51[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyCameraRig.tsx[22m
+[2m08:07:51[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:13:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx[22m
+[2m08:13:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/app.css[22m
+[2m08:13:35[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:13:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyCameraRig.tsx[22m
+[2m08:13:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyCameraRig.tsx[22m
+[2m08:13:35[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:13:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyFieldScene.tsx[22m
+[2m08:13:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyFieldScene.tsx[22m
+[2m08:13:35[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:13:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:13:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:13:35[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:13:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:13:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:13:35[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:13:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:13:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:13:35[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:13:51[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx[22m
+[2m08:13:51[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/app.css[22m
+[2m08:13:51[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:14:26[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:14:26[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:14:26[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:17:08[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx[22m
+[2m08:17:08[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/app.css[22m
+[2m08:17:08[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:17:08[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:17:08[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:17:08[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:19:48[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyCameraRig.tsx[22m
+[2m08:19:48[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyCameraRig.tsx[22m
+[2m08:19:48[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:19:48[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:19:48[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:19:48[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:20:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:20:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:20:07[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:22:18[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyCameraRig.tsx[22m
+[2m08:22:18[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyCameraRig.tsx[22m
+[2m08:22:18[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:24:23[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:24:23[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:24:23[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:25:13[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:25:13[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:25:13[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:26:04[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyConnectScene.tsx, /app/component/canvas/toy-connect/ExplodingLineSegment.tsx, /app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:26:04[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyConnectScene.tsx, /app/component/canvas/toy-connect/ExplodingLineSegment.tsx, /app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:26:04[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:26:04[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:26:04[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:26:04[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:26:26[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyConnectScene.tsx, /app/component/canvas/toy-connect/ExplodingLineSegment.tsx, /app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:26:26[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyConnectScene.tsx, /app/component/canvas/toy-connect/ExplodingLineSegment.tsx, /app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:26:26[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:26:26[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:26:26[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:26:26[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:26:26[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:26:26[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:26:26[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:28:09[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:28:09[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:28:09[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:29:34[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:29:34[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:29:34[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:30:22[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:30:22[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:30:22[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:32:52[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:32:52[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:32:52[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:32:52[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:32:52[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:32:52[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:32:52[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:32:52[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:32:52[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:33:04[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:33:04[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:33:04[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:33:04[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:33:40[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:33:40[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:33:40[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:33:40[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:33:40[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:33:40[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:33:40[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:34:33[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:34:33[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:34:33[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:35:36[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:35:36[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:35:36[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:20[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:37:20[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:37:20[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:20[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:37:20[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:37:20[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:20[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:37:20[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:37:20[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:37:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:37:35[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:37:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:37:35[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:37:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:37:35[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:44[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:37:44[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:37:44[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:45[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:37:45[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:37:45[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:49[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:37:49[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:37:49[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:49[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:49[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:49[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:49[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:50[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:50[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:50[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:50[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:50[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:37:50[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:37:50[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:50[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:37:50[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:37:50[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:50[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:37:50[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:37:50[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:37:50[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m08:38:05[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:38:05[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/ToyConnectCanvas.tsx, /app/component/canvas/toy-connect/ToySelectInput.tsx, /app/component/canvas/toy-connect/ToyCameraRig.tsx, /app/component/canvas/toy-connect/ToyDisplayItem.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:38:05[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:38:26[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:38:26[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToySceneInfo.tsx[22m
+[2m08:38:26[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:38:26[22m [36m[1m[react-router][22m[39m [32mConfig saved[39m
+[2m08:42:04[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:42:04[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:42:04[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:42:17[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:42:17[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:42:17[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:42:22[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:42:22[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:42:22[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:42:22[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:47:50[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ImagePlane.tsx[22m
+[2m08:47:50[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ImagePlane.tsx[22m
+[2m08:47:50[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:47:58[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:47:59[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:47:59[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:51:06[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:51:06[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:51:06[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:51:36[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:51:36[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:51:36[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:51:41[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ImagePlane.tsx[22m
+[2m08:51:41[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ImagePlane.tsx[22m
+[2m08:51:41[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:51:58[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:51:58[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyConnectScene.tsx[22m
+[2m08:51:58[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:52:05[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:52:05[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:52:05[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:54:22[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyFieldScene.tsx[22m
+[2m08:54:22[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyFieldScene.tsx[22m
+[2m08:54:22[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:56:01[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyConnectScene.tsx, /app/component/canvas/toy-connect/ExplodingLineSegment.tsx[22m
+[2m08:56:01[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyConnectScene.tsx, /app/component/canvas/toy-connect/ExplodingLineSegment.tsx[22m
+[2m08:56:01[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:58:15[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:58:15[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m08:58:15[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:58:19[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ImagePlane.tsx[22m
+[2m08:58:19[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ImagePlane.tsx[22m
+[2m08:58:19[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:59:31[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:59:31[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m08:59:31[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m08:59:36[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ImagePlane.tsx[22m
+[2m08:59:36[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ImagePlane.tsx[22m
+[2m08:59:36[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m09:00:11[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ImagePlane.tsx[22m
+[2m09:00:11[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ImagePlane.tsx[22m
+[2m09:00:11[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m09:01:03[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m09:01:03[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/PointMarker.tsx[22m
+[2m09:01:03[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m09:03:02[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m09:03:02[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m09:03:02[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m09:03:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m09:03:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m09:03:07[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m09:07:45[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/ui/ToyConnectMessage.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx, /app/component/toy-experience/ToyExperienceLoader.tsx[22m
+[2m09:07:45[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/ui/ToyConnectMessage.tsx, /app/component/canvas/toy-connect/ToyConnectScene.tsx, /app/component/toy-experience/ToyExperienceLoader.tsx, /app/app.css[22m
+[2m09:07:45[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m09:07:52[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/toy-experience/ToyExperience.tsx[22m
+[2m09:07:52[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/toy-experience/ToyExperience.tsx[22m
+[2m09:07:52[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m09:07:57[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyFieldScene.tsx[22m
+[2m09:07:57[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyFieldScene.tsx[22m
+[2m09:07:57[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m09:08:03[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m09:08:03[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m09:08:03[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m09:08:33[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m09:08:33[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m09:08:33[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m
+[2m09:10:31[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m09:10:31[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/app/app.css, /app/component/canvas/toy-connect/ToyDisplayItem.tsx[22m
+[2m09:10:31[22m [36m[1m[vite][22m[39m [34m[2m(ssr)[22m[39m [32mhmr update [39m[2m/app/app.css[22m

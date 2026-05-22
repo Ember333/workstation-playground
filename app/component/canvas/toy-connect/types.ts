@@ -41,6 +41,7 @@ export type ToyConnectCanvasProps = {
 export type ToyConnectSceneProps = {
   animateIn?: boolean;
   completed: boolean;
+  detailsVisible?: boolean;
   errorIndex: number | null;
   frameSize?: number;
   interactive: boolean;
@@ -49,7 +50,9 @@ export type ToyConnectSceneProps = {
   position?: ScenePoint;
   scale?: number;
   showConnectionLines?: boolean;
+  showImage?: boolean;
   showPlaceholder?: boolean;
+  showPoints?: boolean;
   showSceneInfo?: boolean;
   toy: Toy;
   visible?: boolean;

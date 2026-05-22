@@ -120,7 +120,9 @@ export function ImagePlane({
       {showPlaceholder && (
         <Html
           center
+          transform
           position={[0, 0, 0.04]}
+          scale={Math.max(0.14, imagePlane.frameSize * 0.08)}
           style={{ pointerEvents: "none" }}
           zIndexRange={[120, 0]}
         >

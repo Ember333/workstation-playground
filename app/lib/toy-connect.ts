@@ -12,6 +12,7 @@ export type ToyConfig = {
 };
 
 export type Toy = {
+  configId?: string;
   id: string;
   name: string;
   description: string;
@@ -43,7 +44,8 @@ export function normalizeToy(toy: ToyConfig): Toy | null {
   }
 
   return {
-    id: toy.id ?? image.replace(/\.[^.]+$/, ""),
+    configId: toy.id,
+    id: image.replace(/\.[^.]+$/, ""),
     name: toy.name || image.replace(/\.[^.]+$/, ""),
     description: toy.description ?? "",
     image,

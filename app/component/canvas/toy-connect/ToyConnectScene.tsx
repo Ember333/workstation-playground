@@ -11,6 +11,7 @@ import {
   SCENE_INFO_GAP_RATIO,
   SCENE_INFO_GROUP_LIFT_RATIO,
 } from "./constants";
+import { ExplodingLineSegment } from "./ExplodingLineSegment";
 import { ImagePlane } from "./ImagePlane";
 import { PLAY_FRAME_SIZE, SELECT_TOY_SCALE } from "./layout";
 import { PointMarker } from "./PointMarker";
@@ -23,6 +24,7 @@ import type { ImageSize } from "~/lib/toy-connect";
 export function ToyConnectScene({
   animateIn = false,
   completed,
+  detailsVisible = true,
   errorIndex,
   frameSize = PLAY_FRAME_SIZE,
   interactive,
@@ -31,7 +33,9 @@ export function ToyConnectScene({
   position = [0, 0, 0],
   scale = 1,
   showConnectionLines = true,
+  showImage = completed,
   showPlaceholder = true,
+  showPoints = true,
   showSceneInfo = true,
   toy,
   visible = true,
@@ -69,7 +73,17 @@ export function ToyConnectScene({
     shouldDrawConnectionLines && pointerActive && pointerPoint && clickedLinePoints.length > 0
       ? [clickedLinePoints[clickedLinePoints.length - 1], pointerPoint]
       : [];
-  const revealed = completed;
+  const completedLinePoints = scenePoints.map(([x, y]) => [x, y, CONNECTION_LINE_Z] as ScenePoint);
+  const completedLineSegments =
+    completed && visible && showConnectionLines && completedLinePoints.length > 1
+      ? completedLinePoints.map((point, index) => {
+          const nextPoint = completedLinePoints[(index + 1) % completedLinePoints.length];
+
+          return [point, nextPoint] as [ScenePoint, ScenePoint];
+        })
+      : [];
+  const revealed = completed && showImage;
+  const revealDetails = detailsVisible && visible;
 
   useGSAP(
     () => {
@@ -145,7 +159,7 @@ export function ToyConnectScene({
 
   return (
     <group ref={rootRef} position={position}>
-      <group position={[0, showSceneInfo ? imagePlane.groupLift : 0, 0]}>
+      <group>
         <group>
           <mesh
             onPointerCancel={handleStagePointerEnd}
@@ -187,27 +201,38 @@ export function ToyConnectScene({
               opacity={0.86}
             />
           )}
-          {toy.points.map((point, index) => (
-            <PointMarker
-              completeDelay={getCompletionDelay(index, toy.points.length)}
-              connected={index === connectedIndex}
-              completed={completed}
-              errored={index === errorIndex}
-              key={`${toy.image}-point-${index}`}
-              number={index + 1}
-              position={scenePoints[index]}
-              visible={visible}
-              onPointerContact={(event) => {
-                if (interactive && visible && pointerActiveRef.current) {
-                  handlePointContact(index, scenePoints[index], event);
-                }
-              }}
-              onSelect={(event) => {
-                handlePointContact(index, scenePoints[index], event);
-              }}
+          {completedLineSegments.map((segment, index) => (
+            <ExplodingLineSegment
+              index={index}
+              key={`${toy.image}-completed-line-${index}`}
+              points={segment}
+              total={completedLineSegments.length}
             />
           ))}
-          {showSceneInfo && <ToySceneInfo revealed={revealed} imagePlane={imagePlane} toy={toy} />}
+          {showPoints &&
+            toy.points.map((point, index) => (
+              <PointMarker
+                completeDelay={getCompletionDelay(index, toy.points.length)}
+                connected={index === connectedIndex}
+                completed={completed}
+                errored={index === errorIndex}
+                key={`${toy.image}-point-${index}`}
+                number={index + 1}
+                numberVisible={interactive && revealDetails}
+                position={scenePoints[index]}
+                showNumber={interactive}
+                visible={visible}
+                onPointerContact={(event) => {
+                  if (interactive && visible && pointerActiveRef.current) {
+                    handlePointContact(index, scenePoints[index], event);
+                  }
+                }}
+                onSelect={(event) => {
+                  handlePointContact(index, scenePoints[index], event);
+                }}
+              />
+            ))}
+          {showSceneInfo && <ToySceneInfo revealed={revealed && revealDetails} imagePlane={imagePlane} toy={toy} />}
         </group>
       </group>
     </group>

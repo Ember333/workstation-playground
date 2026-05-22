@@ -3,18 +3,24 @@ import type { FieldVariant, ScenePoint, ToyLayoutItem, ViewportBounds } from "./
 
 export const FIELD_CAMERA_ZOOM = 100;
 export const PLAY_FRAME_SIZE = 2.7;
-export const SELECT_TOY_SCALE = 0.5;
+export const SELECT_TOY_SCALE = 1;
+const PHONE_PLAY_VIEWPORT_MAX_WIDTH = 720;
+const PHONE_PLAY_FRAME_VIEWPORT_RATIO = 1.05;
+const PLAY_CAMERA_CONTENT_LIFT_PX = 38;
+const SELECT_COLUMN_COUNT = 2;
+const SELECT_FRAME_VIEWPORT_RATIO = 1.05;
+const SELECT_CAMERA_PULLBACK_RATIO = 0.9;
+const SELECT_MIN_ZOOM = 48;
 
-const SHOWCASE_SAFE_TOP_RATIO = 0.26;
+const SHOWCASE_SAFE_TOP_RATIO = 0.08;
 const SHOWCASE_SAFE_BOTTOM_RATIO = 0.08;
 const SHOWCASE_SAFE_X_RATIO = 0.08;
 const SHOWCASE_MAX_TOY_SCALE = 0.44;
 const SHOWCASE_MIN_TOY_SCALE = 0.2;
 const SHOWCASE_CELL_FILL_RATIO = 0.78;
-const SELECT_SAFE_TOP_RATIO = 0.18;
+const SELECT_SAFE_TOP_RATIO = 0.08;
 const SELECT_SAFE_BOTTOM_RATIO = 0.12;
-const SELECT_COLUMN_GAP_RATIO = 0.32;
-const SELECT_ROW_GAP = PLAY_FRAME_SIZE * SELECT_TOY_SCALE * 1.18;
+const SELECT_ROW_GAP = PLAY_FRAME_SIZE * 1.58;
 
 function getSeedValue(seed: string) {
   return Array.from(seed).reduce((value, char) => {
@@ -32,6 +38,13 @@ export function getFieldViewport(size: ViewportBounds) {
   return {
     width: size.width / FIELD_CAMERA_ZOOM,
     height: size.height / FIELD_CAMERA_ZOOM,
+  };
+}
+
+export function getViewportForZoom(size: ViewportBounds, zoom: number) {
+  return {
+    width: size.width / zoom,
+    height: size.height / zoom,
   };
 }
 
@@ -90,9 +103,8 @@ export function getShowcaseScale(toyCount: number, viewport: ViewportBounds) {
 export function getSelectPosition(index: number, scrollY: number, viewport: ViewportBounds): ScenePoint {
   const column = index % 2;
   const row = Math.floor(index / 2);
-  const columnGap = Math.min(PLAY_FRAME_SIZE * SELECT_TOY_SCALE * 1.35, viewport.width * SELECT_COLUMN_GAP_RATIO);
-  const x = column === 0 ? columnGap * -0.5 : columnGap * 0.5;
-  const topY = viewport.height * 0.5 - viewport.height * SELECT_SAFE_TOP_RATIO - PLAY_FRAME_SIZE * SELECT_TOY_SCALE * 0.5;
+  const x = (column - 0.5) * PLAY_FRAME_SIZE;
+  const topY = viewport.height * 0.5 - viewport.height * SELECT_SAFE_TOP_RATIO - PLAY_FRAME_SIZE * 0.5;
   const y = topY - row * SELECT_ROW_GAP + scrollY;
 
   return [x, y, 0];
@@ -119,7 +131,7 @@ export function getToyLayoutItems(
 
 export function getSelectScrollMax(toyCount: number, viewport: ViewportBounds) {
   const rowCount = Math.ceil(toyCount / 2);
-  const contentHeight = rowCount > 0 ? PLAY_FRAME_SIZE * SELECT_TOY_SCALE + (rowCount - 1) * SELECT_ROW_GAP : 0;
+  const contentHeight = rowCount > 0 ? PLAY_FRAME_SIZE + (rowCount - 1) * SELECT_ROW_GAP : 0;
   const visibleHeight = viewport.height * (1 - SELECT_SAFE_TOP_RATIO - SELECT_SAFE_BOTTOM_RATIO);
 
   return Math.max(0, contentHeight - visibleHeight);
@@ -130,12 +142,23 @@ export function clampSelectScroll(value: number, toyCount: number, viewport: Vie
 }
 
 export function getPlayZoom(size: ViewportBounds) {
-  const widthZoom = size.width / (PLAY_FRAME_SIZE * 1.08);
+  const phoneSized = size.width <= PHONE_PLAY_VIEWPORT_MAX_WIDTH;
+  const widthRatio = phoneSized ? PHONE_PLAY_FRAME_VIEWPORT_RATIO : 1.08;
+  const widthZoom = size.width / (PLAY_FRAME_SIZE * widthRatio);
   const heightZoom = size.height / (PLAY_FRAME_SIZE * 1.72);
+  const fittedZoom = Math.min(widthZoom, heightZoom);
 
-  return Math.max(108, Math.min(widthZoom, heightZoom) * 0.9);
+  return Math.max(108, phoneSized ? fittedZoom : fittedZoom * 0.9);
 }
 
 export function getPlayCameraYOffset(size: ViewportBounds, zoom: number) {
-  return (size.height / zoom) * 0.14;
+  return -PLAY_CAMERA_CONTENT_LIFT_PX / zoom;
+}
+
+export function getSelectZoom(size: ViewportBounds) {
+  return Math.max(
+    SELECT_MIN_ZOOM,
+    (size.width / (PLAY_FRAME_SIZE * SELECT_COLUMN_COUNT * SELECT_FRAME_VIEWPORT_RATIO)) *
+      SELECT_CAMERA_PULLBACK_RATIO,
+  );
 }

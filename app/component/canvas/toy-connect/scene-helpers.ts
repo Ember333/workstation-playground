@@ -7,7 +7,24 @@ export function getCompletionDelay(index: number, count: number) {
     return 0;
   }
 
-  const shuffled = (index * 7) % count;
+  const candidateSteps = [11, 9, 7, 5, 3];
+  const step =
+    candidateSteps.find((candidate) => {
+      if (candidate >= count) {
+        return false;
+      }
+
+      let a = candidate;
+      let b = count;
+      while (b !== 0) {
+        const t = a % b;
+        a = b;
+        b = t;
+      }
+
+      return a === 1;
+    }) ?? 1;
+  const shuffled = (index * step + 3) % count;
 
   return shuffled * 0.035;
 }

@@ -19,11 +19,12 @@ function getStoredCompletedToyIds(toys: Toy[]) {
 
   try {
     const parsed = JSON.parse(window.localStorage.getItem(COMPLETED_STORAGE_KEY) ?? "[]") as unknown;
-    const toyIds = new Set(toys.map((toy) => toy.id));
+    const completedAliases = new Set(Array.isArray(parsed) ? parsed.filter((item): item is string => typeof item === "string") : []);
+    const completedToyIds = toys
+      .filter((toy) => [toy.id, toy.image, toy.configId].some((alias) => alias && completedAliases.has(alias)))
+      .map((toy) => toy.id);
 
-    return new Set(
-      Array.isArray(parsed) ? parsed.filter((item): item is string => typeof item === "string" && toyIds.has(item)) : [],
-    );
+    return new Set(completedToyIds);
   } catch {
     return new Set<string>();
   }

@@ -5,6 +5,7 @@ import type { ToyCanvasMode, ToyLayoutItem, ViewportBounds } from "./types";
 
 type ToyFieldSceneProps = {
   completedToyIds: Set<string>;
+  detailsVisible: boolean;
   errorIndex: number | null;
   items: ToyLayoutItem[];
   mode: ToyCanvasMode;
@@ -20,6 +21,7 @@ type ToyFieldSceneProps = {
 
 export function ToyFieldScene({
   completedToyIds,
+  detailsVisible,
   errorIndex,
   items,
   mode,
@@ -46,6 +48,7 @@ export function ToyFieldScene({
       {items.map((item) => (
         <ToyDisplayItem
           completed={completedToyIds.has(item.toy.id)}
+          detailsVisible={detailsVisible}
           errorIndex={errorIndex}
           interactive={mode !== "play"}
           item={item}

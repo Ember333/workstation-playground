@@ -5,15 +5,19 @@ import { gsap, useGSAP } from "./animation";
 import { POINT_CONTACT_RADIUS } from "./constants";
 import type { ScenePoint } from "./types";
 
+const POINT_NUMBER_WORLD_SCALE = 0.227;
+
 type PointMarkerProps = {
   completeDelay: number;
   connected: boolean;
   completed: boolean;
   errored: boolean;
   number: number;
+  numberVisible?: boolean;
   onPointerContact: (event: ThreeEvent<PointerEvent>) => void;
   onSelect: (event: ThreeEvent<PointerEvent>) => void;
   position: ScenePoint;
+  showNumber?: boolean;
   visible?: boolean;
 };
 
@@ -23,15 +27,18 @@ export function PointMarker({
   completed,
   errored,
   number,
+  numberVisible = true,
   onPointerContact,
   onSelect,
   position,
+  showNumber = false,
   visible = true,
 }: PointMarkerProps) {
   const markerRef = useRef<HTMLSpanElement>(null);
+  const numberTextRef = useRef<HTMLSpanElement>(null);
   const completedRef = useRef(completed);
   const visibleRef = useRef(visible);
-  const labelClassName = [
+  const numberClassName = [
     "toy-connect__point-number",
     connected && !completed ? "is-connected" : "",
     errored ? "is-errored" : "",
@@ -59,6 +66,7 @@ export function PointMarker({
 
       if (!completed) {
         completedRef.current = false;
+
         if (!visibleRef.current) {
           visibleRef.current = true;
           gsap.to(markerRef.current, {
@@ -93,6 +101,34 @@ export function PointMarker({
     { dependencies: [completed, completeDelay, visible] },
   );
 
+  useGSAP(
+    () => {
+      if (!numberTextRef.current) {
+        return;
+      }
+
+      const textVisible = showNumber && numberVisible;
+
+      if (!textVisible) {
+        gsap.set(numberTextRef.current, {
+          autoAlpha: 0,
+          scale: 0.96,
+          overwrite: "auto",
+        });
+        return;
+      }
+
+      gsap.to(numberTextRef.current, {
+        autoAlpha: 1,
+        scale: 1,
+        duration: 0.72,
+        ease: "power1.out",
+        overwrite: "auto",
+      });
+    },
+    { dependencies: [numberVisible, showNumber] },
+  );
+
   return (
     <group position={position}>
       <mesh onPointerDown={onSelect} onPointerEnter={onPointerContact}>
@@ -101,12 +137,17 @@ export function PointMarker({
       </mesh>
       <Html
         center
-        position={[0, 0, 0]}
+        pointerEvents="none"
+        transform
+        position={[0, 0, 0.002]}
+        scale={POINT_NUMBER_WORLD_SCALE}
         style={{ pointerEvents: "none" }}
         zIndexRange={[50, 0]}
       >
-        <span className={labelClassName} ref={markerRef}>
-          {number}
+        <span className={numberClassName} ref={markerRef}>
+          <span className="toy-connect__point-number-text" ref={numberTextRef}>
+            {showNumber ? number : ""}
+          </span>
         </span>
       </Html>
     </group>

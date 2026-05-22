@@ -218,6 +218,11 @@ button:disabled {
   background: radial-gradient(circle, #dc2626 0 9px, transparent 9.5px);
 }
 
+.toy-connect__point-number-text {
+  display: block;
+  line-height: 1;
+}
+
 .toy-connect__field-number {
   width: 28px;
   height: 28px;

@@ -9,6 +9,7 @@ import type { FieldVariant, ScenePoint, ToyCanvasMode, ToyLayoutItem } from "./t
 
 type ToyDisplayItemProps = {
   completed: boolean;
+  detailsVisible: boolean;
   errorIndex: number | null;
   interactive: boolean;
   item: ToyLayoutItem;
@@ -23,6 +24,7 @@ type ToyDisplayItemProps = {
 
 export function ToyDisplayItem({
   completed,
+  detailsVisible,
   errorIndex,
   interactive,
   item,
@@ -41,7 +43,9 @@ export function ToyDisplayItem({
   const [x, y, z] = item.position;
   const target: ScenePoint = [x, y, z];
   const playSelected = mode === "play" && selected;
+  const questionVisible = mode !== "showcase" && !completed;
   const modelScale = playSelected ? 1 : item.scale / PLAY_FRAME_SIZE;
+  const hitRadius = mode === "showcase" ? Math.max(0.28, item.scale * 0.42) : PLAY_FRAME_SIZE * 0.45;
 
   useGSAP(
     () => {
@@ -155,26 +159,29 @@ export function ToyDisplayItem({
       <group
         ref={floatRef}
         onPointerUp={(event) => {
-          if (interactive) {
+          if (interactive && mode === "select") {
             onClick(event);
           }
         }}
       >
         <mesh>
-          <circleGeometry args={[Math.max(0.28, item.scale * 0.58), 32]} />
+          <circleGeometry args={[hitRadius, 32]} />
           <meshBasicMaterial depthWrite={false} transparent opacity={0} />
         </mesh>
         <ToyConnectScene
-          animateIn={playSelected}
+          animateIn={false}
           completed={completed}
           errorIndex={playSelected ? errorIndex : null}
           interactive={playSelected}
           nextIndex={playSelected ? nextIndex : 0}
           onPointClick={onPointClick}
           scale={modelScale}
-          showConnectionLines={playSelected}
-          showPlaceholder={playSelected}
+          showConnectionLines={playSelected && !completed}
+          showImage={completed && visible}
+          showPlaceholder={questionVisible}
+          showPoints={!completed}
           showSceneInfo={playSelected}
+          detailsVisible={playSelected && detailsVisible}
           toy={item.toy}
           visible={visible}
         />

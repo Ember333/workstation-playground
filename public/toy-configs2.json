@@ -272,7 +272,7 @@
   {
     "id": "7",
     "name": "麻将",
-    "description": "打出一张万能牌，好运好运来来",
+    "description": "打出一张万能牌\n好运好运来来",
     "category": "toy",
     "difficulty": "normal",
     "image": "image8.png",
