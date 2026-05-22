@@ -105,7 +105,9 @@ function ToyCanvasContent({
         onMoveStart={handleCameraMoveStart}
       />
       <ToySelectInput
+        items={items}
         mode={mode}
+        onToySelect={onToySelect}
         viewport={viewport}
         onDragStateChange={handleSelectDragStateChange}
         onScrollChange={setSelectScroll}

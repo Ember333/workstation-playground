@@ -82,7 +82,7 @@ button:disabled {
   z-index: 20;
   top: clamp(24px, 3.7vw, 58px);
   left: var(--deskland-page-x);
-  right: clamp(24px, 4.1vw, 58px);
+  right: var(--deskland-page-x);
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -118,20 +118,33 @@ button:disabled {
   -webkit-user-drag: none;
 }
 
-.deskland-nav__close {
+.deskland-nav__action {
+  position: relative;
   width: clamp(48px, 11.4vw, 130px);
+  height: clamp(48px, 11.4vw, 130px);
   flex: 0 0 auto;
+}
+
+.deskland-nav__close {
+  position: absolute;
+  inset: 0;
+  width: 100%;
   border: 0;
   background: transparent;
   padding: 0;
 }
 
+.deskland-nav__close:disabled {
+  pointer-events: none;
+}
+
 .deskland-nav__progress {
-  min-width: clamp(48px, 11.4vw, 130px);
-  min-height: clamp(48px, 11.4vw, 130px);
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   display: grid;
   place-items: center;
-  flex: 0 0 auto;
   color: #050505;
   font-family: "Deskland Comic Sans", "Comic Sans MS", cursive;
   font-size: clamp(34px, 7vw, 86px);
@@ -750,7 +763,7 @@ button:disabled {
   .deskland-nav {
     top: 22px;
     left: var(--deskland-page-x);
-    right: 18px;
+    right: var(--deskland-page-x);
     gap: 18px;
   }
 
@@ -758,8 +771,32 @@ button:disabled {
     width: min(58vw, 280px);
   }
 
+  .deskland-nav__action {
+    width: 116px;
+    height: 52px;
+  }
+
   .deskland-nav__close {
+    left: auto;
+    right: 0;
     width: 52px;
+    transform: translateY(-6px);
+  }
+
+  .deskland-nav__close img {
+    width: 88%;
+    margin-left: auto;
+  }
+
+  .deskland-nav__progress {
+    right: 0;
+    left: auto;
+    width: 116px;
+    align-items: start;
+    justify-items: end;
+    padding-top: 0;
+    transform: translateY(-4px);
+    font-size: clamp(36px, 12vw, 52px);
   }
 
   .toy-editor {

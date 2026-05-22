@@ -58,6 +58,7 @@ export function ToyFieldScene({
             errorIndex={errorIndex}
             interactive={mode !== "play"}
             item={item}
+            itemCount={items.length}
             mode={mode}
             nextIndex={nextIndex}
             key={item.toy.id}

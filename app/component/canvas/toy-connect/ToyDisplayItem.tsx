@@ -10,8 +10,14 @@ import type { FieldVariant, ScenePoint, ToyCanvasMode, ToyLayoutItem, ViewportBo
 
 const ITEM_HIT_SIZE = PLAY_FRAME_SIZE;
 const ITEM_HIT_Z = 0.32;
-const ENTER_SELECT_DURATION = 1.62;
-const RETURN_SHOWCASE_DURATION = 1.68;
+const ENTER_SELECT_DURATION = 2.58;
+const RETURN_SHOWCASE_DURATION = 2.28;
+const ENTER_SELECT_STAGGER_MAX = 0.72;
+const RETURN_SHOWCASE_STAGGER = 0.048;
+const QUESTION_REVEAL_BUFFER = 0.08;
+const SHOWCASE_RING_ROTATION_SPEED = 0.075;
+const SHOWCASE_POSITION_LERP_SPEED = 8.5;
+const SHOWCASE_SCALE_LERP_SPEED = 10;
 
 type ToyDisplayItemProps = {
   completed: boolean;
@@ -20,6 +26,7 @@ type ToyDisplayItemProps = {
   errorIndex: number | null;
   interactive: boolean;
   item: ToyLayoutItem;
+  itemCount: number;
   mode: ToyCanvasMode;
   nextIndex: number;
   onPointClick: (index: number) => void;
@@ -51,6 +58,67 @@ function getCubicBezierPoint(
   ];
 }
 
+function getSeedValue(seed: string) {
+  return Array.from(seed).reduce((value, char) => {
+    return (value * 33 + char.charCodeAt(0)) % 1000003;
+  }, 29);
+}
+
+function getSeedUnit(seed: string, offset: number) {
+  const value = Math.sin(getSeedValue(`${seed}-${offset}`) * 12.9898) * 43758.5453;
+
+  return value - Math.floor(value);
+}
+
+function getUnitVector([x, y, z]: ScenePoint): ScenePoint {
+  const distance = Math.hypot(x, y);
+
+  if (distance < 0.001) {
+    return [0, -1, z];
+  }
+
+  return [x / distance, y / distance, z];
+}
+
+function getSegmentedBezierPoint(
+  firstStart: ScenePoint,
+  firstControlA: ScenePoint,
+  firstControlB: ScenePoint,
+  middle: ScenePoint,
+  secondControlA: ScenePoint,
+  secondControlB: ScenePoint,
+  end: ScenePoint,
+  progress: number,
+  split = 0.48,
+) {
+  if (progress <= split) {
+    return getCubicBezierPoint(firstStart, firstControlA, firstControlB, middle, progress / split);
+  }
+
+  return getCubicBezierPoint(middle, secondControlA, secondControlB, end, (progress - split) / (1 - split));
+}
+
+function getShowcaseRotationAt(offsetSeconds = 0) {
+  const seconds = typeof performance === "undefined" ? 0 : performance.now() / 1000;
+
+  return (seconds + offsetSeconds) * SHOWCASE_RING_ROTATION_SPEED;
+}
+
+function getRotatedPoint([x, y, z]: ScenePoint, rotation: number): ScenePoint {
+  const cos = Math.cos(rotation);
+  const sin = Math.sin(rotation);
+
+  return [x * cos - y * sin, x * sin + y * cos, z];
+}
+
+function getLerpAlpha(delta: number, speed: number) {
+  return 1 - Math.exp(-speed * delta);
+}
+
+function lerp(start: number, end: number, alpha: number) {
+  return start + (end - start) * alpha;
+}
+
 export function ToyDisplayItem({
   completed,
   completionBurstActive,
@@ -58,6 +126,7 @@ export function ToyDisplayItem({
   errorIndex,
   interactive,
   item,
+  itemCount,
   mode,
   nextIndex,
   onPointClick,
@@ -75,6 +144,7 @@ export function ToyDisplayItem({
   const hasMountedRef = useRef(false);
   const positionTweenRef = useRef<ReturnType<typeof gsap.to> | null>(null);
   const scaleTweenRef = useRef<ReturnType<typeof gsap.to> | null>(null);
+  const questionReadyTweenRef = useRef<ReturnType<typeof gsap.delayedCall> | null>(null);
   const previousVariantRef = useRef<FieldVariant | null>(null);
   const previousModeRef = useRef<ToyCanvasMode | null>(null);
   const selectQuestionReadyRef = useRef(mode === "select");
@@ -105,6 +175,14 @@ export function ToyDisplayItem({
     setSelectQuestionReady(ready);
   }
 
+  function scheduleSelectQuestionReady(delay: number) {
+    questionReadyTweenRef.current?.kill();
+    questionReadyTweenRef.current = gsap.delayedCall(delay, () => {
+      questionReadyTweenRef.current = null;
+      updateSelectQuestionReady(true);
+    });
+  }
+
   useGSAP(
     () => {
       if (!groupRef.current || !scaleGroupRef.current) {
@@ -128,7 +206,7 @@ export function ToyDisplayItem({
             overwrite: "auto",
           },
         );
-        gsap.to(groupRef.current.position, {
+        const initialPositionTween = gsap.to(groupRef.current.position, {
           x: target[0],
           y: target[1],
           z: target[2],
@@ -136,7 +214,13 @@ export function ToyDisplayItem({
           delay: item.index * 0.018,
           ease: "expo.out",
           overwrite: "auto",
+          onComplete: () => {
+            if (positionTweenRef.current === initialPositionTween) {
+              positionTweenRef.current = null;
+            }
+          },
         });
+        positionTweenRef.current = initialPositionTween;
         previousVariantRef.current = variant;
         previousModeRef.current = mode;
         return;
@@ -161,6 +245,10 @@ export function ToyDisplayItem({
         target[2],
       ];
       const position = groupRef.current.position;
+      const seed = item.toy.id || item.toy.image || String(item.index);
+      const seededDelay = itemCount > 1 ? getSeedUnit(seed, 1) * ENTER_SELECT_STAGGER_MAX : 0;
+      const totalQuestionDelay =
+        ENTER_SELECT_DURATION + (itemCount > 1 ? ENTER_SELECT_STAGGER_MAX : 0) + QUESTION_REVEAL_BUFFER;
 
       function animateAlongCurve(
         controlA: ScenePoint,
@@ -203,10 +291,159 @@ export function ToyDisplayItem({
         positionTweenRef.current = tween;
       }
 
+      function animateEnteringSelect(onComplete?: () => void) {
+        const radial = getUnitVector(start);
+        const tangent: ScenePoint = [-radial[1], radial[0], target[2]];
+        const offscreenDistance = Math.hypot(viewport.width, viewport.height) * 0.62 + PLAY_FRAME_SIZE * 1.25;
+        const burst: ScenePoint = [
+          start[0] + radial[0] * offscreenDistance + tangent[0] * (0.42 + getSeedUnit(seed, 3) * 0.92),
+          start[1] + radial[1] * offscreenDistance + tangent[1] * (0.42 + getSeedUnit(seed, 4) * 0.92),
+          target[2],
+        ];
+        const firstControlA: ScenePoint = [
+          start[0] + tangent[0] * 0.72,
+          start[1] + tangent[1] * 0.72,
+          target[2],
+        ];
+        const firstControlB: ScenePoint = [
+          burst[0] - radial[0] * 1.9 + tangent[0] * 1.25,
+          burst[1] - radial[1] * 1.9 + tangent[1] * 1.25,
+          target[2],
+        ];
+        const secondControlA: ScenePoint = [
+          burst[0] + tangent[0] * 0.72 - radial[0] * 0.55,
+          burst[1] + tangent[1] * 0.72 - radial[1] * 0.55,
+          target[2],
+        ];
+        const secondControlB: ScenePoint = [
+          target[0] + tangent[0] * 0.68 + radial[0] * 0.36,
+          target[1] + tangent[1] * 0.68 + radial[1] * 0.36,
+          target[2],
+        ];
+        const motion = { progress: 0 };
+        const startRotation = groupRef.current?.rotation.z ?? 0;
+        const spin = (0.24 + getSeedUnit(seed, 5) * 0.18) * Math.PI;
+
+        positionTweenRef.current?.kill();
+        const tween = gsap.to(motion, {
+          progress: 1,
+          duration: ENTER_SELECT_DURATION,
+          delay: seededDelay,
+          ease: "power4.inOut",
+          onUpdate: () => {
+            const [nextX, nextY, nextZ] = getSegmentedBezierPoint(
+              start,
+              firstControlA,
+              firstControlB,
+              burst,
+              secondControlA,
+              secondControlB,
+              target,
+              motion.progress,
+              0.45,
+            );
+
+            position.set(nextX, nextY, nextZ);
+            if (groupRef.current) {
+              groupRef.current.rotation.z = startRotation + spin * Math.sin(motion.progress * Math.PI);
+            }
+          },
+          onComplete: () => {
+            position.set(target[0], target[1], target[2]);
+            if (groupRef.current) {
+              groupRef.current.rotation.z = 0;
+            }
+            if (positionTweenRef.current === tween) {
+              positionTweenRef.current = null;
+            }
+            onComplete?.();
+          },
+          overwrite: "auto",
+        });
+        positionTweenRef.current = tween;
+      }
+
+      function animateReturningToShowcase() {
+        const columnSide = start[0] < 0 ? -1 : 1;
+        const row = Math.floor(item.index / 2);
+        const delay = Math.min(0.62, row * RETURN_SHOWCASE_STAGGER);
+        const targetEnd = getRotatedPoint(target, getShowcaseRotationAt(delay + RETURN_SHOWCASE_DURATION));
+        const sideExit: ScenePoint = [
+          columnSide * (viewport.width * 0.5 + PLAY_FRAME_SIZE * 1.18),
+          start[1] + (getSeedUnit(seed, 6) - 0.5) * viewport.height * 0.2,
+          target[2],
+        ];
+        const targetRadial = getUnitVector(targetEnd);
+        const targetTangent: ScenePoint = [-targetRadial[1] * columnSide, targetRadial[0] * columnSide, target[2]];
+        const firstControlA: ScenePoint = [
+          start[0] + columnSide * PLAY_FRAME_SIZE * 0.18,
+          start[1] + targetTangent[1] * 0.12,
+          target[2],
+        ];
+        const firstControlB: ScenePoint = [
+          sideExit[0] - columnSide * PLAY_FRAME_SIZE * 0.45,
+          sideExit[1] + targetTangent[1] * 0.72,
+          target[2],
+        ];
+        const secondControlA: ScenePoint = [
+          sideExit[0] + columnSide * 0.38,
+          sideExit[1] - targetTangent[1] * 0.82,
+          target[2],
+        ];
+        const secondControlB: ScenePoint = [
+          targetEnd[0] + columnSide * 1.18 + targetTangent[0] * 0.46,
+          targetEnd[1] + targetTangent[1] * 0.46,
+          target[2],
+        ];
+        const motion = { progress: 0 };
+        const startRotation = groupRef.current?.rotation.z ?? 0;
+        const spin = columnSide * -(0.32 + getSeedUnit(seed, 7) * 0.22) * Math.PI;
+
+        positionTweenRef.current?.kill();
+        const tween = gsap.to(motion, {
+          progress: 1,
+          duration: RETURN_SHOWCASE_DURATION,
+          delay,
+          ease: "power4.inOut",
+          onUpdate: () => {
+            const [nextX, nextY, nextZ] = getSegmentedBezierPoint(
+              start,
+              firstControlA,
+              firstControlB,
+              sideExit,
+              secondControlA,
+              secondControlB,
+              targetEnd,
+              motion.progress,
+              0.4,
+            );
+
+            position.set(nextX, nextY, nextZ);
+            if (groupRef.current) {
+              groupRef.current.rotation.z = startRotation + spin * Math.sin(motion.progress * Math.PI);
+            }
+          },
+          onComplete: () => {
+            position.set(targetEnd[0], targetEnd[1], targetEnd[2]);
+            if (groupRef.current) {
+              groupRef.current.rotation.z = 0;
+            }
+            if (positionTweenRef.current === tween) {
+              positionTweenRef.current = null;
+            }
+          },
+          overwrite: "auto",
+        });
+        positionTweenRef.current = tween;
+      }
+
       let skipScaleTween = false;
       let transitionScaleDuration = visible ? 0.36 : 0.22;
+      let transitionScaleDelay = 0;
 
       if (returningToShowcase) {
+        questionReadyTweenRef.current?.kill();
+        questionReadyTweenRef.current = null;
         updateSelectQuestionReady(false);
       }
 
@@ -233,18 +470,13 @@ export function ToyDisplayItem({
         );
       } else if (enteringSelect) {
         updateSelectQuestionReady(false);
-        animateAlongCurve(
-          controlA,
-          controlB,
-          ENTER_SELECT_DURATION,
-          item.index * 0.004,
-          "power3.inOut",
-          0,
-          () => updateSelectQuestionReady(true),
-        );
+        animateEnteringSelect();
+        scheduleSelectQuestionReady(totalQuestionDelay);
+        transitionScaleDelay = seededDelay;
         transitionScaleDuration = ENTER_SELECT_DURATION;
       } else if (returningToShowcase) {
-        animateAlongCurve(controlA, controlB, RETURN_SHOWCASE_DURATION, item.index * 0.004, "power3.inOut");
+        animateReturningToShowcase();
+        transitionScaleDelay = Math.min(0.62, Math.floor(item.index / 2) * RETURN_SHOWCASE_STAGGER);
         transitionScaleDuration = RETURN_SHOWCASE_DURATION;
       } else {
         animateAlongCurve(controlA, controlB, 0.82, item.index * 0.008, "power2.out");
@@ -267,6 +499,7 @@ export function ToyDisplayItem({
         scaleTweenRef.current = gsap.to(screenScaleRef.current, {
           value: targetScreenScale,
           duration: transitionScaleDuration,
+          delay: transitionScaleDelay,
           ease: visible ? "power3.inOut" : "power2.out",
           overwrite: "auto",
           onComplete: () => {
@@ -310,8 +543,8 @@ export function ToyDisplayItem({
     },
   );
 
-  useFrame(({ clock }) => {
-    if (!floatRef.current || !scaleGroupRef.current) {
+  useFrame(({ clock }, delta) => {
+    if (!floatRef.current || !groupRef.current || !scaleGroupRef.current) {
       return;
     }
 
@@ -325,6 +558,27 @@ export function ToyDisplayItem({
       floatRef.current.position.y = 0;
       floatRef.current.rotation.z = 0;
       return;
+    }
+
+    if (positionTweenRef.current === null) {
+      const [rotatedX, rotatedY, rotatedZ] = getRotatedPoint(target, getShowcaseRotationAt());
+      const positionAlpha = getLerpAlpha(delta, SHOWCASE_POSITION_LERP_SPEED);
+
+      groupRef.current.position.set(
+        lerp(groupRef.current.position.x, rotatedX, positionAlpha),
+        lerp(groupRef.current.position.y, rotatedY, positionAlpha),
+        lerp(groupRef.current.position.z, rotatedZ, positionAlpha),
+      );
+    }
+
+    if (!screenScaleCompensationRef.current && scaleTweenRef.current === null) {
+      const scaleAlpha = getLerpAlpha(delta, SHOWCASE_SCALE_LERP_SPEED);
+
+      scaleGroupRef.current.scale.set(
+        lerp(scaleGroupRef.current.scale.x, visualScale, scaleAlpha),
+        lerp(scaleGroupRef.current.scale.y, visualScale, scaleAlpha),
+        1,
+      );
     }
 
     const seed = item.index * 0.7;
