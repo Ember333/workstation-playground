@@ -17,6 +17,7 @@ type ImagePlaneProps = {
   revealed: boolean;
   imagePlane: SceneImagePlane;
   onImageSize: (size: ImageSize) => void;
+  placeholderVisible?: boolean;
   preloadImage?: boolean;
   showPlaceholder?: boolean;
   src: string;
@@ -100,6 +101,7 @@ export function ImagePlane({
   revealed,
   imagePlane,
   onImageSize,
+  placeholderVisible = true,
   preloadImage = false,
   showPlaceholder = true,
   src,
@@ -140,7 +142,7 @@ export function ImagePlane({
           style={htmlOverlayStyle}
           zIndexRange={[120, 0]}
         >
-          <ToyQuestionMark revealed={revealed} rotation={questionRotation} />
+          <ToyQuestionMark rotation={questionRotation} visible={placeholderVisible && !revealed} />
         </Html>
       )}
     </group>

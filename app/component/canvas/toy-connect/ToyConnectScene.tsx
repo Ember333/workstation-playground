@@ -42,6 +42,7 @@ export function ToyConnectScene({
   showConnectionLines = true,
   showImage = completed,
   showPlaceholder = true,
+  placeholderVisible = showPlaceholder,
   showPoints = true,
   showSceneInfo = true,
   toy,
@@ -92,6 +93,9 @@ export function ToyConnectScene({
   const revealed = showImage && (completed || forceImageReveal);
   const revealDetails = detailsVisible && visible;
   const selectablePoints = pointSelectionEnabled && Boolean(onPointSelectIntent) && visible;
+  const pointSelectionPlaneSize = selectablePoints
+    ? imagePlane.frameSize + pointSelectionRadius * 2
+    : imagePlane.frameSize;
 
   function getNearestSelectablePoint(position: ScenePoint) {
     return scenePoints.reduce(
@@ -142,7 +146,13 @@ export function ToyConnectScene({
 
   function handleStagePointerDown(event: ThreeEvent<PointerEvent>) {
     if (selectablePoints && !interactive) {
-      event.stopPropagation();
+      const pointerPoint = getLocalPointerPoint(event, POINT_Z);
+      const nearest = getNearestSelectablePoint(pointerPoint);
+
+      if (nearest.distance <= pointSelectionRadius) {
+        event.stopPropagation();
+      }
+
       return;
     }
 
@@ -203,12 +213,13 @@ export function ToyConnectScene({
             onPointerMove={handleStagePointerMove}
             onPointerUp={handleStagePointerEnd}
           >
-            <planeGeometry args={[imagePlane.frameSize, imagePlane.frameSize]} />
+            <planeGeometry args={[pointSelectionPlaneSize, pointSelectionPlaneSize]} />
             <meshBasicMaterial depthWrite={false} transparent opacity={0} />
           </mesh>
           <ImagePlane
             imagePlane={imagePlane}
             onImageSize={setSourceSize}
+            placeholderVisible={visible && placeholderVisible}
             preloadImage={preloadImage}
             questionRotation={getQuestionRotation(`${toy.id}-${toy.image}`)}
             revealed={revealed}

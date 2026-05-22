@@ -73,6 +73,8 @@ button:disabled {
   overflow: hidden;
   background: #ffffff;
   color: #050505;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .deskland-nav {
@@ -86,6 +88,8 @@ button:disabled {
   justify-content: space-between;
   gap: 24px;
   pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .deskland-nav__brand,
@@ -111,6 +115,7 @@ button:disabled {
   display: block;
   width: 100%;
   height: auto;
+  -webkit-user-drag: none;
 }
 
 .deskland-nav__close {

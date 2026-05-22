@@ -59,6 +59,7 @@ export type ToyConnectSceneProps = {
   showConnectionLines?: boolean;
   showImage?: boolean;
   showPlaceholder?: boolean;
+  placeholderVisible?: boolean;
   showPoints?: boolean;
   showSceneInfo?: boolean;
   toy: Toy;

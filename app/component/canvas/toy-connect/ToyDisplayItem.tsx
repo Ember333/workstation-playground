@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import type { ThreeEvent } from "@react-three/fiber";
 import type { Group } from "three";
@@ -10,7 +10,6 @@ import type { FieldVariant, ScenePoint, ToyCanvasMode, ToyLayoutItem, ViewportBo
 
 const ITEM_HIT_SIZE = PLAY_FRAME_SIZE;
 const ITEM_HIT_Z = 0.32;
-const ITEM_CENTER_HIT_RADIUS = PLAY_FRAME_SIZE * 0.2;
 const ENTER_SELECT_DURATION = 1.62;
 const RETURN_SHOWCASE_DURATION = 1.68;
 
@@ -78,7 +77,9 @@ export function ToyDisplayItem({
   const scaleTweenRef = useRef<ReturnType<typeof gsap.to> | null>(null);
   const previousVariantRef = useRef<FieldVariant | null>(null);
   const previousModeRef = useRef<ToyCanvasMode | null>(null);
+  const selectQuestionReadyRef = useRef(mode === "select");
   const screenScaleCompensationRef = useRef(false);
+  const [selectQuestionReady, setSelectQuestionReady] = useState(mode === "select");
   const camera = useThree((state) => state.camera);
   const size = useThree((state) => state.size);
   const [x, y, z] = item.position;
@@ -86,14 +87,23 @@ export function ToyDisplayItem({
   const playSelected = mode === "play" && selected;
   const sceneInfoVisible = playSelected || sceneInfoExiting;
   const showcase = mode === "showcase";
-  const questionVisible = !showcase && !completed;
+  const questionVisible = !completed && (mode === "play" || (mode === "select" && selectQuestionReady));
+  const placeholderMounted = !completed || completionBurstActive;
   const placeholderVisible = questionVisible || (completed && completionBurstActive);
-  const pointSelectionEnabled = interactive && !playSelected && !completed && (mode === "showcase" || mode === "select");
-  const frameSelectionEnabled = interactive && (showcase || completed);
-  const centerSelectionEnabled = interactive && !playSelected && !completed && mode === "select";
+  const pointSelectionEnabled = interactive && !playSelected && !completed && mode === "showcase";
+  const frameSelectionEnabled = interactive && (showcase || completed || mode === "select");
   const visualScale = visible ? (playSelected ? 1 : item.scale / PLAY_FRAME_SIZE) : 0;
   const targetCameraZoom = mode === "select" ? getSelectZoom(size) : FIELD_CAMERA_ZOOM;
   const targetScreenScale = visualScale * targetCameraZoom;
+
+  function updateSelectQuestionReady(ready: boolean) {
+    if (selectQuestionReadyRef.current === ready) {
+      return;
+    }
+
+    selectQuestionReadyRef.current = ready;
+    setSelectQuestionReady(ready);
+  }
 
   useGSAP(
     () => {
@@ -159,6 +169,7 @@ export function ToyDisplayItem({
         delay: number,
         ease: string,
         spin = 0,
+        onComplete?: () => void,
       ) {
         const motion = { progress: 0 };
         const startRotation = groupRef.current?.rotation.z ?? 0;
@@ -185,6 +196,7 @@ export function ToyDisplayItem({
             if (positionTweenRef.current === tween) {
               positionTweenRef.current = null;
             }
+            onComplete?.();
           },
           overwrite: "auto",
         });
@@ -194,21 +206,52 @@ export function ToyDisplayItem({
       let skipScaleTween = false;
       let transitionScaleDuration = visible ? 0.36 : 0.22;
 
+      if (returningToShowcase) {
+        updateSelectQuestionReady(false);
+      }
+
       if (sameSelectFlow && !selectFlowModeChanged && positionTweenRef.current === null) {
         screenScaleCompensationRef.current = false;
         groupRef.current.position.set(target[0], target[1], target[2]);
         groupRef.current.rotation.z = 0;
         skipScaleTween = Math.abs(scaleGroupRef.current.scale.x - visualScale) < 0.001;
       } else if (sameSelectFlow) {
-        animateAlongCurve(controlA, controlB, selectFlowModeChanged ? 0.58 : 0.42, 0, "power2.out");
+        const enteringSelectMode = previousMode !== "select" && mode === "select";
+
+        if (enteringSelectMode) {
+          updateSelectQuestionReady(false);
+        }
+
+        animateAlongCurve(
+          controlA,
+          controlB,
+          selectFlowModeChanged ? 0.58 : 0.42,
+          0,
+          "power2.out",
+          0,
+          enteringSelectMode ? () => updateSelectQuestionReady(true) : undefined,
+        );
       } else if (enteringSelect) {
-        animateAlongCurve(controlA, controlB, ENTER_SELECT_DURATION, item.index * 0.004, "power3.inOut");
+        updateSelectQuestionReady(false);
+        animateAlongCurve(
+          controlA,
+          controlB,
+          ENTER_SELECT_DURATION,
+          item.index * 0.004,
+          "power3.inOut",
+          0,
+          () => updateSelectQuestionReady(true),
+        );
         transitionScaleDuration = ENTER_SELECT_DURATION;
       } else if (returningToShowcase) {
         animateAlongCurve(controlA, controlB, RETURN_SHOWCASE_DURATION, item.index * 0.004, "power3.inOut");
         transitionScaleDuration = RETURN_SHOWCASE_DURATION;
       } else {
         animateAlongCurve(controlA, controlB, 0.82, item.index * 0.008, "power2.out");
+      }
+
+      if (variant === "select" && mode === "select" && !enteringSelect && !selectFlowModeChanged) {
+        updateSelectQuestionReady(true);
       }
 
       if (skipScaleTween) {
@@ -312,12 +355,6 @@ export function ToyDisplayItem({
               <meshBasicMaterial depthWrite={false} transparent opacity={0} />
             </mesh>
           )}
-          {centerSelectionEnabled && (
-            <mesh position={[0, 0, ITEM_HIT_Z]} onPointerDown={handleItemPointerDown} onPointerUp={handleItemPointerUp}>
-              <circleGeometry args={[ITEM_CENTER_HIT_RADIUS, 32]} />
-              <meshBasicMaterial depthWrite={false} transparent opacity={0} />
-            </mesh>
-          )}
           <ToyConnectScene
             animateIn={false}
             completed={completed}
@@ -330,11 +367,12 @@ export function ToyDisplayItem({
             onPointSelectIntent={onSelectIntent}
             pointSelectionEnabled={pointSelectionEnabled}
             pointSelectionRadius={POINT_SELECT_CONTACT_RADIUS}
+            placeholderVisible={placeholderVisible}
             preloadImage={playSelected}
             scale={1}
             showConnectionLines={playSelected}
             showImage={completed && visible}
-            showPlaceholder={placeholderVisible}
+            showPlaceholder={placeholderMounted}
             showPoints={!completed || playSelected}
             showSceneInfo={sceneInfoVisible}
             detailsVisible={playSelected && detailsVisible}

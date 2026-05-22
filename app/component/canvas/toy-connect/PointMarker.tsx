@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import type { ThreeEvent } from "@react-three/fiber";
 import type { CanvasTexture, Sprite, SpriteMaterial } from "three";
 import { CanvasTexture as ThreeCanvasTexture, SRGBColorSpace } from "three";
@@ -109,6 +109,13 @@ export function PointMarker({
     [connected, completed, errored],
   );
   const numberTexture = useMemo<CanvasTexture | null>(() => createNumberTexture(number), [number]);
+  const handleNumberMaterialRef = useCallback((material: SpriteMaterial | null) => {
+    numberMaterialRef.current = material;
+
+    if (material) {
+      material.opacity = 0;
+    }
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -205,70 +212,67 @@ export function PointMarker({
     { dependencies: [completed, completeDelay, completionBurstActive, visible] },
   );
 
-  useGSAP(
-    () => {
-      if (!numberSpriteRef.current || !numberMaterialRef.current) {
-        return;
-      }
+  useEffect(() => {
+    if (!numberSpriteRef.current || !numberMaterialRef.current) {
+      return;
+    }
 
-      if (completed) {
-        numberWasVisibleRef.current = false;
-        return;
-      }
+    if (completed) {
+      numberWasVisibleRef.current = false;
+      return;
+    }
 
-      const textVisible = showNumber && numberVisible;
+    const textVisible = showNumber && numberVisible;
 
-      if (!textVisible) {
-        const hiddenScale = {
-          x: POINT_MARKER_SIZE * 0.96,
-          y: POINT_MARKER_SIZE * 0.96,
-          z: 1,
-        };
-
-        if (numberWasVisibleRef.current) {
-          gsap.to(numberSpriteRef.current.scale, {
-            ...hiddenScale,
-            duration: 0.32,
-            ease: "power2.out",
-            overwrite: "auto",
-          });
-          gsap.to(numberMaterialRef.current, {
-            opacity: 0,
-            duration: 0.32,
-            ease: "power2.out",
-            overwrite: "auto",
-          });
-        } else {
-          gsap.set(numberSpriteRef.current.scale, hiddenScale);
-          gsap.set(numberMaterialRef.current, { opacity: 0 });
-        }
-
-        numberWasVisibleRef.current = false;
-        return;
-      }
-
-      numberWasVisibleRef.current = true;
-      gsap.to(numberSpriteRef.current.scale, {
-        x: POINT_MARKER_SIZE,
-        y: POINT_MARKER_SIZE,
+    if (!textVisible) {
+      const hiddenScale = {
+        x: POINT_MARKER_SIZE * 0.96,
+        y: POINT_MARKER_SIZE * 0.96,
         z: 1,
-        duration: 0.72,
-        ease: "power1.out",
-        overwrite: "auto",
-      });
-      gsap.to(numberMaterialRef.current, {
-        opacity: 1,
-        duration: 0.72,
-        ease: "power1.out",
-        overwrite: "auto",
-      });
-    },
-    { dependencies: [completed, numberVisible, showNumber] },
-  );
+      };
+
+      if (numberWasVisibleRef.current) {
+        gsap.to(numberSpriteRef.current.scale, {
+          ...hiddenScale,
+          duration: 0.32,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+        gsap.to(numberMaterialRef.current, {
+          opacity: 0,
+          duration: 0.32,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+      } else {
+        gsap.set(numberSpriteRef.current.scale, hiddenScale);
+        gsap.set(numberMaterialRef.current, { opacity: 0 });
+      }
+
+      numberWasVisibleRef.current = false;
+      return;
+    }
+
+    numberWasVisibleRef.current = true;
+    gsap.to(numberSpriteRef.current.scale, {
+      x: POINT_MARKER_SIZE,
+      y: POINT_MARKER_SIZE,
+      z: 1,
+      duration: 0.72,
+      ease: "power1.out",
+      overwrite: "auto",
+    });
+    gsap.to(numberMaterialRef.current, {
+      opacity: 1,
+      duration: 0.72,
+      ease: "power1.out",
+      overwrite: "auto",
+    });
+  }, [completed, numberVisible, showNumber]);
 
   const initialMarkerSize = completed && !completionBurstActive ? 0 : POINT_MARKER_SIZE;
   const initialDotOpacity = completed && !completionBurstActive ? 0 : 1;
-  const initialNumberOpacity = completed && !completionBurstActive ? 0 : showNumber && numberVisible ? 1 : 0;
+  const initialNumberSize = completed && !completionBurstActive ? 0 : POINT_MARKER_SIZE * 0.96;
 
   return (
     <group position={position}>
@@ -295,14 +299,13 @@ export function PointMarker({
               opacity={initialDotOpacity}
             />
           </sprite>
-          <sprite ref={numberSpriteRef} renderOrder={21} scale={[initialMarkerSize, initialMarkerSize, 1]}>
+          <sprite ref={numberSpriteRef} renderOrder={21} scale={[initialNumberSize, initialNumberSize, 1]}>
             <spriteMaterial
-              ref={numberMaterialRef}
+              ref={handleNumberMaterialRef}
               map={numberTexture}
               transparent
               depthWrite={false}
               depthTest={false}
-              opacity={initialNumberOpacity}
             />
           </sprite>
         </group>

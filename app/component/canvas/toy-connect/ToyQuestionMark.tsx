@@ -2,12 +2,13 @@ import { useRef } from "react";
 import { gsap, useGSAP } from "./animation";
 
 type ToyQuestionMarkProps = {
-  revealed: boolean;
   rotation: number;
+  visible: boolean;
 };
 
-export function ToyQuestionMark({ revealed, rotation }: ToyQuestionMarkProps) {
+export function ToyQuestionMark({ rotation, visible }: ToyQuestionMarkProps) {
   const questionRef = useRef<HTMLSpanElement>(null);
+  const hasMountedRef = useRef(false);
 
   useGSAP(
     () => {
@@ -15,27 +16,30 @@ export function ToyQuestionMark({ revealed, rotation }: ToyQuestionMarkProps) {
         return;
       }
 
-      if (revealed) {
-        gsap.to(questionRef.current, {
-          autoAlpha: 0,
-          duration: 0.72,
-          ease: "power2.out",
-          overwrite: "auto",
-        });
+      const target = {
+        autoAlpha: visible ? 1 : 0,
+        rotation,
+        scale: 1,
+      };
+
+      if (!hasMountedRef.current) {
+        hasMountedRef.current = true;
+        gsap.set(questionRef.current, target);
         return;
       }
 
-      gsap.set(questionRef.current, {
-        autoAlpha: 1,
-        rotation,
-        scale: 1,
+      gsap.to(questionRef.current, {
+        ...target,
+        duration: visible ? 0.52 : 0.44,
+        ease: visible ? "power2.out" : "power2.inOut",
+        overwrite: "auto",
       });
     },
-    { dependencies: [revealed, rotation], revertOnUpdate: true },
+    { dependencies: [visible, rotation] },
   );
 
   return (
-    <span className="toy-connect__image-question" ref={questionRef}>
+    <span className="toy-connect__image-question" ref={questionRef} style={{ opacity: 0, visibility: "hidden" }}>
       <span className="toy-connect__image-question-glyph">?</span>
     </span>
   );
