@@ -6,7 +6,7 @@ export const PLAY_FRAME_SIZE = 2.7;
 export const SELECT_TOY_SCALE = 1;
 const PHONE_PLAY_VIEWPORT_MAX_WIDTH = 720;
 const PHONE_PLAY_FRAME_VIEWPORT_RATIO = 1.05;
-const PLAY_CAMERA_CONTENT_LIFT_PX = 38;
+const PLAY_CAMERA_CONTENT_DROP_PX = -38;
 const SELECT_COLUMN_COUNT = 2;
 const SELECT_FRAME_VIEWPORT_RATIO = 1.05;
 const SELECT_CAMERA_PULLBACK_RATIO = 0.9;
@@ -19,7 +19,7 @@ export const SHOWCASE_RING_RADIUS_RATIO = 0.42;
 const SHOWCASE_MAX_TOY_SCALE = 0.27;
 const SHOWCASE_MIN_TOY_SCALE = 0.18;
 const SHOWCASE_RING_FILL_RATIO = 0.36;
-const SELECT_SAFE_TOP_RATIO = 0.08;
+const SELECT_SAFE_TOP_RATIO = 0.15;
 const SELECT_SAFE_BOTTOM_RATIO = 0.12;
 const SELECT_ROW_GAP = PLAY_FRAME_SIZE * 1.58;
 
@@ -139,7 +139,7 @@ export function getPlayZoom(size: ViewportBounds) {
 }
 
 export function getPlayCameraYOffset(size: ViewportBounds, zoom: number) {
-  return -PLAY_CAMERA_CONTENT_LIFT_PX / zoom;
+  return PLAY_CAMERA_CONTENT_DROP_PX / zoom;
 }
 
 export function getSelectZoom(size: ViewportBounds) {

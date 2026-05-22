@@ -25,7 +25,8 @@ export function ToySceneInfo({ revealed, imagePlane, toy }: ToySceneInfoProps) {
   const title = hasContent ? lastTitleRef.current : " ";
   const body = hasContent ? lastBodyRef.current : " ";
   const bodyLines = body
-    .split(/[,，]/)
+    .replace(/[,，]\s*/g, " ")
+    .split(/\r?\n/)
     .map((line) => line.trim())
     .filter(Boolean);
   const position = [0, imagePlane.height * -0.5 - imagePlane.infoGap - imagePlane.infoDrop, 0.16] as [

@@ -18,7 +18,7 @@ export function ToyQuestionMark({ revealed, rotation }: ToyQuestionMarkProps) {
       if (revealed) {
         gsap.to(questionRef.current, {
           autoAlpha: 0,
-          duration: 0.36,
+          duration: 0.72,
           ease: "power2.out",
           overwrite: "auto",
         });

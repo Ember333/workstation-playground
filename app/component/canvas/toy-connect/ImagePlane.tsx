@@ -17,7 +17,7 @@ type ImagePlaneProps = {
   revealed: boolean;
   imagePlane: SceneImagePlane;
   onImageSize: (size: ImageSize) => void;
-  preferHtmlImage?: boolean;
+  preloadImage?: boolean;
   showPlaceholder?: boolean;
   src: string;
 };
@@ -25,10 +25,11 @@ type ImagePlaneProps = {
 type RevealedImageProps = {
   imagePlane: SceneImagePlane;
   onImageSize: (size: ImageSize) => void;
+  revealed: boolean;
   src: string;
 };
 
-function RevealedImage({ imagePlane, onImageSize, src }: RevealedImageProps) {
+function RevealedImage({ imagePlane, onImageSize, revealed, src }: RevealedImageProps) {
   const texture = useTexture(src);
   const imageGroupRef = useRef<Group>(null);
   const materialRef = useRef<MeshBasicMaterial>(null);
@@ -53,22 +54,28 @@ function RevealedImage({ imagePlane, onImageSize, src }: RevealedImageProps) {
         return;
       }
 
-      gsap
-        .timeline()
-        .fromTo(
-          imageGroupRef.current.scale,
-          { x: 0.7, y: 0.7, z: 1 },
-          { x: 1.2, y: 1.2, z: 1, duration: 0.78, ease: "elastic.out(1, 0.45)" },
-          0,
-        )
-        .fromTo(
-          materialRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 0.42, ease: "power2.out" },
-          0,
-        );
+      if (!revealed) {
+        gsap.set(imageGroupRef.current.scale, { x: 1, y: 1, z: 1 });
+        gsap.set(materialRef.current, { opacity: 0 });
+        return;
+      }
+
+      gsap.to(imageGroupRef.current.scale, {
+        x: 1,
+        y: 1,
+        z: 1,
+        duration: 0.76,
+        ease: "power2.out",
+        overwrite: "auto",
+      });
+      gsap.to(materialRef.current, {
+        opacity: 1,
+        duration: 0.76,
+        ease: "power2.out",
+        overwrite: "auto",
+      });
     },
-    { dependencies: [src], revertOnUpdate: true },
+    { dependencies: [revealed, src] },
   );
 
   return (
@@ -93,7 +100,7 @@ export function ImagePlane({
   revealed,
   imagePlane,
   onImageSize,
-  preferHtmlImage = false,
+  preloadImage = false,
   showPlaceholder = true,
   src,
 }: ImagePlaneProps) {
@@ -119,31 +126,9 @@ export function ImagePlane({
         <planeGeometry args={[imagePlane.frameSize, imagePlane.frameSize]} />
         <meshBasicMaterial color="#ffffff" depthWrite={false} transparent opacity={0} />
       </mesh>
-      {revealed && preferHtmlImage && (
-        <Html
-          center
-          transform
-          position={[0, 0, 0.03]}
-          scale={1}
-          style={htmlOverlayStyle}
-          zIndexRange={[80, 0]}
-        >
-          <img
-            alt=""
-            aria-hidden="true"
-            src={src}
-            style={{
-              display: "block",
-              height: `${imagePlane.height * 100}px`,
-              objectFit: "contain",
-              width: `${imagePlane.width * 100}px`,
-            }}
-          />
-        </Html>
-      )}
-      {revealed && !preferHtmlImage && (
+      {(revealed || preloadImage) && (
         <Suspense fallback={null}>
-          <RevealedImage imagePlane={imagePlane} onImageSize={onImageSize} src={src} />
+          <RevealedImage imagePlane={imagePlane} onImageSize={onImageSize} revealed={revealed} src={src} />
         </Suspense>
       )}
       {showPlaceholder && (

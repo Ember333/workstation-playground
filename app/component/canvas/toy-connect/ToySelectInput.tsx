@@ -27,6 +27,8 @@ export function ToySelectInput({
     lastY: 0,
     startY: 0,
   });
+  const pendingDeltaRef = useRef(0);
+  const scrollFrameRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (mode !== "select") {
@@ -35,13 +37,28 @@ export function ToySelectInput({
       return;
     }
 
-    function updateScroll(delta: number) {
-      onScrollChange((current) => clampSelectScroll(current + delta, toyCount, viewport));
+    function flushScroll() {
+      const delta = pendingDeltaRef.current;
+
+      pendingDeltaRef.current = 0;
+      scrollFrameRef.current = null;
+
+      if (delta !== 0) {
+        onScrollChange((current) => clampSelectScroll(current + delta, toyCount, viewport));
+      }
+    }
+
+    function scheduleScroll(delta: number) {
+      pendingDeltaRef.current += delta;
+
+      if (scrollFrameRef.current === null) {
+        scrollFrameRef.current = window.requestAnimationFrame(flushScroll);
+      }
     }
 
     function handleWheel(event: WheelEvent) {
       event.preventDefault();
-      updateScroll(event.deltaY / 110);
+      scheduleScroll(event.deltaY / 110);
     }
 
     function handlePointerDown(event: PointerEvent) {
@@ -56,11 +73,11 @@ export function ToySelectInput({
 
       const delta = (dragRef.current.lastY - event.clientY) / 88;
       dragRef.current.lastY = event.clientY;
-      if (Math.abs(event.clientY - dragRef.current.startY) > DRAG_THRESHOLD) {
+      if (Math.abs(event.clientY - dragRef.current.startY) > DRAG_THRESHOLD && !dragRef.current.dragged) {
         dragRef.current.dragged = true;
         onDragStateChange(true);
       }
-      updateScroll(delta);
+      scheduleScroll(delta);
     }
 
     function handlePointerEnd() {
@@ -80,6 +97,12 @@ export function ToySelectInput({
     window.addEventListener("pointercancel", handlePointerEnd);
 
     return () => {
+      if (scrollFrameRef.current !== null) {
+        window.cancelAnimationFrame(scrollFrameRef.current);
+        scrollFrameRef.current = null;
+      }
+
+      pendingDeltaRef.current = 0;
       domElement.removeEventListener("wheel", handleWheel);
       domElement.removeEventListener("pointerdown", handlePointerDown);
       window.removeEventListener("pointermove", handlePointerMove);

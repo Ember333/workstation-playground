@@ -5,6 +5,7 @@ import type { Group } from "three";
 import { getContainedImageSize, getScenePoint, getToyImageSrc } from "~/lib/toy-connect";
 import {
   CONNECTION_LINE_Z,
+  POINT_SELECT_CONTACT_RADIUS,
   POINTER_LINE_Z,
   POINT_Z,
   SCENE_INFO_DROP_RATIO,
@@ -31,7 +32,11 @@ export function ToyConnectScene({
   interactive,
   nextIndex,
   onPointClick,
+  onPointSelectIntent,
   position = [0, 0, 0],
+  pointSelectionEnabled = false,
+  pointSelectionRadius = POINT_SELECT_CONTACT_RADIUS,
+  preloadImage = false,
   scale = 1,
   forceImageReveal = false,
   showConnectionLines = true,
@@ -86,6 +91,18 @@ export function ToyConnectScene({
       : [];
   const revealed = showImage && (completed || forceImageReveal);
   const revealDetails = detailsVisible && visible;
+  const selectablePoints = pointSelectionEnabled && Boolean(onPointSelectIntent) && visible;
+
+  function getNearestSelectablePoint(position: ScenePoint) {
+    return scenePoints.reduce(
+      (nearest, scenePoint, index) => {
+        const distance = Math.hypot(scenePoint[0] - position[0], scenePoint[1] - position[1]);
+
+        return distance < nearest.distance ? { distance, index } : nearest;
+      },
+      { distance: Number.POSITIVE_INFINITY, index: -1 },
+    );
+  }
 
   useGSAP(
     () => {
@@ -124,6 +141,11 @@ export function ToyConnectScene({
   }
 
   function handleStagePointerDown(event: ThreeEvent<PointerEvent>) {
+    if (selectablePoints && !interactive) {
+      event.stopPropagation();
+      return;
+    }
+
     if (!interactive || !visible) {
       return;
     }
@@ -140,7 +162,18 @@ export function ToyConnectScene({
     updatePointerPoint(event);
   }
 
-  function handleStagePointerEnd() {
+  function handleStagePointerEnd(event?: ThreeEvent<PointerEvent>) {
+    if (selectablePoints && !interactive && event) {
+      const pointerPoint = getLocalPointerPoint(event, POINT_Z);
+      const nearest = getNearestSelectablePoint(pointerPoint);
+
+      if (nearest.distance <= pointSelectionRadius) {
+        event.stopPropagation();
+        onPointSelectIntent?.();
+        return;
+      }
+    }
+
     setPointerContactActive(false);
     setPointerPoint(null);
   }
@@ -176,7 +209,7 @@ export function ToyConnectScene({
           <ImagePlane
             imagePlane={imagePlane}
             onImageSize={setSourceSize}
-            preferHtmlImage={forceImageReveal}
+            preloadImage={preloadImage}
             questionRotation={getQuestionRotation(`${toy.id}-${toy.image}`)}
             revealed={revealed}
             showPlaceholder={visible && showPlaceholder}
@@ -220,6 +253,7 @@ export function ToyConnectScene({
                 completed={completed}
                 completionBurstActive={completionBurstActive}
                 errored={index === errorIndex}
+                interactive={interactive && visible}
                 key={`${toy.image}-point-${index}`}
                 number={index + 1}
                 numberVisible={interactive && revealDetails}

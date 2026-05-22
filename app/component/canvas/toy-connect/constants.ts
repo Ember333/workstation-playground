@@ -8,3 +8,4 @@ export const POINT_Z = 0.05;
 export const CONNECTION_LINE_Z = POINT_Z - 0.01;
 export const POINTER_LINE_Z = CONNECTION_LINE_Z;
 export const POINT_CONTACT_RADIUS = 0.17;
+export const POINT_SELECT_CONTACT_RADIUS = 0.28;

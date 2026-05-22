@@ -3685,3 +3685,209 @@ Incoming: [-1.5161626317433257, -1.4897483917770367, 0, true, showcase, true, 18
 
 Previous: [-0.822073143585365, -2.018362172661431, 0.01, true, showcase, 18, 12.8, 7.2]
 Incoming: [-0.822073143585365, -2.018362172661431, 0.01, true, showcase, true, 18, 0.18, 12.8, 7.2]
+[2m11:19:49[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mA tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RemixErrorBoundary location={{pathname:"/", ...}}>
+      <RouterProvider2 router={{basename:"/", ...}} useTransitions={undefined} onError={undefined}>
+        <RouterProvider flushSync={function} router={{basename:"/", ...}} useTransitions={undefined} onError={undefined}>
+          <Router basename="/" location={{pathname:"/", ...}} navigationType="POP" navigator={{...}} ...>
+            <DataRoutes2 routes={[...]} manifest={{...}} future={{...}} state={{...}} isStatic={false} ...>
+              <RenderErrorBoundary location={{pathname:"/", ...}} revalidation="idle" component={<Layout>} ...>
+                <RenderedRoute match={{params:{}, ...}} routeContext={{outlet:null, ...}}>
+                  <Layout>
+                    <html
+                      lang="zh-CN"
+-                     style={{-webkit-touch-callout:"none"}}
+                    >
+
+[2m11:19:57[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mA tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RemixErrorBoundary location={{pathname:"/", ...}}>
+      <RouterProvider2 router={{basename:"/", ...}} useTransitions={undefined} onError={undefined}>
+        <RouterProvider flushSync={function} router={{basename:"/", ...}} useTransitions={undefined} onError={undefined}>
+          <Router basename="/" location={{pathname:"/", ...}} navigationType="POP" navigator={{...}} ...>
+            <DataRoutes2 routes={[...]} manifest={{...}} future={{...}} state={{...}} isStatic={false} ...>
+              <RenderErrorBoundary location={{pathname:"/", ...}} revalidation="idle" component={<Layout>} ...>
+                <RenderedRoute match={{params:{}, ...}} routeContext={{outlet:null, ...}}>
+                  <Layout>
+                    <html
+                      lang="zh-CN"
+-                     style={{-webkit-touch-callout:"none"}}
+                    >
+
+[2m11:32:59[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[vite] TypeError: Importing a module script failed.
+[2m11:32:59[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[vite] Failed to reload /app/component/canvas/toy-connect/ToyDisplayItem.tsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
+[2m11:32:59[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[vite] TypeError: Importing a module script failed.
+[2m11:32:59[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[vite] Failed to reload /app/app.css. This could be due to syntax errors or importing non-existent modules. (see errors above)
+[2m11:32:59[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[vite] TypeError: Importing a module script failed.
+[2m11:32:59[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[vite] Failed to reload /app/component/canvas/toy-connect/ToyDisplayItem.tsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
+[2m11:32:59[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[vite] TypeError: Importing a module script failed.
+[2m11:32:59[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[vite] Failed to reload /app/component/canvas/toy-connect/ToyFieldScene.tsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
+[2m11:32:59[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[vite] TypeError: Importing a module script failed.
+[2m11:32:59[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[vite] Failed to reload /app/app.css. This could be due to syntax errors or importing non-existent modules. (see errors above)
+[2m11:32:59[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[vite] TypeError: Importing a module script failed.
+[2m11:32:59[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[vite] Failed to reload /app/component/canvas/toy-connect/ToyFieldScene.tsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
+[2m11:33:00[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mA tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RemixErrorBoundary location={{pathname:"/", ...}}>
+      <RouterProvider2 router={{basename:"/", ...}} useTransitions={undefined} onError={undefined}>
+        <RouterProvider flushSync={function} router={{basename:"/", ...}} useTransitions={undefined} onError={undefined}>
+          <Router basename="/" location={{pathname:"/", ...}} navigationType="POP" navigator={{...}} ...>
+            <DataRoutes2 routes={[...]} manifest={{...}} future={{...}} state={{...}} isStatic={false} ...>
+              <RenderErrorBoundary location={{pathname:"/", ...}} revalidation="idle" component={<Layout>} ...>
+                <RenderedRoute match={{params:{}, ...}} routeContext={{outlet:null, ...}}>
+                  <Layout>
+                    <html
+                      lang="zh-CN"
+-                     style={{-webkit-touch-callout:"none"}}
+                    >
+
+[2m11:40:30[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mThe final argument passed to useLayoutEffect changed size between renders. The order and size of this array must remain constant.
+
+Previous: [-1.35, 4.370348450087697, 0, true, select, 100, 1, 6.300000000000001, 13.619877262113562]
+Incoming: [-1.35, 4.370348450087697, 0, true, play, select, 100, 1, 6.300000000000001, 13.619877262113562]
+[2m11:40:30[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mThe final argument passed to useLayoutEffect changed size between renders. The order and size of this array must remain constant.
+
+Previous: [1.35, 4.370348450087697, 0, true, select, 100, 1, 6.300000000000001, 13.619877262113562]
+Incoming: [1.35, 4.370348450087697, 0, true, play, select, 100, 1, 6.300000000000001, 13.619877262113562]
+[2m11:40:30[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mThe final argument passed to useLayoutEffect changed size between renders. The order and size of this array must remain constant.
+
+Previous: [-1.35, 0.10434845008769589, 0, true, select, 100, 1, 6.300000000000001, 13.619877262113562]
+Incoming: [-1.35, 0.10434845008769589, 0, true, play, select, 100, 1, 6.300000000000001, 13.619877262113562]
+[2m11:40:30[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mThe final argument passed to useLayoutEffect changed size between renders. The order and size of this array must remain constant.
+
+Previous: [1.35, 0.10434845008769589, 0, true, select, 100, 1, 6.300000000000001, 13.619877262113562]
+Incoming: [1.35, 0.10434845008769589, 0, true, play, select, 100, 1, 6.300000000000001, 13.619877262113562]
+[2m11:40:30[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mThe final argument passed to useLayoutEffect changed size between renders. The order and size of this array must remain constant.
+
+Previous: [-1.35, -4.161651549912305, 0, true, select, 100, 1, 6.300000000000001, 13.619877262113562]
+Incoming: [-1.35, -4.161651549912305, 0, true, play, select, 100, 1, 6.300000000000001, 13.619877262113562]
+[2m11:40:30[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mThe final argument passed to useLayoutEffect changed size between renders. The order and size of this array must remain constant.
+
+Previous: [1.35, -4.161651549912305, 0, true, select, 100, 1, 6.300000000000001, 13.619877262113562]
+Incoming: [1.35, -4.161651549912305, 0, true, play, select, 100, 1, 6.300000000000001, 13.619877262113562]
+[2m11:40:30[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mThe final argument passed to useLayoutEffect changed size between renders. The order and size of this array must remain constant.
+
+Previous: [-1.35, -8.427651549912305, 0, true, select, 100, 1, 6.300000000000001, 13.619877262113562]
+Incoming: [-1.35, -8.427651549912305, 0, true, play, select, 100, 1, 6.300000000000001, 13.619877262113562]
+[2m11:40:30[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mThe final argument passed to useLayoutEffect changed size between renders. The order and size of this array must remain constant.
+
+Previous: [1.35, -8.427651549912305, 0, true, select, 100, 1, 6.300000000000001, 13.619877262113562]
+Incoming: [1.35, -8.427651549912305, 0, true, play, select, 100, 1, 6.300000000000001, 13.619877262113562]
+[2m11:40:30[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mThe final argument passed to useLayoutEffect changed size between renders. The order and size of this array must remain constant.
+
+Previous: [-1.35, -12.693651549912307, 0, true, select, 100, 1, 6.300000000000001, 13.619877262113562]
+Incoming: [-1.35, -12.693651549912307, 0, true, play, select, 100, 1, 6.300000000000001, 13.619877262113562]
+[2m11:40:30[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mThe final argument passed to useLayoutEffect changed size between renders. The order and size of this array must remain constant.
+
+Previous: [1.35, -12.693651549912307, 0, true, select, 100, 1, 6.300000000000001, 13.619877262113562]
+Incoming: [1.35, -12.693651549912307, 0, true, play, select, 100, 1, 6.300000000000001, 13.619877262113562]
+[2m11:40:30[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mThe final argument passed to useLayoutEffect changed size between renders. The order and size of this array must remain constant.
+
+Previous: [-1.35, -16.95965154991231, 0, true, select, 100, 1, 6.300000000000001, 13.619877262113562]
+Incoming: [-1.35, -16.95965154991231, 0, true, play, select, 100, 1, 6.300000000000001, 13.619877262113562]
+[2m11:40:30[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mThe final argument passed to useLayoutEffect changed size between renders. The order and size of this array must remain constant.
+
+Previous: [1.35, -16.95965154991231, 0, true, select, 100, 1, 6.300000000000001, 13.619877262113562]
+Incoming: [1.35, -16.95965154991231, 0, true, play, select, 100, 1, 6.300000000000001, 13.619877262113562]
+[2m11:40:30[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mThe final argument passed to useLayoutEffect changed size between renders. The order and size of this array must remain constant.
+
+Previous: [-1.35, -21.225651549912307, 0, true, select, 100, 1, 6.300000000000001, 13.619877262113562]
+Incoming: [-1.35, -21.225651549912307, 0, true, play, select, 100, 1, 6.300000000000001, 13.619877262113562]
+[2m11:40:30[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mThe final argument passed to useLayoutEffect changed size between renders. The order and size of this array must remain constant.
+
+Previous: [1.35, -21.225651549912307, 0, true, select, 100, 1, 6.300000000000001, 13.619877262113562]
+Incoming: [1.35, -21.225651549912307, 0, true, play, select, 100, 1, 6.300000000000001, 13.619877262113562]
+[2m11:40:30[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mThe final argument passed to useLayoutEffect changed size between renders. The order and size of this array must remain constant.
+
+Previous: [-1.35, -25.49165154991231, 0, true, select, 100, 1, 6.300000000000001, 13.619877262113562]
+Incoming: [-1.35, -25.49165154991231, 0, true, play, select, 100, 1, 6.300000000000001, 13.619877262113562]
+[2m11:40:30[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mThe final argument passed to useLayoutEffect changed size between renders. The order and size of this array must remain constant.
+
+Previous: [1.35, -25.49165154991231, 0, true, select, 100, 1, 6.300000000000001, 13.619877262113562]
+Incoming: [1.35, -25.49165154991231, 0, true, play, select, 100, 1, 6.300000000000001, 13.619877262113562]
+[2m11:48:51[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mA tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RemixErrorBoundary location={{pathname:"/", ...}}>
+      <RouterProvider2 router={{basename:"/", ...}} useTransitions={undefined} onError={undefined}>
+        <RouterProvider flushSync={function} router={{basename:"/", ...}} useTransitions={undefined} onError={undefined}>
+          <Router basename="/" location={{pathname:"/", ...}} navigationType="POP" navigator={{...}} ...>
+            <DataRoutes2 routes={[...]} manifest={{...}} future={{...}} state={{...}} isStatic={false} ...>
+              <RenderErrorBoundary location={{pathname:"/", ...}} revalidation="idle" component={<Layout>} ...>
+                <RenderedRoute match={{params:{}, ...}} routeContext={{outlet:null, ...}}>
+                  <Layout>
+                    <html
+                      lang="zh-CN"
+-                     style={{-webkit-touch-callout:"none"}}
+                    >
+
+[2m12:04:39[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mA tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RemixErrorBoundary location={{pathname:"/", ...}}>
+      <RouterProvider2 router={{basename:"/", ...}} useTransitions={undefined} onError={undefined}>
+        <RouterProvider flushSync={function} router={{basename:"/", ...}} useTransitions={undefined} onError={undefined}>
+          <Router basename="/" location={{pathname:"/", ...}} navigationType="POP" navigator={{...}} ...>
+            <DataRoutes2 routes={[...]} manifest={{...}} future={{...}} state={{...}} isStatic={false} ...>
+              <RenderErrorBoundary location={{pathname:"/", ...}} revalidation="idle" component={<Layout>} ...>
+                <RenderedRoute match={{params:{}, ...}} routeContext={{outlet:null, ...}}>
+                  <Layout>
+                    <html
+                      lang="zh-CN"
+-                     style={{-webkit-touch-callout:"none"}}
+                    >
+

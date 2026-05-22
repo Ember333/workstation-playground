@@ -155,7 +155,12 @@ export function ToyExperience({ onCanvasReady, toys }: ToyExperienceProps) {
         onClose={showSelect}
         onHome={mode === "showcase" ? showSelect : showShowcase}
       />
-      <section className="toy-connect__stage" aria-label="Toy connection">
+      <section
+        className="toy-connect__stage"
+        aria-label="Toy connection"
+        data-mode={mode}
+        data-selected-toy-id={selectedToyId ?? undefined}
+      >
         <Suspense fallback={<ToyLoadingLogo />}>
           <LazyToyConnectCanvas
             completedToyIds={completedToyIds}

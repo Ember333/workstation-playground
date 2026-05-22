@@ -15,10 +15,13 @@ type PointMarkerProps = {
   connected: boolean;
   completed: boolean;
   completionBurstActive?: boolean;
+  contactRadius?: number;
   errored: boolean;
+  interactive?: boolean;
   number: number;
   numberVisible?: boolean;
   onPointerContact: (event: ThreeEvent<PointerEvent>) => void;
+  onPointerUp?: (event: ThreeEvent<PointerEvent>) => void;
   onSelect: (event: ThreeEvent<PointerEvent>) => void;
   position: ScenePoint;
   showNumber?: boolean;
@@ -82,10 +85,13 @@ export function PointMarker({
   connected,
   completed,
   completionBurstActive = false,
+  contactRadius = POINT_CONTACT_RADIUS,
   errored,
+  interactive = true,
   number,
   numberVisible = true,
   onPointerContact,
+  onPointerUp,
   onSelect,
   position,
   showNumber = false,
@@ -96,6 +102,7 @@ export function PointMarker({
   const dotMaterialRef = useRef<SpriteMaterial>(null);
   const numberMaterialRef = useRef<SpriteMaterial>(null);
   const completionAnimationRunRef = useRef(false);
+  const numberWasVisibleRef = useRef(showNumber && numberVisible && !completed);
   const visibleRef = useRef(visible);
   const dotTexture = useMemo<CanvasTexture | null>(
     () => createDotTexture(connected && !completed, errored),
@@ -205,21 +212,42 @@ export function PointMarker({
       }
 
       if (completed) {
+        numberWasVisibleRef.current = false;
         return;
       }
 
       const textVisible = showNumber && numberVisible;
 
       if (!textVisible) {
-        gsap.set(numberSpriteRef.current.scale, {
+        const hiddenScale = {
           x: POINT_MARKER_SIZE * 0.96,
           y: POINT_MARKER_SIZE * 0.96,
           z: 1,
-        });
-        gsap.set(numberMaterialRef.current, { opacity: 0 });
+        };
+
+        if (numberWasVisibleRef.current) {
+          gsap.to(numberSpriteRef.current.scale, {
+            ...hiddenScale,
+            duration: 0.32,
+            ease: "power2.out",
+            overwrite: "auto",
+          });
+          gsap.to(numberMaterialRef.current, {
+            opacity: 0,
+            duration: 0.32,
+            ease: "power2.out",
+            overwrite: "auto",
+          });
+        } else {
+          gsap.set(numberSpriteRef.current.scale, hiddenScale);
+          gsap.set(numberMaterialRef.current, { opacity: 0 });
+        }
+
+        numberWasVisibleRef.current = false;
         return;
       }
 
+      numberWasVisibleRef.current = true;
       gsap.to(numberSpriteRef.current.scale, {
         x: POINT_MARKER_SIZE,
         y: POINT_MARKER_SIZE,
@@ -239,14 +267,22 @@ export function PointMarker({
   );
 
   const initialMarkerSize = completed && !completionBurstActive ? 0 : POINT_MARKER_SIZE;
-  const initialOpacity = completed && !completionBurstActive ? 0 : 1;
+  const initialDotOpacity = completed && !completionBurstActive ? 0 : 1;
+  const initialNumberOpacity = completed && !completionBurstActive ? 0 : showNumber && numberVisible ? 1 : 0;
 
   return (
     <group position={position}>
-      <mesh onPointerDown={onSelect} onPointerEnter={onPointerContact} onPointerMove={onPointerContact}>
-        <circleGeometry args={[POINT_CONTACT_RADIUS, 32]} />
-        <meshBasicMaterial depthWrite={false} transparent opacity={0} />
-      </mesh>
+      {interactive && (
+        <mesh
+          onPointerDown={onSelect}
+          onPointerEnter={onPointerContact}
+          onPointerMove={onPointerContact}
+          onPointerUp={onPointerUp}
+        >
+          <circleGeometry args={[contactRadius, 32]} />
+          <meshBasicMaterial depthWrite={false} transparent opacity={0} />
+        </mesh>
+      )}
       {dotTexture && numberTexture && (
         <group position={[0, 0, 0.002]}>
           <sprite ref={dotSpriteRef} renderOrder={20} scale={[initialMarkerSize, initialMarkerSize, 1]}>
@@ -256,7 +292,7 @@ export function PointMarker({
               transparent
               depthWrite={false}
               depthTest={false}
-              opacity={initialOpacity}
+              opacity={initialDotOpacity}
             />
           </sprite>
           <sprite ref={numberSpriteRef} renderOrder={21} scale={[initialMarkerSize, initialMarkerSize, 1]}>
@@ -266,7 +302,7 @@ export function PointMarker({
               transparent
               depthWrite={false}
               depthTest={false}
-              opacity={initialOpacity}
+              opacity={initialNumberOpacity}
             />
           </sprite>
         </group>

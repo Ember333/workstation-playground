@@ -1,8 +1,13 @@
 import type { ThreeEvent } from "@react-three/fiber";
+import { useRef } from "react";
 import type { RefObject } from "react";
+import type { MeshBasicMaterial } from "three";
+import { gsap, useGSAP } from "./animation";
 import { SHOWCASE_RING_RADIUS_RATIO } from "./layout";
 import { ToyDisplayItem } from "./ToyDisplayItem";
 import type { ToyCanvasMode, ToyLayoutItem, ViewportBounds } from "./types";
+
+const ignoreRaycast = () => undefined;
 
 type ToyFieldSceneProps = {
   completedToyIds: Set<string>;
@@ -39,6 +44,24 @@ export function ToyFieldScene({
   selectedToyId,
   viewport,
 }: ToyFieldSceneProps) {
+  const ringMaterialRef = useRef<MeshBasicMaterial>(null);
+
+  useGSAP(
+    () => {
+      if (!ringMaterialRef.current) {
+        return;
+      }
+
+      gsap.to(ringMaterialRef.current, {
+        opacity: mode === "showcase" ? 0.18 : 0,
+        duration: 0.48,
+        ease: "power2.out",
+        overwrite: "auto",
+      });
+    },
+    { dependencies: [mode] },
+  );
+
   function handleStageClick(event: ThreeEvent<PointerEvent>) {
     if (mode !== "showcase") {
       return;
@@ -50,18 +73,22 @@ export function ToyFieldScene({
 
   return (
     <group>
-      {mode === "showcase" && (
-        <mesh position={[0, 0, -0.08]}>
-          <ringGeometry
-            args={[
-              Math.min(viewport.width, viewport.height) * SHOWCASE_RING_RADIUS_RATIO - 0.006,
-              Math.min(viewport.width, viewport.height) * SHOWCASE_RING_RADIUS_RATIO + 0.006,
-              160,
-            ]}
-          />
-          <meshBasicMaterial color="#050505" depthWrite={false} transparent opacity={0.18} />
-        </mesh>
-      )}
+      <mesh position={[0, 0, -0.08]} raycast={ignoreRaycast}>
+        <ringGeometry
+          args={[
+            Math.min(viewport.width, viewport.height) * SHOWCASE_RING_RADIUS_RATIO - 0.006,
+            Math.min(viewport.width, viewport.height) * SHOWCASE_RING_RADIUS_RATIO + 0.006,
+            160,
+          ]}
+        />
+        <meshBasicMaterial
+          ref={ringMaterialRef}
+          color="#050505"
+          depthWrite={false}
+          transparent
+          opacity={mode === "showcase" ? 0.18 : 0}
+        />
+      </mesh>
       <group>
         {items.map((item) => (
           <ToyDisplayItem
@@ -77,12 +104,10 @@ export function ToyFieldScene({
             sceneInfoExiting={item.toy.id === sceneInfoExitToyId}
             selected={item.toy.id === selectedToyId}
             variant={mode === "showcase" ? "showcase" : "select"}
-            visible={mode !== "play" || item.toy.id === selectedToyId}
+            visible
             viewport={viewport}
             onPointClick={onPointClick}
-            onClick={(event) => {
-              event.stopPropagation();
-
+            onSelectIntent={() => {
               if (mode === "showcase") {
                 onShowcaseClick();
                 return;
@@ -96,7 +121,7 @@ export function ToyFieldScene({
         ))}
       </group>
       {mode === "showcase" && (
-        <mesh position={[0, 0, 6]} onPointerUp={handleStageClick}>
+        <mesh position={[0, 0, -1]} onPointerUp={handleStageClick}>
           <planeGeometry args={[viewport.width * 1.4, viewport.height * 1.4]} />
           <meshBasicMaterial depthWrite={false} transparent opacity={0} />
         </mesh>

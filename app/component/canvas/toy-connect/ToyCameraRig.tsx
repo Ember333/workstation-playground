@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { useThree } from "@react-three/fiber";
 import type { OrthographicCamera } from "three";
 import { gsap } from "./animation";
@@ -25,6 +25,10 @@ function interpolateZoom(startZoom: number, endZoom: number, progress: number) {
   return startZoom * Math.pow(endZoom / startZoom, progress);
 }
 
+function nearlyEqual(a: number, b: number) {
+  return Math.abs(a - b) < 0.001;
+}
+
 type ToyCameraRigProps = {
   items: ToyLayoutItem[];
   mode: ToyCanvasMode;
@@ -43,13 +47,24 @@ export function ToyCameraRig({ items, mode, onMoveComplete, onMoveStart, selecte
   const targetY =
     mode === "play" && selectedItem ? selectedItem.position[1] + getPlayCameraYOffset(size, targetZoom) : 0;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     cameraTweenRef.current?.kill();
     onMoveStart();
 
     const startX = camera.position.x;
     const startY = camera.position.y;
     const startZoom = camera.zoom;
+
+    if (nearlyEqual(startX, targetX) && nearlyEqual(startY, targetY) && nearlyEqual(startZoom, targetZoom)) {
+      camera.position.x = targetX;
+      camera.position.y = targetY;
+      camera.position.z = 10;
+      camera.zoom = targetZoom;
+      camera.updateProjectionMatrix();
+      onMoveComplete();
+      return;
+    }
+
     const dx = targetX - startX;
     const dy = targetY - startY;
     const zoomingIn = targetZoom > startZoom;

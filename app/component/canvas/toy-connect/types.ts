@@ -49,7 +49,11 @@ export type ToyConnectSceneProps = {
   interactive: boolean;
   nextIndex: number;
   onPointClick: (index: number) => void;
+  onPointSelectIntent?: () => void;
   position?: ScenePoint;
+  pointSelectionEnabled?: boolean;
+  pointSelectionRadius?: number;
+  preloadImage?: boolean;
   scale?: number;
   forceImageReveal?: boolean;
   showConnectionLines?: boolean;

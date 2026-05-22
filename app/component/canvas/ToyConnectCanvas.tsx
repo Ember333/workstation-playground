@@ -39,6 +39,8 @@ function ToyCanvasContent({
   const selectDraggingRef = useRef(false);
   const size = useThree((state) => state.size);
   const layoutMode = mode === "showcase" ? "showcase" : "select";
+  const enteringSelectFromShowcase = previousModeRef.current === "showcase" && mode === "select";
+  const layoutSelectScroll = enteringSelectFromShowcase ? 0 : selectScroll;
   const cameraKey = `${mode}:${selectedToyId ?? "none"}`;
   const viewport = useMemo(
     () => (layoutMode === "select" ? getViewportForZoom(size, getSelectZoom(size)) : getFieldViewport(size)),
@@ -50,13 +52,17 @@ function ToyCanvasContent({
   const handleCameraMoveStart = useCallback(() => {
     setSettledCameraKey(null);
   }, []);
+  const handleSelectDragStateChange = useCallback((dragging: boolean) => {
+    selectDraggingRef.current = dragging;
+    setSelectDragging(dragging);
+  }, []);
   const detailsVisible = mode === "play" && settledCameraKey === cameraKey;
   const activeSceneInfoExitToyId =
     sceneInfoExitToyId ??
     (previousModeRef.current === "play" && mode !== "play" ? previousSelectedToyIdRef.current : null);
   const items = useMemo(
-    () => getToyLayoutItems(toys, layoutMode, selectScroll, viewport),
-    [layoutMode, selectScroll, toys, viewport],
+    () => getToyLayoutItems(toys, layoutMode, layoutSelectScroll, viewport),
+    [layoutMode, layoutSelectScroll, toys, viewport],
   );
 
   useEffect(() => {
@@ -69,6 +75,10 @@ function ToyCanvasContent({
 
     previousModeRef.current = mode;
     previousSelectedToyIdRef.current = selectedToyId;
+
+    if (previousMode === "showcase" && mode === "select") {
+      setSelectScroll(0);
+    }
 
     if (previousMode === "play" && mode !== "play" && previousSelectedToyId) {
       setSceneInfoExitToyId(previousSelectedToyId);
@@ -97,10 +107,7 @@ function ToyCanvasContent({
       <ToySelectInput
         mode={mode}
         viewport={viewport}
-        onDragStateChange={(dragging) => {
-          selectDraggingRef.current = dragging;
-          setSelectDragging(dragging);
-        }}
+        onDragStateChange={handleSelectDragStateChange}
         onScrollChange={setSelectScroll}
         toyCount={toys.length}
       />
